@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examens - Département des Sciences de Gestion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --primary-light: #d1fae5;
+            --secondary: #0f172a;
+            --secondary-light: #1e293b;
+            --accent: #f59e0b;
+            --danger: #e11d48;
+            --text: #334155;
+            --text-light: #64748b;
+            --text-dark: #0f172a;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --radius-sm: 8px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-dark);
+        }
+        /* Header */
+        .top-bar {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        header {
+            background: var(--secondary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+        .header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        .logo-text h1 {
+            font-size: 18px;
+            color: white;
+            font-weight: 700;
+        }
+        .logo-text p {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        nav {
+            display: flex;
+            gap: 8px;
+        }
+        nav a {
+            color: #cbd5e1;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background: var(--primary);
+            color: white;
+        }
+        nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        /* Main */
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-header h2 {
+            font-size: 32px;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+        .page-header p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        /* Niveau Tabs */
+        .niveau-tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .niveau-btn {
+            padding: 12px 32px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .niveau-btn i {
+            font-size: 16px;
+        }
+        .niveau-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .niveau-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        /* Specialite Tabs */
+        .specialite-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .specialite-btn {
+            padding: 8px 20px;
+            background: transparent;
+            border: none;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-light);
+            border-radius: 20px;
+        }
+        .specialite-btn:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+        .specialite-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        /* Exam Type Tabs */
+        .exam-type-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .exam-type-btn {
+            padding: 6px 16px;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text);
+        }
+        .exam-type-btn:hover {
+            background: var(--primary-light);
+        }
+        .exam-type-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        /* Table Container */
+        .table-container {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        .exam-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .exam-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 14px 12px;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: center;
+        }
+        .exam-table td {
+            padding: 12px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+        .exam-table tr:last-child td {
+            border-bottom: none;
+        }
+        .exam-table tr:hover {
+            background: #f8fafc;
+        }
+        .lieu-cell {
+            font-weight: 500;
+        }
+        .lieu-cell i {
+            color: var(--primary);
+            margin-right: 6px;
+        }
+        .lieu-vide {
+            color: var(--text-light);
+            font-style: italic;
+        }
+        .info-section {
+            background: var(--primary-light);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .info-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--primary-dark);
+        }
+        .info-text i {
+            font-size: 18px;
+        }
+        .print-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .print-btn:hover {
+            background: var(--primary);
+        }
+        .current-display {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        .current-display i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: #94a3b8;
+            padding: 40px 20px 30px;
+            margin-top: auto;
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 12px;
+            border-top: 1px solid #334155;
+            padding-top: 24px;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--secondary-light);
+                flex-direction: column;
+                padding: 16px;
+                gap: 4px;
+            }
+            nav.open {
+                display: flex;
+            }
+            nav a {
+                width: 100%;
+                padding: 14px 16px;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .exam-table th, .exam-table td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+            .page-header h2 {
+                font-size: 22px;
+            }
+            .niveau-btn {
+                padding: 8px 20px;
+                font-size: 13px;
+            }
+            .specialite-btn {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
+        }
+        @media print {
+            .top-bar, header, .niveau-tabs, .specialite-tabs, .exam-type-tabs, .print-btn, footer {
+                display: none;
+            }
+            main {
+                padding: 20px;
+            }
+            .exam-table th {
+                background: #333;
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        Faculté des Sciences Économiques, Commerciales et des Sciences de Gestion
+    </div>
+    <header>
+        <div class="header-main">
+            <div class="logo" onclick="window.location.href='index.html'">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Sciences de Gestion</h1>
+                    <p>FSECSG, UMMTO</p>
+                </div>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="examens.html" class="active"><i class="fas fa-calendar-alt"></i> Examens</a>
+                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
+                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-briefcase"></i> Licence</a>
+                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-landmark"></i> Master</a>
+                <a href="calendrierpairs.html"><i class="fas fa-map"></i> Feuille de Route</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="page-header">
+            <h2><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Planning des Examens</h2>
+            <p>Année Universitaire 2025/2026 - Tous niveaux et spécialités</p>
+        </div>
+
+        <!-- Niveau Tabs -->
+        <div class="niveau-tabs">
+            <button class="niveau-btn active" onclick="showNiveau('licence2')">
+                <i class="fas fa-user-graduate"></i> Licence 2 Gestion
+            </button>
+            <button class="niveau-btn" onclick="showNiveau('licence3')">
+                <i class="fas fa-user-graduate"></i> Licence 3
+            </button>
+            <button class="niveau-btn" onclick="showNiveau('master1')">
+                <i class="fas fa-university"></i> Master 1
+            </button>
+        </div>
+
+        <!-- Specialite Tabs (Licence 2) -->
+        <div id="licence2-specialites" class="specialite-tabs">
+            <button class="specialite-btn active" onclick="showSpecialite('licence2', 'gestion')">Gestion</button>
+        </div>
+
+        <!-- Specialite Tabs (Licence 3) -->
+        <div id="licence3-specialites" class="specialite-tabs" style="display:none;">
+            <button class="specialite-btn active" onclick="showSpecialite('licence3', 'management')">Management</button>
+            <button class="specialite-btn" onclick="showSpecialite('licence3', 'mrh')">MRH</button>
+            <button class="specialite-btn" onclick="showSpecialite('licence3', 'entrepreneuriat')">Entrepreneuriat</button>
+        </div>
+
+        <!-- Specialite Tabs (Master 1) -->
+        <div id="master1-specialites" class="specialite-tabs" style="display:none;">
+            <button class="specialite-btn active" onclick="showSpecialite('master1', 'strategique')">Management Stratégique</button>
+            <button class="specialite-btn" onclick="showSpecialite('master1', 'financier')">Management Financier</button>
+            <button class="specialite-btn" onclick="showSpecialite('master1', 'mrh')">MRH</button>
+            <button class="specialite-btn" onclick="showSpecialite('master1', 'gestion-publique')">Gestion Publique</button>
+            <button class="specialite-btn" onclick="showSpecialite('master1', 'mes')">MES</button>
+        </div>
+
+        <!-- Exam Type Tabs -->
+        <div id="exam-type-tabs" class="exam-type-tabs">
+            <button class="exam-type-btn active" onclick="showExamType('emd')">EMD</button>
+            <button class="exam-type-btn" onclick="showExamType('dette')">Dettes</button>
+        </div>
+
+        <div id="current-display" class="current-display">
+            <i class="fas fa-info-circle"></i> Licence 2 Gestion - EMD - Semestre 4
+        </div>
+
+        <!-- Table Container -->
+        <div id="table-container" class="table-container">
+            <!-- Dynamic content -->
+        </div>
+
+        <div class="info-section">
+            <div class="info-text">
+                <i class="fas fa-info-circle"></i>
+                <span><strong>Informations importantes :</strong> Les lieux des examens sont susceptibles d'être modifiés. Consultez régulièrement les listes affichées au département.</span>
+            </div>
+            <button class="print-btn" onclick="window.print()">
+                <i class="fas fa-print"></i> Imprimer
+            </button>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Département des Sciences de Gestion - FSECSG, Université Mouloud MAMMERI Tizi Ouzou</p>
+        </div>
+    </footer>
+
+    <script>
+        // Données complètes des examens
+        const examData = {
+            licence2: {
+                gestion: {
+                    emd: {
+                        semestre4: [
+                            { date: "10/05/2026", horaire: "09h00-10h30", module: "SIG", lieu: "G1: Salle 01 bloc B" },
+                            { date: "11/05/2026", horaire: "09h00-10h30", module: "Marketing", lieu: "G2: Salle 02 bloc B" },
+                            { date: "13/05/2026", horaire: "09h00-10h30", module: "Statistiques 4", lieu: "G3: Salle 01 bloc A" },
+                            { date: "14/05/2026", horaire: "09h00-10h30", module: "Fondements de RO", lieu: "G4: Salle 09 et 10 bloc A" },
+                            { date: "17/05/2026", horaire: "09h00-10h30", module: "Macro économie", lieu: "G5: Salle 11 et 12 bloc A" },
+                            { date: "18/05/2026", horaire: "09h00-10h30", module: "Gestion d'Entreprise", lieu: "G6: Salle 13 et 14 bloc A" },
+                            { date: "20/05/2026", horaire: "09h00-10h30", module: "Ethique des affaires", lieu: "(Voir les listes affichées)" }
+                        ]
+                    },
+                    dette: {
+                        semestre4: [
+                            { date: "10/05/2026", horaire: "09h00-10h30", module: "SIG", lieu: "À déterminer" },
+                            { date: "11/05/2026", horaire: "09h00-10h30", module: "Fondements de RO", lieu: "À déterminer" },
+                            { date: "13/05/2026", horaire: "09h00-10h30", module: "Gestion d'Entreprise", lieu: "Salle 15 bloc A" },
+                            { date: "14/05/2026", horaire: "09h00-10h30", module: "Ethique des Affaires", lieu: "Salle 16 bloc A" },
+                            { date: "17/05/2026", horaire: "09h00-10h30", module: "Macro économie", lieu: "À déterminer" },
+                            { date: "18/05/2026", horaire: "09h00-10h30", module: "Statistiques 4", lieu: "À déterminer" },
+                            { date: "20/05/2026", horaire: "09h00-10h30", module: "Marketing", lieu: "À déterminer" }
+                        ],
+                        semestre3: [
+                            { date: "03/05/2026", horaire: "14h00-15h30", module: "Introduction au Management", lieu: "À déterminer" },
+                            { date: "04/05/2026", horaire: "14h00-15h30", module: "Statistiques 3", lieu: "À déterminer" },
+                            { date: "05/05/2026", horaire: "14h00-15h30", module: "EMMF", lieu: "Salle 15 bloc A" },
+                            { date: "06/05/2026", horaire: "14h00-15h30", module: "Mathématiques Financières", lieu: "Salle 16 bloc A" },
+                            { date: "07/05/2026", horaire: "11h00-12h30", module: "Comptabilité de Gestion", lieu: "À déterminer" },
+                            { date: "07/05/2026", horaire: "13h30-15h00", module: "Méthodologie", lieu: "À déterminer" },
+                            { date: "20/05/2026", horaire: "13h30-15h00", module: "Macro économie 1", lieu: "À déterminer" },
+                            { date: "21/05/2026", horaire: "13h30-15h00", module: "Finance Publique", lieu: "À déterminer" }
+                        ]
+                    }
+                }
+            },
+            licence3: {
+                management: {
+                    emd: {
+                        semestre6: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "MQT", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Analyse des Données", lieu: "Amphi Amzal : G1 + G2" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Management Stratégique", lieu: "À déterminer" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Management des Op", lieu: "Salle 02 bloc B : G3" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Contrôle de Gestion", lieu: "À déterminer" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Management de la Chaine Log", lieu: "À déterminer" }
+                        ]
+                    }
+                },
+                mrh: {
+                    emd: {
+                        semestre6: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "MS des RH", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Ingénierie de la Formation", lieu: "À déterminer" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Contrôle de Gestion", lieu: "Amphi Mammeri : G1 + G2" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Analyse des Données", lieu: "À déterminer" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Santé et Sécurité au Travail", lieu: "À déterminer" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Management éléctr des RH", lieu: "À déterminer" }
+                        ]
+                    }
+                },
+                entrepreneuriat: {
+                    emd: {
+                        semestre6: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "Management", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Management et év des projets", lieu: "À déterminer" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Techniques de Gestion", lieu: "Salle 01 bloc A" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Analyse des Données", lieu: "À déterminer" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Management des Op", lieu: "À déterminer" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Marketing digital", lieu: "À déterminer" }
+                        ]
+                    }
+                }
+            },
+            master1: {
+                strategique: {
+                    emd: {
+                        semestre2: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "Marketing Stratégique", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Méthodes quantitatives de MGT", lieu: "1/2 G1 : Salle 02 bloc A" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Prise de décision Stratégique", lieu: "1/2 G1 : Salle 03 bloc A" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Méthodologie de préparation d'un Mémoire", lieu: "1/2 G2 : Salle 04 bloc A" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Création de la valeur et MA", lieu: "1/2 G2 : Salle 05 bloc A" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Management Stratégique de AE", lieu: "À déterminer" },
+                            { date: "Mar 20/05/2026", horaire: "13h30-15h00", module: "Théorie des Organisations", lieu: "(Voir les listes affichées)" }
+                        ]
+                    }
+                },
+                financier: {
+                    emd: {
+                        semestre2: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "Management de la CI", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Droit des Marchés publics", lieu: "1/2 G1 : Salle 06 bloc A" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Management de portefeuille", lieu: "1/2 G1 : Salle 07 bloc A" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Méthodes quantitatives de Mgt", lieu: "1/2 G2 : Salle 08 bloc A" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Management des Services pub", lieu: "1/2 G2 : Salle 09 bloc A" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Méthodologie de préparation d'un Mémoire", lieu: "À déterminer" },
+                            { date: "Mar 20/05/2026", horaire: "13h30-15h00", module: "Management Financier Int", lieu: "(Voir les listes affichées)" }
+                        ]
+                    }
+                },
+                mrh: {
+                    emd: {
+                        semestre2: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "Audit Social", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Knowledge Management", lieu: "Salle 10 bloc A" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Méthodes Quantitatives de Management", lieu: "Salle 11 bloc A" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Méthodologie de préparation d'un Mémoire", lieu: "Salle 12 bloc A" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Management des Salaires et des Incitations", lieu: "À déterminer" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Système de planification des RES", lieu: "(Voir les listes affichées)" },
+                            { date: "Mar 20/05/2026", horaire: "13h30-15h00", module: "Théorie de l'organisation", lieu: "À déterminer" }
+                        ]
+                    }
+                },
+                "gestion-publique": {
+                    emd: {
+                        semestre2: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "Contrôle et Audit dans le Secteur Pub", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Droit de la Fonction Pub", lieu: "À déterminer" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Evaluation de projets Pub", lieu: "Salle 13 bloc A" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Méthodes quantitatives de Mgt", lieu: "À déterminer" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "MRH dans le SP", lieu: "À déterminer" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Méthodologie de préparation d'un Mémoire", lieu: "À déterminer" },
+                            { date: "Mar 20/05/2026", horaire: "13h30-15h00", module: "Finance Publique App", lieu: "À déterminer" }
+                        ]
+                    }
+                },
+                mes: {
+                    emd: {
+                        semestre2: [
+                            { date: "Dim 10/05/2026", horaire: "13h30-15h00", module: "Economie de la Santé et de la PS 2", lieu: "À déterminer" },
+                            { date: "Lun 11/05/2026", horaire: "13h30-15h00", module: "Séminaire TIC et Santé", lieu: "À déterminer" },
+                            { date: "Mer 13/05/2026", horaire: "13h30-15h00", module: "Politique publique de Santé", lieu: "Salle 14 bloc A" },
+                            { date: "Jeu 14/05/2026", horaire: "13h30-15h00", module: "Droit de la Santé", lieu: "À déterminer" },
+                            { date: "Dim 17/05/2026", horaire: "13h30-15h00", module: "Management du SIH", lieu: "À déterminer" },
+                            { date: "Lun 18/05/2026", horaire: "13h30-15h00", module: "Informatique Médicale", lieu: "À déterminer" },
+                            { date: "Mar 20/05/2026", horaire: "13h30-15h00", module: "CRA", lieu: "À déterminer" }
+                        ]
+                    }
+                }
+            }
+        };
+
+        let currentNiveau = "licence2";
+        let currentSpecialite = "gestion";
+        let currentExamType = "emd";
+        let currentSemestre = "semestre4";
+
+        function toggleMenu() {
+            document.getElementById('mainNav').classList.toggle('open');
+        }
+
+        function showNiveau(niveau) {
+            currentNiveau = niveau;
+            currentExamType = "emd";
+            
+            document.querySelectorAll('.niveau-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.niveau-btn').classList.add('active');
+            
+            document.getElementById('licence2-specialites').style.display = 'none';
+            document.getElementById('licence3-specialites').style.display = 'none';
+            document.getElementById('master1-specialites').style.display = 'none';
+            
+            if (niveau === 'licence2') {
+                document.getElementById('licence2-specialites').style.display = 'flex';
+                currentSpecialite = 'gestion';
+                currentSemestre = 'semestre4';
+                updateSpecialiteButtons('licence2', 'gestion');
+            } else if (niveau === 'licence3') {
+                document.getElementById('licence3-specialites').style.display = 'flex';
+                currentSpecialite = 'management';
+                currentSemestre = 'semestre6';
+                updateSpecialiteButtons('licence3', 'management');
+            } else if (niveau === 'master1') {
+                document.getElementById('master1-specialites').style.display = 'flex';
+                currentSpecialite = 'strategique';
+                currentSemestre = 'semestre2';
+                updateSpecialiteButtons('master1', 'strategique');
+            }
+            
+            document.querySelectorAll('.exam-type-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.exam-type-btn[onclick*="emd"]').classList.add('active');
+            
+            updateDisplay();
+        }
+
+        function updateSpecialiteButtons(niveau, specialiteId) {
+            const container = document.getElementById(`${niveau}-specialites`);
+            const buttons = container.querySelectorAll('.specialite-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(specialiteId === 'gestion-publique' ? 'gestion publique' : 
+                    (specialiteId === 'strategique' ? 'stratégique' : specialiteId))) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function showSpecialite(niveau, specialite) {
+            currentSpecialite = specialite;
+            currentExamType = "emd";
+            
+            if (niveau === 'licence2') currentSemestre = 'semestre4';
+            else if (niveau === 'licence3') currentSemestre = 'semestre6';
+            else if (niveau === 'master1') currentSemestre = 'semestre2';
+            
+            document.querySelectorAll(`#${niveau}-specialites .specialite-btn`).forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.exam-type-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.exam-type-btn[onclick*="emd"]').classList.add('active');
+            
+            updateDisplay();
+        }
+
+        function showExamType(type) {
+            currentExamType = type;
+            document.querySelectorAll('.exam-type-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let data, semestre = currentSemestre;
+            
+            try {
+                if (currentExamType === 'emd') {
+                    data = examData[currentNiveau][currentSpecialite]?.emd?.[semestre] || [];
+                } else {
+                    data = examData[currentNiveau][currentSpecialite]?.dette?.[semestre] || [];
+                }
+            } catch(e) {
+                data = [];
+            }
+            
+            const niveauNames = {
+                licence2: "Licence 2 Gestion",
+                licence3: "Licence 3",
+                master1: "Master 1"
+            };
+            const specialiteNames = {
+                gestion: "Gestion",
+                management: "Management",
+                mrh: "MRH",
+                entrepreneuriat: "Entrepreneuriat",
+                strategique: "Management Stratégique",
+                financier: "Management Financier",
+                "gestion-publique": "Gestion Publique",
+                mes: "MES"
+            };
+            const examTypeNames = { emd: "EMD", dette: "Dettes" };
+            const semestreNames = { semestre2: "Semestre 2", semestre3: "Semestre 3", semestre4: "Semestre 4", semestre6: "Semestre 6" };
+            
+            document.getElementById('current-display').innerHTML = `
+                <i class="fas fa-info-circle"></i> 
+                ${niveauNames[currentNiveau]} - ${specialiteNames[currentSpecialite]} - 
+                ${examTypeNames[currentExamType]} - ${semestreNames[semestre]}
+            `;
+            
+            if (!data || data.length === 0) {
+                document.getElementById('table-container').innerHTML = `
+                    <div style="text-align:center; padding:60px;">
+                        <i class="fas fa-calendar-times" style="font-size:48px; color:#cbd5e1; margin-bottom:16px; display:block;"></i>
+                        <p>Aucun examen trouvé pour cette sélection.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <table class="exam-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Horaire</th>
+                            <th>Module</th>
+                            <th>Lieu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            data.forEach(row => {
+                let lieuClass = row.lieu === "À déterminer" || row.lieu === "(Voir les listes affichées)" ? "lieu-vide" : "";
+                html += `
+                    <tr>
+                        <td>${row.date}</td>
+                        <td>${row.horaire}</td>
+                        <td><strong>${row.module}</strong></td>
+                        <td class="lieu-cell ${lieuClass}"><i class="fas fa-map-marker-alt"></i> ${row.lieu}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `</tbody></table>`;
+            document.getElementById('table-container').innerHTML = html;
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
