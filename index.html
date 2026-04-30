@@ -270,6 +270,179 @@
             color: var(--text-light);
             margin-top: 4px;
         }
+        /* Annonces Section */
+        .annonces-section {
+            margin-bottom: 40px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .section-header h2 {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-header h2 i {
+            color: var(--primary);
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 6px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .annonces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .annonce-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .annonce-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        .annonce-card.urgent {
+            border-left: 4px solid var(--danger);
+        }
+        .annonce-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            z-index: 1;
+        }
+        .badge-urgent {
+            background: var(--danger);
+            color: white;
+        }
+        .badge-examen {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .badge-soutenance {
+            background: #faf5ff;
+            color: #9333ea;
+        }
+        .badge-emploi {
+            background: #fffbeb;
+            color: #d97706;
+        }
+        .badge-evenement {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+        .badge-avis {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .annonce-content {
+            padding: 20px;
+        }
+        .annonce-category {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .annonce-content h3 {
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .annonce-content p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .annonce-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .btn-download {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-download:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-link {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-link:hover {
+            background: var(--primary-dark);
+        }
+        .voir-plus {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .voir-plus-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .voir-plus-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
         /* Content Grid */
         .content-grid {
             display: grid;
@@ -470,11 +643,18 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .annonces-grid {
+                grid-template-columns: 1fr;
+            }
             .content-grid {
                 grid-template-columns: 1fr;
             }
             .footer-grid {
                 grid-template-columns: 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -499,11 +679,11 @@
             </button>
             <nav id="mainNav">
                 <a href="#" class="active"><i class="fas fa-home"></i> Accueil</a>
-                <a href="#"><i class="fas fa-bullhorn"></i> Nouveautés</a>
-                <a href="#"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
-                <a href="#"><i class="fas fa-briefcase"></i> Licence</a>
-                <a href="#"><i class="fas fa-landmark"></i> Master</a>
-                <a href="#"><i class="fas fa-map"></i> Feuille de Route</a>
+                <a href="examens.html"><i class="fas fa-calendar-alt"></i> Examens</a>
+                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
+                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Licence</a>
+                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-landmark"></i> Master</a>
+                <a href="feuillederoute.html"><i class="fas fa-map"></i> Feuille de Route</a>
             </nav>
         </div>
     </header>
@@ -511,16 +691,40 @@
         <div class="hero-banner">
             <span class="hero-badge"></span>
             <h1>Bienvenue au Département des Sciences de Gestion</h1>
-            <p>Former les leaders de demain, promouvoir l'innovation managériale et contribuer au développement économique.</p>
+            <p>************************************************************</p>
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="window.location.href='calendrierpairs.html'">
                     <i class="fas fa-map"></i> Voir la feuille de route
                 </button>
-                <button class="btn btn-secondary">
-                    Consulter les avis
+                <button class="btn btn-secondary" onclick="document.getElementById('annonces').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-bullhorn"></i> Voir les annonces
                 </button>
             </div>
         </div>
+
+        <!-- Section Annonces -->
+        <div id="annonces" class="annonces-section">
+            <div class="section-header">
+                <h2><i class="fas fa-bullhorn"></i> Dernières Annonces & Nouveautés</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterAnnonces('all')">Toutes</button>
+                    <button class="filter-btn" onclick="filterAnnonces('Examen')">Examens</button>
+                    <button class="filter-btn" onclick="filterAnnonces('Emploi du temps')">Emplois du temps</button>
+                    <button class="filter-btn" onclick="filterAnnonces('Soutenance')">Soutenances</button>
+                    <button class="filter-btn" onclick="filterAnnonces('Événement')">Événements</button>
+                    <button class="filter-btn" onclick="filterAnnonces('Avis')">Avis</button>
+                </div>
+            </div>
+            <div id="annoncesContainer" class="annonces-grid">
+                <!-- Les annonces seront chargées dynamiquement par JS -->
+            </div>
+            <div class="voir-plus">
+                <button class="voir-plus-btn" onclick="loadMoreAnnonces()">
+                    <i class="fas fa-arrow-down"></i> Voir plus d'annonces
+                </button>
+            </div>
+        </div>
+
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon"><i class="fas fa-users"></i></div>
@@ -543,6 +747,7 @@
                 <div class="stat-label">Spécialités Master</div>
             </div>
         </div>
+
         <div class="content-grid">
             <div class="card">
                 <div class="card-header">
@@ -565,21 +770,21 @@
             <div>
                 <h3 style="font-size: 16px; margin-bottom: 16px;">Accès Rapide</h3>
                 <div class="quick-links">
-                    <div class="quick-link">
+                    <div class="quick-link" onclick="document.getElementById('annonces').scrollIntoView({behavior:'smooth'})">
                         <div class="quick-link-icon"><i class="fas fa-bullhorn"></i></div>
                         <div class="quick-link-text">
                             <h4>Dernières Annonces</h4>
                             <p>Examens, soutenances, emplois du temps</p>
                         </div>
                     </div>
-                    <div class="quick-link">
-                        <div class="quick-link-icon"><i class="fas fa-gavel"></i></div>
+                    <div class="quick-link" onclick="window.location.href='examens.html'">
+                        <div class="quick-link-icon"><i class="fas fa-calendar-alt"></i></div>
                         <div class="quick-link-text">
-                            <h4>Textes Réglementaires</h4>
-                            <p>Lois, arrêtés, règlements intérieurs</p>
+                            <h4>Examens</h4>
+                            <p>Plannings EMD et Dettes</p>
                         </div>
                     </div>
-                    <div class="quick-link">
+                    <div class="quick-link" onclick="window.location.href='licence.html'">
                         <div class="quick-link-icon"><i class="fas fa-book-open"></i></div>
                         <div class="quick-link-text">
                             <h4>Programmes Licence</h4>
@@ -641,10 +846,143 @@
             <p>Conçu par MAHTOUT Idir.</p>
         </div>
     </footer>
+
     <script>
+        // Données des annonces
+        const annoncesData = [
+            {
+                id: 1,
+                title: "Plannings des examens de L1, L2, L3 et Master",
+                content: "Les examens des semestres pairs de l'année universitaire 2025/2026 .",
+                date: "2026-04-29",
+                category: "Examen",
+                isUrgent: false,
+                isLink: true,
+                linkUrl: "examens.html",
+                linkText: "Cliquez ici pour consulter"
+            },
+            {
+                id: 2,
+                title: "Fiches de vœux – Passages L2 → L3 et L3 → Master",
+                content: "Les étudiants de L2 et L3 sont tenus de formuler leurs vœux d’orientation pour l’année universitaire prochaine.\nVeuillez remplir impérativement le formulaire correspondant à votre niveau",
+                date: "2026-04-29",
+                category: "Avis",
+                isUrgent: false,
+                isCustom: true,
+                customHtml: `
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdqm5d2-SUixmwGXhMd2w3fYNevEkyDdJrsQnQZpHWRPrqXgA/viewform?usp=publish-editor" target="_blank" style="flex:1; text-decoration: none;">
+                            <button style="width:100%; background: #059669; color: white; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <i class="fas fa-arrow-right"></i> L2 vers L3
+                            </button>
+                        </a>
+                        <a href="https://forms.gle/hxNnJhq3tweEoLSD8" target="_blank" style="flex:1; text-decoration: none;">
+                            <button style="width:100%; background: #0f172a; color: white; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <i class="fas fa-arrow-right"></i> L3 vers Master
+                            </button>
+                        </a>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 12px; color: #e11d48; background: #fff5f5; padding: 8px; border-radius: 8px;">
+                        <i class="fas fa-calendar-alt"></i> Date limite : <strong>4 mai 2026</strong>
+                    </p>
+                `
+            }
+        ];
+
+        let currentFilter = "all";
+        let visibleCount = 4;
+
+        function getCategoryClass(category) {
+            const classes = {
+                'Examen': 'badge-examen',
+                'Soutenance': 'badge-soutenance',
+                'Emploi du temps': 'badge-emploi',
+                'Événement': 'badge-evenement',
+                'Avis': 'badge-avis'
+            };
+            return classes[category] || 'badge-avis';
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function renderAnnonces() {
+            const container = document.getElementById('annoncesContainer');
+            let filtered = annoncesData.filter(item => currentFilter === 'all' || item.category === currentFilter);
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            const displayed = filtered.slice(0, visibleCount);
+            
+            if (displayed.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:60px; background:white; border-radius:16px;">
+                    <i class="fas fa-bell-slash" style="font-size:48px; color:#cbd5e1; margin-bottom:16px; display:block;"></i>
+                    <p>Aucune annonce dans cette catégorie pour le moment.</p>
+                </div>`;
+                return;
+            }
+            
+            container.innerHTML = displayed.map(item => `
+                <div class="annonce-card ${item.isUrgent ? 'urgent' : ''}">
+                    <div class="annonce-badge ${item.isUrgent ? 'badge-urgent' : getCategoryClass(item.category)}">
+                        ${item.isUrgent ? '<i class="fas fa-exclamation-circle"></i> URGENT' : item.category}
+                    </div>
+                    <div class="annonce-content">
+                        <div class="annonce-category ${getCategoryClass(item.category)}">${item.category}</div>
+                        <h3>${item.title}</h3>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                            <span style="font-size: 11px; color: var(--text-light);"><i class="far fa-calendar-alt"></i> ${formatDate(item.date)}</span>
+                        </div>
+                        <p>${item.content}</p>
+                        ${item.isCustom ? item.customHtml : (
+                            item.isLink ? 
+                                `<div class="annonce-footer">
+                                    <a href="${item.linkUrl}" class="btn-download btn-link" style="background: var(--primary); color: white; text-decoration: none;">
+                                        <i class="fas fa-external-link-alt"></i> ${item.linkText}
+                                    </a>
+                                </div>` :
+                                `<div class="annonce-footer">
+                                    <span class="file-name" style="font-size: 11px; color: var(--text-light);">
+                                        <i class="far fa-file-pdf"></i> ${item.fileName}
+                                    </span>
+                                    <button class="btn-download" onclick="alert('Téléchargement de: ${item.fileName} (Simulation)')">
+                                        <i class="fas fa-download"></i> Télécharger
+                                    </button>
+                                </div>`
+                        )}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterAnnonces(category) {
+            currentFilter = category;
+            visibleCount = 4;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === (category === 'all' ? 'Toutes' : category)) {
+                    btn.classList.add('active');
+                }
+            });
+            renderAnnonces();
+        }
+
+        function loadMoreAnnonces() {
+            let filtered = annoncesData.filter(item => currentFilter === 'all' || item.category === currentFilter);
+            if (visibleCount < filtered.length) {
+                visibleCount = Math.min(visibleCount + 4, filtered.length);
+                renderAnnonces();
+            } else {
+                alert('Vous avez vu toutes les annonces.');
+            }
+        }
+
         function toggleMenu() {
             document.getElementById('mainNav').classList.toggle('open');
         }
+
+        // Initialisation
+        renderAnnonces();
     </script>
 </body>
 </html>
