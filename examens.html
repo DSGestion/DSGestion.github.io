@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -90,10 +89,10 @@
             </div>
             <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
             <nav id="mainNav">
-                <a href="#" class="active"><i class="fas fa-home"></i> Accueil</a>
-                <a href="examens.html"><i class="fas fa-calendar-alt"></i> Examens</a>
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="examens.html" class="active"><i class="fas fa-calendar-alt"></i> Examens</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
-                <a href="licence.html"><i class="fas fa-briefcase"></i> Licence</a>
+                 href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Licence</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-landmark"></i> Master</a>
                 <a href="feuillederoute.html"><i class="fas fa-map"></i> Feuille de Route</a>
             </nav>
@@ -106,10 +105,10 @@
         </div>
 
         <div class="niveau-tabs">
-            <button class="niveau-btn active" onclick="showNiveau('licence1')"><i class="fas fa-user-graduate"></i> Licence 1 TC</button>
-            <button class="niveau-btn" onclick="showNiveau('licence2')"><i class="fas fa-user-graduate"></i> Licence 2 Gestion</button>
-            <button class="niveau-btn" onclick="showNiveau('licence3')"><i class="fas fa-user-graduate"></i> Licence 3</button>
-            <button class="niveau-btn" onclick="showNiveau('master1')"><i class="fas fa-university"></i> Master 1</button>
+            <button class="niveau-btn active" onclick="showNiveau(event, 'licence1')"><i class="fas fa-user-graduate"></i> Licence 1 TC</button>
+            <button class="niveau-btn" onclick="showNiveau(event, 'licence2')"><i class="fas fa-user-graduate"></i> Licence 2 Gestion</button>
+            <button class="niveau-btn" onclick="showNiveau(event, 'licence3')"><i class="fas fa-user-graduate"></i> Licence 3</button>
+            <button class="niveau-btn" onclick="showNiveau(event, 'master1')"><i class="fas fa-university"></i> Master 1</button>
         </div>
 
         <div id="licence1-specialites" class="specialite-tabs"><button class="specialite-btn active">Tronc Commun</button></div>
@@ -128,8 +127,8 @@
         </div>
 
         <div class="exam-type-tabs" id="exam-type-tabs">
-            <button class="exam-type-btn active" onclick="showExamType('emd')">EMD</button>
-            <button class="exam-type-btn" onclick="showExamType('dette')">Dettes</button>
+            <button class="exam-type-btn active" onclick="showExamType(event, 'emd')">EMD</button>
+            <button class="exam-type-btn" onclick="showExamType(event, 'dette')">Dettes</button>
         </div>
 
         <div id="semester-tabs-container" class="semester-tabs" style="display:none;"></div>
@@ -138,14 +137,13 @@
         <div id="table-container" class="table-container"></div>
 
         <div class="info-section">
-           <!-- <div class="info-text"><i class="fas fa-info-circle"></i> <span><strong>Informations importantes :</strong> Les lieux des examens sont susceptibles d'être modifiés. Consultez régulièrement les listes affichées au département.</span></div>   -->
             <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimer</button>
         </div>
     </main>
     <footer><div class="footer-bottom"><p>&copy; 2026 Département des Sciences de Gestion - FSECSG, Université Mouloud MAMMERI Tizi Ouzou</p></div></footer>
 
     <script>
-        // ======================== DONNÉES COMPLÈTES DU PDF ========================
+        // ======================== DONNÉES COMPLÈTES ========================
         const examData = {
             licence1: {
                 emd: {
@@ -377,7 +375,8 @@
         // ======================== NAVIGATION ========================
         function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
 
-        function showNiveau(niveau) {
+        function showNiveau(event, niveau) {
+            event.preventDefault();
             currentNiveau = niveau;
             currentExamType = "emd";
             document.querySelectorAll('.niveau-btn').forEach(btn => btn.classList.remove('active'));
@@ -423,7 +422,8 @@
             });
         }
 
-        function showSpecialite(niveau, specialite) {
+        function showSpecialite(event, niveau, specialite) {
+            event.preventDefault();
             currentSpecialite = specialite;
             currentExamType = "emd";
             if (niveau === 'licence3') currentSemestre = 'semestre6';
@@ -437,7 +437,8 @@
             updateDisplay();
         }
 
-        function showExamType(type) {
+        function showExamType(event, type) {
+            event.preventDefault();
             currentExamType = type;
             document.querySelectorAll('.exam-type-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -445,7 +446,8 @@
             updateDisplay();
         }
 
-        function showSemester(sem) {
+        function showSemester(event, sem) {
+            event.preventDefault();
             currentSemestre = sem;
             document.querySelectorAll('.semester-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -491,7 +493,7 @@
             if (!semesters.includes(currentSemestre)) currentSemestre = semesters[0];
             for (const sem of semesters) {
                 const active = sem === currentSemestre ? ' active' : '';
-                html += `<button class="semester-btn${active}" onclick="showSemester('${sem}')">${semestreNames[sem] || sem}</button>`;
+                html += `<button class="semester-btn${active}" onclick="showSemester(event, '${sem}')">${semestreNames[sem] || sem}</button>`;
             }
             container.innerHTML = html;
         }
@@ -551,14 +553,13 @@
             const sharedLieu = sectionData.lieu || "";
             const lieuLines = sharedLieu ? sharedLieu.split('\n') : [];
 
-            // Vérifier si des modules ont des lieuOverride individuels
+            // Vérifier si des modules ont un lieuOverride (aucun dans nos données, mais on garde la logique)
             const hasOverrides = modules.some(m => m.lieuOverride);
-            // Tous les modules partagent-ils le même lieu (pas d'override) ?
-            const allShared = !hasOverrides;
+            const allShared = !hasOverrides && sharedLieu !== "";
 
             let html = `<table class="exam-table"><thead><tr><th><i class="fas fa-calendar-day"></i> Date</th><th><i class="fas fa-clock"></i> Horaire</th><th><i class="fas fa-book"></i> Module</th><th><i class="fas fa-map-marker-alt"></i> Lieu</th></tr></thead><tbody>`;
 
-            if (allShared && sharedLieu) {
+            if (allShared) {
                 // TOUS les modules partagent le même lieu → rowspan
                 const count = modules.length;
                 for (let i = 0; i < count; i++) {
@@ -572,14 +573,12 @@
                     }
                     html += `</tr>`;
                 }
-            } else {
-                // Certains modules ont des overrides
-                // Regrouper les modules consécutifs qui partagent le lieu commun
+            } else if (sharedLieu !== "") {
+                // Cas où le lieu est partagé mais certains modules ont des overrides (non utilisé ici)
                 let i = 0;
                 while (i < modules.length) {
                     const m = modules[i];
                     if (m.lieuOverride) {
-                        // Module avec lieu individuel
                         html += `<tr>`;
                         html += `<td>${escapeHtml(m.date)}</td>`;
                         html += `<td>${escapeHtml(m.horaire)}</td>`;
@@ -588,7 +587,6 @@
                         html += `</tr>`;
                         i++;
                     } else {
-                        // Compter les modules consécutifs sans override
                         let start = i;
                         while (i < modules.length && !modules[i].lieuOverride) i++;
                         let span = i - start;
@@ -605,6 +603,16 @@
                         }
                     }
                 }
+            } else {
+                // Pas de lieu commun du tout
+                for (const m of modules) {
+                    html += `<tr>`;
+                    html += `<td>${escapeHtml(m.date)}</td>`;
+                    html += `<td>${escapeHtml(m.horaire)}</td>`;
+                    html += `<td><strong>${escapeHtml(m.module)}</strong></td>`;
+                    html += `<td class="lieu-cell"><i class="fas fa-map-marker-alt"></i> ${m.lieuOverride ? escapeHtml(m.lieuOverride) : "Non spécifié"}</td>`;
+                    html += `</tr>`;
+                }
             }
 
             html += `</tbody></table>`;
@@ -613,10 +621,10 @@
 
         // ======================== EVENT LISTENERS ========================
         document.querySelectorAll('#licence3-specialites .specialite-btn').forEach(btn => {
-            btn.addEventListener('click', () => showSpecialite('licence3', btn.getAttribute('data-spec')));
+            btn.addEventListener('click', (e) => showSpecialite(e, 'licence3', btn.getAttribute('data-spec')));
         });
         document.querySelectorAll('#master1-specialites .specialite-btn').forEach(btn => {
-            btn.addEventListener('click', () => showSpecialite('master1', btn.getAttribute('data-spec')));
+            btn.addEventListener('click', (e) => showSpecialite(e, 'master1', btn.getAttribute('data-spec')));
         });
 
         // ======================== INIT ========================
