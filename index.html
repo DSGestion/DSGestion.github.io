@@ -365,6 +365,10 @@
             background: #f1f5f9;
             color: #475569;
         }
+        .badge-rapport {
+            background: #fef3c7;
+            color: #b45309;
+        }
         .annonce-content {
             padding: 20px;
         }
@@ -387,6 +391,7 @@
             color: var(--text);
             line-height: 1.6;
             margin-bottom: 16px;
+            white-space: pre-line;
         }
         .annonce-footer {
             display: flex;
@@ -681,7 +686,7 @@
                 <a href="#" class="active"><i class="fas fa-home"></i> Accueil</a>
                 <a href="examens.html"><i class="fas fa-calendar-alt"></i> Examens</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
-                <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Licence</a>
+                <a href="licence.html"><i class="fas fa-briefcase"></i> Licence</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-landmark"></i> Master</a>
                 <a href="feuillederoute.html"><i class="fas fa-map"></i> Feuille de Route</a>
             </nav>
@@ -691,7 +696,7 @@
         <div class="hero-banner">
             <span class="hero-badge"></span>
             <h1>Bienvenue au Département des Sciences de Gestion</h1>
-            <p>************************************************************</p>
+            <p>Formation, innovation, excellence – au service de la communauté universitaire.</p>
             <div class="hero-buttons">
                 <button class="btn btn-primary" onclick="window.location.href='feuillederoute.html'">
                     <i class="fas fa-map"></i> Voir la feuille de route
@@ -853,7 +858,7 @@
             {
                 id: 1,
                 title: "Plannings des examens de L1, L2, L3 et Master",
-                content: "Les examens des semestres pairs de l'année universitaire 2025/2026 .",
+                content: "Les examens des semestres pairs de l'année universitaire 2025/2026 sont disponibles.",
                 date: "2026-04-29",
                 category: "Examen",
                 isUrgent: false,
@@ -864,7 +869,7 @@
             {
                 id: 2,
                 title: "Fiches de vœux – Passages L2 → L3 et L3 → Master",
-                content: "Les étudiants de L2 et L3 sont tenus de formuler leurs vœux d’orientation pour l’année universitaire prochaine.\nVeuillez remplir le formulaire correspondant à votre niveau",
+                content: "Les étudiants de L2 et L3 sont tenus de formuler leurs vœux d’orientation pour l’année universitaire prochaine.\nVeuillez remplir le formulaire correspondant à votre niveau.",
                 date: "2026-04-29",
                 category: "Avis",
                 isUrgent: false,
@@ -885,17 +890,18 @@
                     <p style="margin-top: 15px; font-size: 12px; color: #e11d48; background: #fff5f5; padding: 8px; border-radius: 8px;">
                         <i class="fas fa-calendar-alt"></i> Date limite : <strong>4 mai 2026</strong>
                     </p>
+                `
             },
-                {
+            {
                 id: 3,
-                title: "Plannings des examens de L1, L2, L3 et Master",
-                content: "Nous informons les étudiant de L3 le délai pour l'envoi de vos rapports de stage à vos encadrants sont rallongés jusqu'au au jeudi 07/05/2026.\nM. MAHTOUT Idir\nChef de département",
-                date: "2026-05-07",
-                category: "Rapport de stage",
+                title: "L3 - Rallongement du délai de dépôt des rapports de stage",
+                content: "Les étudiants de L3 sont informés que la date d'envoi des rapports de stage aux encadrants est rallongée jusqu'au jeudi 07/05/2026.\n\nM. MAHTOUT Idir\nChef de département",
+                date: "2026-05-02",
+                category: "Soutenance",
                 isUrgent: false,
                 isLink: true,
                 linkUrl: "feuillederoute.html",
-                linkText: "Voir la feuille de route."
+                linkText: "Voir la feuille de route"
             }
         ];
 
@@ -908,7 +914,8 @@
                 'Soutenance': 'badge-soutenance',
                 'Emploi du temps': 'badge-emploi',
                 'Événement': 'badge-evenement',
-                'Avis': 'badge-avis'
+                'Avis': 'badge-avis',
+                'Rapport de stage': 'badge-rapport'
             };
             return classes[category] || 'badge-avis';
         }
@@ -943,7 +950,7 @@
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
                             <span style="font-size: 11px; color: var(--text-light);"><i class="far fa-calendar-alt"></i> ${formatDate(item.date)}</span>
                         </div>
-                        <p>${item.content}</p>
+                        <p style="white-space: pre-line;">${item.content}</p>
                         ${item.isCustom ? item.customHtml : (
                             item.isLink ? 
                                 `<div class="annonce-footer">
