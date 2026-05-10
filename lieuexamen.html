@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Répartition des étudiants - Licence 1 TC, Licence 2 Gestion, Licence 3</title>
+    <title>Répartition des étudiants par lieu d'examen - FSECSG</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -99,9 +99,7 @@
             background: var(--primary);
             color: white;
         }
-        .info-repartition {
-            display: none; /* suppression du message d'attention */
-        }
+        .info-repartition { display: none; }
         .students-list {
             background: white;
             border-radius: var(--radius);
@@ -137,9 +135,7 @@
             color: var(--primary);
             margin-right: 6px;
         }
-        .student-table tr:hover {
-            background: #f8fafc;
-        }
+        .student-table tr:hover { background: #f8fafc; }
         .groupe-badge {
             background: var(--primary-light);
             color: var(--primary-dark);
@@ -172,7 +168,21 @@
             font-weight: 500;
             color: var(--primary-dark);
         }
-        
+        .print-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .print-btn:hover { background: var(--primary); }
         footer { background: var(--secondary); color: #94a3b8; padding: 40px 20px 30px; margin-top: auto; }
         .footer-bottom { max-width: 1200px; margin: 0 auto; text-align: center; font-size: 12px; border-top: 1px solid #334155; padding-top: 24px; }
         
@@ -184,11 +194,23 @@
             .page-header h2 { font-size: 22px; }
             .filter-header { flex-direction: column; align-items: stretch; }
             .student-table th, .student-table td { padding: 8px; }
+            .print-btn { width: 100%; justify-content: center; }
         }
         @media print {
-            .top-bar, header, .filter-bar, footer { display: none; }
+            /* On garde l'en-tête et le pied de page pour l'impression */
+            .top-bar, header, footer { 
+                display: block !important; 
+                position: static;
+                box-shadow: none;
+            }
+            .menu-toggle, nav, .filter-bar, .print-btn, .niveau-tabs, .section-tabs, .group-filters, .search-box {
+                display: none !important;
+            }
             main { padding: 0; }
             .students-list { border: none; }
+            .stats { background: none; border: 1px solid #ccc; }
+            .student-table th { background: #333; color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .student-table tr.subgroup-header td { background: #f0f0f0; }
         }
     </style>
 </head>
@@ -213,19 +235,21 @@
     </header>
     <main>
         <div class="page-header">
-            <h2><i class="fas fa-users" style="color: var(--primary);"></i> Répartition des étudiants</h2>
+            <h2><i class="fas fa-users" style="color: var(--primary);"></i> Répartition des étudiants par lieu d'examen</h2>
             <p>Sélectionnez un niveau</p>
         </div>
 
         <div class="niveau-tabs">
             <button class="niveau-btn" onclick="showNiveau('licence1')"><i class="fas fa-user-graduate"></i> Licence 1 TC</button>
             <button class="niveau-btn" onclick="showNiveau('licence2')"><i class="fas fa-user-graduate"></i> Licence 2 Gestion</button>
-            <button class="niveau-btn active" onclick="showNiveau('licence3')"><i class="fas fa-user-graduate"></i> Licence 3</button>
-            <button class="niveau-btn" onclick="showNiveau('master1')" disabled style="opacity:0.5; cursor:not-allowed;">Master 1</button>
+            <button class="niveau-btn" onclick="showNiveau('licence3')"><i class="fas fa-user-graduate"></i> Licence 3</button>
+            <button class="niveau-btn active" onclick="showNiveau('master1')"><i class="fas fa-university"></i> Master 1</button>
         </div>
 
-        <div id="sectionTabs" class="section-tabs">
-            <!-- Dynamiquement rempli selon le niveau et la filière pour Licence 3 -->
+        <div id="sectionTabs" class="section-tabs"></div>
+
+        <div style="text-align: right;">
+            <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimer cette page</button>
         </div>
 
         <div class="filter-bar">
@@ -239,7 +263,6 @@
             <div class="group-filters" id="groupFilters"></div>
         </div>
 
-        <div id="infoRepartition" class="info-repartition"></div>
         <div id="stats" class="stats"></div>
         <div class="students-list">
             <table class="student-table" id="studentTable">
@@ -257,124 +280,105 @@
     </footer>
 
     <script>
-        // ======================== DONNÉES SECTION G1 (groupes 21 à 30) ========================
+        // ======================== LICENCE 1 TC - SECTION G1 ========================
         const studentsG1 = [
-            // G21
             ...["BOUAMARA THIZIRI","LEFKI TAHER","BOUANEM MASSINISSA","BOUCHEBABA MAYA","BOUAYAD NOUREDDINE","BOUARAB REDHA","BOUALILI OUSSAMA","BOUAYAD MASSINISSA","BOUAZIZ HAKIM","BOUBRIK DOUNIA","BOUBCHIR LINA","BOUAZIZ LAETICIA","BOUAMER SAMIR","BOUBHIZ RAYANE","BOUARAB NABILA","BOUBRIT CYLIA","BOUCHAKOURE RAYANE","BOUBEKEUR WISSAM","BOUCHEMMA LITICIA","BOUAMER MOUNIRA","BOUBRIT LYNDA","BOUAROUR RAYANE","BOUCHEFRA SOUHILA","BOUALILI KAMILIA","BOUALIA FOUAD","BOUCHAIR WASSIM","BOUAZIZ IMENE","MESSAOUDI Chaima","BOUBOUZAL MAHFOUD","CHERABCHA ABDERRAHMANE","BOUBRIT ELHADI","AIT ALI AMARA YANIS","BRAHIMI Karim","BEN MOUHOUB Gaya","BOUBEGHLA Nabil","BOUBCHIR ABDERAHIM","BOUCHENE MOULOUD"].map(n => ({ nomPrenom: n, groupe: "G21", lieu: "Amphi Belhouas" })),
-            // G22
             ...["BOUDLAL KENZA","BOUCHOUAREB HAMZA","BOUDJEMIA LISA","BOUDEFOUA AGHILES","BOUDIA MASTAN","BOUDJEMA ABDELOUHAB","BOUDJEMAA BELKACEM","BOUFATIS MOHAMED","BOUDJEMAI LISA","BOUFATIS MOHAMED AMINE","BOUDJELOUAH CHANEZ","BOUDINAR ANIS","BOUDIA INAS","BOUCHOUYA IMANE","BOUCHENTOUF ISLAM","BOUFATIS MADJID","BOUDJENANE SIHAM","BOUDI ALICIA","BOUDJEMA KOCEILA","BOUDISSA Imane","BOUDA MAYAS","BOUDJENANE NADJET","BOUDJEMIA SARAH","BOUDIAF GAYA","AIT OUADDA Yahia","LOUNAS OMAR","BOUCHIBA GHILES","BOUDARENE RAYANE","MEDROUK Myassa","BOUDEDJA DIANA","BOUDAOUD RAYANE","BOUDISSA SAID","BOUDJEMA MEHDI","BOUDJABOUT TINHINANE","BOUCHERRAB SAMY","BOUDEDJA AMEL","BOUDJEMIA MOHAMED FAOUZI"].map(n => ({ nomPrenom: n, groupe: "G22", lieu: "Amphi Belhouas" })),
-            // G23 moitié Amphi Belhouas
             ...["BOULKOROUM AHMED","NOUARI Bahaa eddine","BOUKHLEF LYDIA","BOUKAIS YASMINE","BOUKHENNOUFA DANIA","BOUKACEM SAMY","BOUKHARI SALIM","BOUKHATA RANIA","BOUKERSI AGHILES","BOUKELLAL ABDLGHANI","BOUHAMAM SALIHA","BOUINDOUR SARAH","BOUKHARI ISLAM","BOUKHROUF KENZA","BOULAKDEM ALI","BOULAHIA BOUSSAD","BOUKSIL NOURREDDINE","BOUKHARI MARIA","BOUDJEMA MERIEM"].map(n => ({ nomPrenom: n, groupe: "G23", lieu: "Amphi Belhouas (1/2 G23)" })),
-            // G23 moitié Amphi Benyahia
             ...["BOUHALLOUFA MANISSA","BOUKERSI NAADIR","BOUKHENAK ATHMANE","BOUGUENI MOHAND","BOUKHERROUB LINA","BOUKELLAL SOFIANE","BOUFNAR KATIA","ALVARO PAULO MONTEIRO GAMA","MEBARKI AYOUB","BOUHADDA ADEM","BOUIZERI Amar","BOULAKEUR YASSER","BOUKHERCHOUFA ABDERRAHMANE","BOUKAIS MOUHAMED AZIZ","BOUHACINE RAYANE","BOULILA CHEMS EDDINE","BOUKARI KARIM","BOUGUEDAD YACINE"].map(n => ({ nomPrenom: n, groupe: "G23", lieu: "Amphi Benyahia (1/2 G23)" })),
-            // G24
             ...["METAHRI LYES","BOUMRICHE MOHAMED","AMRAR Chanez","BOUSSAD KATIA","BOURAS RAMDAN","BOUSSAD ABD SALAM","BOUSNADJI FATIMA","BOULOUS IMENE","BOURNINE RAYANE","BOULKOROUM MASSINISSA","BOUSNOU MELISSA","BOUNKAR MERIEM","BOUNOUAL NIHAD","BOURAS MOHAMED ALI","BOUMRAR RANYA","BOUNIF Kenza","BOUSSAHELA LYSA","BOUSSACI DJAMEL","BOUMIES MHEND","BOUREZAG RANIA","BOURNANE SALMA","BOURAHLA RANIA","BOUSSAD LYDIA","BOUMDINE MEHDI","BOURTI MIRNA","BOUMEZRAG AIMAD","BOULTACHE MELISSA","BOURICHA YOUCEF","BOURENNANI FARROUDJA","BOUSSAFEUR Amine","Boumahri Abd El Aziz","Bacha Ernest","MEZRAG Arris","HAMDOUCHE AMINE","HOCINE Yasmine","BOUSSAAD IDRIS","BOUSSAD KARIM"].map(n => ({ nomPrenom: n, groupe: "G24", lieu: "Amphi Benyahia" })),
-            // G25
             ...["BOUSSAID NABIL","BOUZOURENE LOUBNA","BRAHAMI MASSILVA","BOUZNAD SARAH","CHABANE RAYAN","BOUZEKRI LINA","CHABANE AMAR","BRIHMAT MOUHAMED AMINE","FERRANI WASSIM","BRAHIMI FERIEL","CHABANE FELLA","BRAHIMI ALI","BOUSSAIR MELISSA","BOUSSAKOU MELISSA","CHABANE NIHAD","BOUZOUAGH NOUR EL HOUDA","BRAHIMI SAID","BRAKNI SOFIA","BOUZIANE THANINA","BOUZARARI Sarah","BOUZOUANE SALEM","BRAHIMI YOUNES","BOUSSAID REBIHA","BRAHMI SARAH","BOUZERIA MANAL","NKUNZIMANA Bonaventure","BACHIRI ABDELAZIZ","HAMMAR MOHAMED OU IDIR","BERKACHE SOUHILA","HIMENE KAMEL","DJENDER NAZIM","BOUZOUANE TAOUS","BOUTATA OMAR","SAHI LINA","CHABANE THANINA","BOUTELDJA YASMINE","BRAHIMI LINA"].map(n => ({ nomPrenom: n, groupe: "G25", lieu: "Amphi Benyahia" })),
-            // G26
             ...["CHANANE AISSA","CHAOUCHI AMEL","CHARIF AMEL","CHEBILI RAYANE","CHEBILI YANI","CHACHOUR RAMDANE","SLIMANI Feriel","CHAOU Massinissa","MOUAS Nadia","CHAOU MAISSA","CHEBBAH ABDELDJALIL","CHEBILI MARIA","CHALAL MARIA","CHAFAI RAYANE","CHACHOUA SAMY","CHALLAL INES","CHAMEK MOUNIA","CHAIB Fares","CHATBI LITICIA","CHAIBET YANIS","CHAOU DYHIA","CHABANE SALIM","CHALLAM YANIS","CHABANE ELYNA","CHABANE AMINE","CHALA SLIMANE","CHABNI MANEL","CHALAH FARIZA","NAMIRIMU Maria","JOSE SEBASTIAO WINE ELIZABETH","CHEBIRI ALA EDDINE","CHATER NARIMANE","CHACHOUA RAYAN","CHEBALLAH Khalil","CHAHMI Amine","CHADLI GHILES"].map(n => ({ nomPrenom: n, groupe: "G26", lieu: "Amphi Mammeri" })),
-            // G27
             ...["CHEBLI Mayas","CHERFAOUI HAKIMA","CHERCHEM NASSIM","CEKLAT HAMID","CHEKIKENE ANIS","CHERFI CELIA","CHERA MEHDI","CHENDER AGHILES","CHEMLOUL BILAL","CHEMLAL THAFATH","CHENNA LAMISS","CHEBOUTI LISA","CHENAOUI OURDIA","CHEMROUK YANIS","CHEGRANI LEITICIA","CHELALI YANI","AOUAOU JUGURTA","DJOUADI AMEL","CHERFIOUI MANEL","CHENANE TINHINANE","CHERFI TAYEB","CHEBRI YAMINA","CHEKIR Rayane","CHERIDJI AMEL","CHEKKAI FERIEL","CHEMMOUL Saliha","CHEMALA ANAIS","CHERFAOUI ANAIS","HASSAN SHEHU","BERKANI MOHAMED MOULOUD","DRICI IMENE","GRAICHE Souhila","MAHTOUT AMEL","MOUGAS Idir","CHEMLOUL WISSAM","CHEMANI KOCEILA","CHERFIOUI HAKIMA","CHEBREK YAZID","CHELOUCHE AZZEDINE"].map(n => ({ nomPrenom: n, groupe: "G27", lieu: "Amphi Mammeri" })),
-            // G28 moitié Amphi Mammeri
             ...["CHIHAOUI NADIR","CHERIEF ESSAID","CHERIGUI ABDELLAH","CHETTOUH CHERIFA","CHIBANI IMENE","CHETOUANE LIZA","CHIBIKH MELINA","CHIBANI MOHAMED","CHERIFI IMENE","CHERIFI OUSSAMA","CHIBANE BILLAL","CHERIF MILLISSA","CHERIFI LILYA","CHIKH LYDIA","CHIKH MARIA","CHERIEF M'HANI","CHIBANE ELYES","CHERNAI MOHAMED ZAKARIA"].map(n => ({ nomPrenom: n, groupe: "G28", lieu: "Amphi Mammeri (1/2 G28)" })),
-            // G28 moitié Amphi Amzal
             ...["CHERIFI AMEL","CHIBAH MEZIANE","CHERRID CHAHRAZED","BOUHROU Housem","MENDJEL SARAH","BLIBEK AREZKI","BENREZKALLAH Ilyas","EL HOCINE MENAD","AGOUMADZ CHAHINEZ","NAIT SAADA AMINE","ZAIDI MERIEM","CHIKH SARA","CHERIFI MASSINISSA","CHIKH CHAHRA","CHIKHI SAMY","CHERIEF YANIS","CHERIK ANAIS","CHIKH Amine","CHIKH LYDIA"].map(n => ({ nomPrenom: n, groupe: "G28", lieu: "Amphi Amzal (1/2 G28)" })),
-            // G29
             ...["CHOUCHANE FARAH","DAF MELISSA","DAIRA RIM","DAHMANE YANI","DAHOUN MANEL","DABEL SAMRA","CHOUKACHE OUALID","DANANE RAYANE","DAHMANE ANIS","CHOUIREF SAMRA","DAHDAH LINA","DAHMANI LISA","CHOUIMET ABDERRAHMANE","CHIKHI DJOHRA","DAHLAL MELISSA","DAHMANI MOUAD","DABOUZ AMAR AMAYAS","CHIKHI NORA","DAF MISSIPSA","CHOUADRA ZINEB","OUMSALEM RAYANE","DAHOUMANE SELMA","CHOUIKRAT KAMELIA","DAHMANI AGNES","BELKHIR GAYA","DJENNANE SABRINA","HADJEB Fetta","SEMASSEL Akram","SIDI MAMAR MOHAMED AMINE","CHIKHIROU MERIEM","CHIKHI SAMRA","DAHMANE Marouane","CHIKHI AMINA","CHOUKRI MALAK","DAHOUMANE ABDESLAM","DAHOUMANE NABIL","DABEL MASSI","DAHMANI RAOUF"].map(n => ({ nomPrenom: n, groupe: "G29", lieu: "Amphi Amzal" })),
-            // G30
             ...["DELCI NACER","DERDICHE SID AHMED","DERROUAZ INAS","DEBIANE RAYAN","DEBIANE YASMINE MORJANE","DENGAR MOKRANE","DERMECHE SIPHAX","DAOUDI SAID","DERROUICHE ASMA","DEKKAR MELLISSA","DERBENE MADJID","DEMOUCHE RAYANE","DEHAM AZEDDINE","DEBIT LYES","DEHLOUM MELINDA","CHAIBI Assia","DAOUD AMEL","DERMOUNE LIZA","DIAFI FARAH","DERAI BOUCHRA","DELCI MOHAMED AMINE","DAROUL AGHIS","DEBBAL ABDERRAHIM","DERRICHE AIMANE","DEHAM KENZA","DERRICHE MELISSA","DERRADJI AICHA","DIB YANIS","BEN MOUHOUB RANIA","REKAI ROUMAISSA","REHOUNE SAMY","DAOUD YOUCEF MOHAMED ISLAM","DEKANI ILYES","DERRAB Abderrahmane","DERRAS YAMINA","DEKHLI LINA"].map(n => ({ nomPrenom: n, groupe: "G30", lieu: "Amphi Amzal" }))
         ];
-
-        // ======================== DONNÉES SECTION G2 (groupes 31 à 40) ========================
+        // ======================== LICENCE 1 TC - SECTION G2 ========================
         const studentsG2 = [
-            // G31 - Salle 01 Bloc C
             ...["DJELIL SAID","DJAROUN ZINEDDINE","DJEDDI THIZIRI","DJAROUN ABDELGHANI","MAMMAR Ghiles","DJAOUD MEHDI","DJEGLOU SAMIRA","DJAROUN MAYAS","DJEGHALI AHLEM","DJAMA KHELIFA","DJEBRA THAMILA","DIF MEHDI MOHAMMED","DJANI CHANAZ","DIDI LYES","DJEHM LIZA","DIBOUN RYMA","DJAID OUAMAR","DJALAL SAMY","DJEGHALI KATIA"].map(n => ({ nomPrenom: n, groupe: "G31", lieu: "Salle 01 Bloc C" })),
-            // G31 - Salle 02 Bloc C
             ...["DJEGLOU YANIS","DJEDDI RAMDANE","DJAALA CHEMS ELASSIL","DJEBBAR MADINE","DJEDID FATMA CHAIMAA","DJAROUM LILA","CHAREF Kawtar","BOUDJEMAI TARIK","MAMMAR MARIA","MAHDID ABDELGHANI","MAHDID Zidane","DILMI BOURAS ABDERRAHIM","DJEBBAR REDOUANE","DJEBARA NESRINE","DJEGHLAL SABIHA INAS","DIBOUN SAID","DJEDDIS Mehani abdeslam","DJAOUTI KENZA","LEKADIR Yuba","DJEDID YAZID"].map(n => ({ nomPrenom: n, groupe: "G31", lieu: "Salle 02 Bloc C" })),
-            // G32 - Salle 03 Bloc C
             ...["DJENNADI AMAR ASSALAS","CHEKRI WALID","DJENNAD AMAYES","DRIF TOUFIK","DORBANE FAWZI","DORBANE AHCENE","DJELLOUT YENNI","DOUFENE LAETICIA","DJERIDI THIZIRI","LEHAD ALI","DOUDJEDID KATIA","KASSOURI Massinissa","DJENAD ANAIS","DLIM JUGURTA","DJELLAL Souad","DJELLAL LITICIA","DRISSI MARWA","DOUFENE FAWZI"].map(n => ({ nomPrenom: n, groupe: "G32", lieu: "Salle 03 Bloc C" })),
-            // G32 - Salle 04 Bloc C
             ...["DJENNAD MAHMOUD","DJODER EMELIE","DRICI IMANE","DOUAOUDA ANIS","DRIF LITICIA","DRIF RAYANE","DJEMA MERIEM","DJELIL KOUCIELA","DJEZAIRI MOHAMED","DRIA RIM","DOUGAREM ABDELAZIZ","Dourari Aghiles","CHABANE YANI","LASKRI MANEL","CHAOU SOFIANE","MALLA SID ALI","DROUCHE MASSINISSA","DJENNADI NADINE","DJEMA NOUR EL HOUDA"].map(n => ({ nomPrenom: n, groupe: "G32", lieu: "Salle 04 Bloc C" })),
-            // G33 - Salle 05 Bloc C
             ...["FERHAOUI MASSINISSA","FELLAG RYMA","FELLAHI ALICIA","FATHI IDIR","FELLAH NASSIMA","FECIH ANIS","FEDDAL HOCINE","FELLAG SARA","MESSAOUDEN BELKACEM","EL HADDAD MOHAND SAID","DROUCHE SAMRA","ELHADJEN MALIK","FEKHAR RAYANE","FEKIK LOUNES","ELMAM RAYAN","FELLAG THIZIRI","FELOUAH YANIS","FARES YASMINA","FEDJIRI YOUSRA"].map(n => ({ nomPrenom: n, groupe: "G33", lieu: "Salle 05 Bloc C" })),
-            // G33 - Salle 06 Bloc C
             ...["FAYED CHENZA","FELLOUS BILLAL","FELLAG RANIA","FEKRACHE LIZA","FELLAG IMANE","FENTAZI YASMINE","FELLAHI Asma","ESSETITI AYA","FAHEM AMNAY","CHIKHAOUI ZAKARIA","TAMANI Salim","ASKEUR LUDMILA","BELAICHE MOHAMMED","BIRKOUCHE Kahina","FARSI SARAH","EYOBELET OBAKA Josias Evny","ELGAOUBI MOHAND ZINE","FARSI AHCENE"].map(n => ({ nomPrenom: n, groupe: "G33", lieu: "Salle 06 Bloc C" })),
-            // G34 - Salle 07 Bloc C
             ...["FERRAT LYDIA","GAHFIF TAREK","FERNANE Kamal","GAGOU IMANE","GACEM CHAOUCHE MOKRANE","LAMRANI Ourdia","GARIDI SOFIANE","FERRAT LYSA","FERRAS SALIM","FERRAS SOFIANE","FERNANE NABILA","FERRANI SANDRA","FERRAH YACINE","GHADI ANAIS","FICEL Lisa","GACEM MOHAMMED","FRIDI MOH","GALLOUZE SARA"].map(n => ({ nomPrenom: n, groupe: "G34", lieu: "Salle 07 Bloc C" })),
-            // G34 - Salle 08 Bloc C
             ...["FERHAT SARAH","GAOUI YAMINA","FERHATI SIHEM","FLICI LILIA","GACI RACHA","FERRAH SAMIR","GACEM CHAOUCHE MERIEM","FERROUM HANANE","FERRAD AHLEM","FRIDI TOUFIK","MOHAMMEDI Kamelia","FERHAT Kenza","NEBBALI Ahmed","OURAK LYDINE","MAÏGA Abidine","FERHATI RAYANE","GALLOUZE RABAH","FLISSI ABDENOUR"].map(n => ({ nomPrenom: n, groupe: "G34", lieu: "Salle 08 Bloc C" })),
-            // G35 - Salle 09 Bloc C
             ...["GHERBI MAYES","GOUARAB DJAMEL","GHEZALI NAZIM","GOUCEM Lynda","GOUDJIL MOHAMED","GOUDJIL SARA","GHARBI SAMY","GHOZALI ZINEDDINE","GOUBRID MAHDI","GORMIT MAISSA","GHALEB YANIS","GHEROUS CELINE","GHEZALI CHERIF","GHEZALI FERROUDJA","GHERRAB MERIEM","GHEZZAZ SARAH","GORMIT KHAOULA CHAIMA","GRAICHE IKRAM","GHIAR HACHEMI"].map(n => ({ nomPrenom: n, groupe: "G35", lieu: "Salle 09 Bloc C" })),
-            // G35 - Salle 10 Bloc C
             ...["GHANEM HADJILA","GHIAR LYDIA","GHEMMOURI FAHIMA","GHEZLI KARIM","GHEMOURI SARAH","CHERRAK FAROUK","Dadzie Angelina","CHITTI ILYES","HASSANI MALIKA","KHENDEK Hocine","OUKFIF SYFAX","GHOZALI LITICIA","GHALEB LYES","GHERBI DIHIA","GHANINE AMAYAS","GOUMGHAR AREZKI","GOUMIRI LAETICIA","GHANDRICHE Rayane"].map(n => ({ nomPrenom: n, groupe: "G35", lieu: "Salle 10 Bloc C" })),
-            // G36 - Salle 11 Bloc C
             ...["HADJOU SAID","GRAÏNE Ilyes","GUERRAB SOFIANE","GUENNOUN WISSAM","HABI SALAH","GUERDOU SARAH","GUEDJOU Liza","HABIEB Mohamed zine eddine","AIT IBRAHIM Amina nour el houda","GUERBAS SARA","GUEMIRI DJAMEL EDDINE","GUERBAS AYOUB","GUENOUN AMAZIGH","KERFOUN MELISSA","HABBI YASMINE","GUETTAB ROUMAISSA","GUIDDIR ABDERZAK","GUENDOUL RAYANE"].map(n => ({ nomPrenom: n, groupe: "G36", lieu: "Salle 11 Bloc C" })),
-            // G36 - Salle 12 Bloc C
             ...["HACHEMI ABDERRAHIM","GUENNOUN LIZA","GUERBAS YANIS","GUENNOUN RAYANE","GUENEZ ABDERRAOUF","GRAICHI ANIA","GUERBAS YANI","GUEMOUN MOHAMMED SAID","GUEZOUI GHILES","GUEDOUAR KAMELIA","GUERGOUR OUISSAM","FERHAT Massinissa","AIT ALLAOUA Nassima","AIT RAMDANE YOUNES","GUEBLI HICHEM","HABIB JUGURTHA","GUESSABI IMENE","GUEMMAR MOULOUD KOCEILA"].map(n => ({ nomPrenom: n, groupe: "G36", lieu: "Salle 12 Bloc C" })),
-            // G37 - Salle 13 Bloc C
             ...["HADID SALIM","HADDOUCHE IBRAHIM","HADJ ALI TASSADIT","HADIOUCHE ANIS","HACIANE Rafik","HADDAD SAID","HADDOUCHE FERIAL","HADDADOU YANIS","HADID SOFIANE","HADDOUCHE SOFIANE","HADBI LENA","HADID HOUSSAM","HADDAG SAID","HADJ ALI OUSSAMA","HADJ ALI LAMIA","HADBI THYZIRI","HADDADOU LISA","HADDAD Liticia"].map(n => ({ nomPrenom: n, groupe: "G37", lieu: "Salle 13 Bloc C" })),
-            // G37 - Salle 14 Bloc C
             ...["HADDAR SAADI","HADDOU WISSAM","HADJ AMAR ADEL","HADDADI RAYANE","HADJ AHMED FERIEL","HACHOUR GHILES","HACHEROUF MOKRANE","BOUALILI MELINA","BEN OUARAB SAID","AZIZ NACIM","LAKRIB NASSIM","HAMMOUCHE Abderezak","AMEUR Maissa","HADDOUCHE DALIA","HACHI Malia","HADDAD ANAIS","HADJ AHMED YACIN","HADJ ALI FERHAT"].map(n => ({ nomPrenom: n, groupe: "G37", lieu: "Salle 14 Bloc C" })),
-            // G38 - Salle 15 Bloc C
             ...["HADJ SAID MOHAND","AKHEMOUM AMINA","HADJ SAID Mohand","DJOUAHER KHELIFA","HADJ MAHFOUD FERHAT","HAKKOUM AMINE","HADJAM ABDEL KRIM","HADJAZ HANANE","HADJAB YOUCEF","HADJAM MASSINISSA","HAKKOUM ALICIA","HALES LYNDA","HADJAZ SAIDA","HALET Manel","HALIT YASTEN","HADJMI Cylia","HADJ RABIA AMIR","HADJAZ SARAH","HAFNAOUI HAMZA"].map(n => ({ nomPrenom: n, groupe: "G38", lieu: "Salle 15 Bloc C" })),
-            // G38 - Salle 09 Bloc A
             ...["HAKKOUM CILINA","HADJEL IKRAM","HADJEMI KENZA","HADJI TAYEB","HAHAD MAYA","HADJI WAFA","HADJ SAID Elena","NAIT DAHMANE LINA","DJENAS AMEL","BAIK AHMED","CHEGRANI MAISSA","ATAL MOHAMED","ARKAM Massyl","HADJICI HOCINE","HADJ-AMAR Melissa","HALIMI MESSAOUD","HADJ SAID AMAZIGH","HADJ ARAB AZIZA","HALES MASTIAS"].map(n => ({ nomPrenom: n, groupe: "G38", lieu: "Salle 09 Bloc A" })),
-            // G39 - Salle 10 Bloc A
             ...["HALLOU SALIM","HAMADI Massinissa","ABDELAZIZ MERIEM","HAMDOUNE LYES","HAMEG AMAYAS","HAMADOU Amayas","HAMDOUCHE FARES","HAMADI RAYANE","HAMAIDI RAYANE","HAMAMA SMAIL","HAMCHAOUI YASMINE","HAMDI MOHAMED","HAMAD ANAIS","HAMDANI MOHAMED ARESLANE","HAMDIDI ISLAM","HAMDANI JUGURTA","HALLICHE RACHA","HAMADOU IMANE"].map(n => ({ nomPrenom: n, groupe: "G39", lieu: "Salle 10 Bloc A" })),
-            // G39 - Salle 11 Bloc A
             ...["HAMEG IDIR","HAMADOUCHE SARA","HAMALI MASSILIA","HAMDANI MERIEM","HAMDINI ABDELKADER","HAMDOUCHE YASMINE","HALLAF ZOHRA","HAMEG Amelia","HAMADACHE RABAH","HAMAMA ANIS","NOURRINE FAYCAL","TAKOUCHE Dihia","KHERROUB Massinissa","HAMAMA HANNA","HAMDI SAID","HAMAS Rayane","HAMDI Yanis","HALLALEL SYPHAX","HALLICHE YACINE"].map(n => ({ nomPrenom: n, groupe: "G39", lieu: "Salle 11 Bloc A" })),
-            // G40 - Salle 12 Bloc A
             ...["HAMMOUDI LINA","RAZAOUI FOUAD","HAMNACHE SAID","HAMICH MALAK","HAMIDI BILAL","HAMI Ghania","HAMIDOUCHE LINA","HAMMADI MAROUA","HAMITOUCHE FATIMA","HAMMOUDI KENZA","HAMMAS FATIHA","HAMICHE MELISSA","AMMAR IKRAM","HAMIDANI LYNA","HAMMADOU FATMA","HAMMOUTENE BOUCHRA","HAMNACHE Abdelkrim","HAMITI DIHIA"].map(n => ({ nomPrenom: n, groupe: "G40", lieu: "Salle 12 Bloc A" })),
-            // G40 - Salle 13 Bloc A
             ...["HAMI Fouad","HAMIDI HAKIM","HAMMOUDI RYMA","HAMID IMEN","HAMICHE NESRINE","HAMMAR AKLI","HAMITECHE YACINE","HAMIDI Souhila","Hamidi Yani","HAMMOUDI KHALED","HAMMOUDI CELINE","Ferhani Amine","BENATMANE AWSIM","MAYOUF Kahina","IDRIS YACINE","LARKECHE Mohamed","HAMMAR HAMZA","HAMMAD LYES"].map(n => ({ nomPrenom: n, groupe: "G40", lieu: "Salle 13 Bloc A" }))
         ];
-
-        // ======================== DONNÉES LICENCE 2 GESTION (groupes 01 à 06) ========================
+        // ======================== LICENCE 2 GESTION ========================
         const studentsL2 = [
-            // G01 - Salle 01 Bloc B
             ...["ADEM DIHIA","MELOUAH RAMZI","REMMAS CHAHINEZ","KEDAM Melissa","BERRICHI Ania","ABDERRAHMANI MASSINISSA","Abdoulkader osman SAADA","AHMED ALI RAYANE","AIT AMMAR REZIKA","AIT BELKACEM HOURIA","AIT OUFELLA MAYANE","AMIMER SALIM","AMIRAT MOHAMED","AMROUZ AMINA","ASSEUM Maya iriss","AMMOUR CHAHINAZ","AZOUAOU YAMINA","BADIS CHANEZ","BELGACEM IMENE","BELHADJI LIZA","BELHOCINE Khadidja","BELKACEMI LYNA","BELKACEMI RYM","BELKALEM LYNA","AIT ALI BRAHAM JUBA","CHABANE SALIM","BOUDIA THIZIRI","OUSSADANE KAMELIA","YAKOUBI YASMINE","LARBI Boussaad","TEBAH ABDELAZIZ","BOUMALI KENZA","BEN MESSAOUD HANANE","CHABANE Taous","ABDERRAHMANI RAFIK","DJILALI Hanane","SEHAKI AZOUAOU"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 01 Bloc B" })),
-            // G02 - Salle 02 Bloc B
             ...["AIT YOUCEF KHEIRDINE","AIT YOUCEF YOUVA","ALBI ANIA","ALIANE ANIA","ALIMIRAOUSSAID SONIA","ARAB KENZA","ARKOUB AMAYES","ATYAMENA Kosseila","BAALI LILIA","BADIS LINA","BATATACHE LITICIA","BEDRANI NAWEL","BELAICHE TASSADIT","BELGUESMIA FATIMA ZOHRA","BELHARET WISSAM","BELKHIR MARIA","BELLAHOUES YANIS","BELLAHSENE ALDJIA","BELLIK ILIAS","BELLIL ANIS","BEN AHMED LINA","BEN MOUHOUB KARIMA","BENAMGHAR ANISSA","Benarbane Thilleli","BENMOUHOUB MANEL","BOUDIAF SONIA","BOUKROU LIZA","BOURAIL DJEDJIGA","BOUTABA LYNA","BOUTORA NARIMENE","BOUZERIA NESRINE","BOUZIDI AMINA","BOUZIDI MANEL","CHABANE AMEL","CHABANE YAMINA","CHABANI HANANE","BOUGHANEM TANYA","CHAHBOUNE INES","CHAOUCHE MANEL"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Salle 02 Bloc B" })),
-            // G03 - Salle 01 Bloc A
             ...["BENNABI Imene","BOUACEM AMAR","BOUHADOUN LYLIA","BOUKHDIMI LILIA","BOUKROU ANAIS","BOURNINE ZAKARIA NAZIM","BOUTABA RABAH","BOUZIDI SAKINA","CHEBIRI IMANE","CHEIKH SIDIYA Youssouf","CHERFAOUI YASMINE","CHERTOUHA AMILIA","CHIBANI MELISSA","DAHEB SONIA","DAHLAB RAYANE","DAHLIZ Juba","DAHOUMANE CHANEZ","DEKKICHE Mohamed lamine","DENDANI MOHAMED","DILEM ABDERRAHMANE","DJEGHLAL CHERAZ","DJERA ANAIS","DJIOUA TINHINANE","DRIOUCHE WALID","Drokow Dorcas","FERHAT RAYANE","FERHAT Sarah florence","GHANINE KARAM","GHEMDANE LIZA","GHEMDANE ANIA","GHERRAB WAFA","GHIAR LINA","GORMIT AMIRA","GUELMA AGHILES","GUENDOUZ OUERDIA","GUERCHOUH INES","GUIDOU HOUDA","HADDAD DALIA","HADDOU DJOUHER"].map(n => ({ nomPrenom: n, groupe: "G03", lieu: "Salle 01 Bloc A" })),
-            // G04 - deux lieux : Salle 09 Bloc A et Salle 10 Bloc A
             ...["GUEDECHE AREZKI","GUERROUAH NASSIBA","GUERROUAH FAYCAL","HADDAD KHALED","HADDADI HANANE","HADID SABRINA","HADJOU IMANE","HALICHE Mohamed amokrane","HALIS SAID","HAMAMA FAWZI","HAMITOUCHE THIZIRI","HAMMADI Imane","HAMOUNI Idris","HAMRAOUI KAMELIA","GUEDMIME MELISSA","IZRI RAYAN","KACI AISSA Leaticia","HANACHI AMINA","HANINE Anis","HAROUN LITICIA","HARROUCHE LITICIA"].map(n => ({ nomPrenom: n, groupe: "G04", lieu: "Salle 09 Bloc A" })),
             ...["HASSAD LAETICIA","HASSANI KAHINA","IKNI OUARDA","IZRI RIADH","KACHETEL OUNISSA","KACHI LYDIA","KACI FERROUDJA","KACIMI MEHDI","KACIMI YACINE","KALEM Ines","KARA Rabah","KARED Mohand amokrane","KECHAD Manel","KECHEMIR SERINE","KHERMANE LINA","Koumaré Sidi","KRIM Sofiane","LASBEUR YACINE","MAIGA Aliou Ousmane","INGRACHEN LOUNAS"].map(n => ({ nomPrenom: n, groupe: "G04", lieu: "Salle 10 Bloc A" })),
-            // G05 - deux lieux : Salle 11 Bloc A et Salle 12 Bloc A
             ...["KHELILI TAFATH","KOUBA ASSIA","KRIM RAFIK","LACHEB HANANE","LAHRECH AMINA","LAMRI MERIEM","LEKHAL MOHAMED ISLAM","LOUNNAS ASMA","MALKI SABRINA","MECHETI SYLIA","MEFTAH MAISSA","MEKIDECHE INES","MESSAD DIT MAHTAL Fatima","MEZIANI INES","MOHAMED ZODI YOUSSOUF","MOUHOUB MANEL","MOUNSI MERIEM","NADJI KARIMA","NOUR MEROUANE"].map(n => ({ nomPrenom: n, groupe: "G05", lieu: "Salle 11 Bloc A" })),
             ...["OULD TALEB IMENE","OUSSAD AHMED","REZALI Melissa","OUNADI KHALISSA","OUSSAAD HANANE","SAADA LAKHDAR","SAIFI SAID","SLIMANI SARAH","ZAMOUM MANEL","KADI ZAHIRA","ATLAOUI HASSINA","HAMMOUDI Lynda","TIZIATIA MOHAMED SEGHIR","FORTAS MERIEM","Alkassim Mariama Wallet","AIT OUMESSAOUD YASMINE","FELLAG KATIBA","KECHEMIR Massinissa"].map(n => ({ nomPrenom: n, groupe: "G05", lieu: "Salle 12 Bloc A" })),
-            // G06 - deux lieux : Salle 13 Bloc A et Salle 14 Bloc A
             ...["ZOUAK LYNDA","BESSALAH GHILES","ROUANE SONIA","SEDINI LYDIA","SEGGAR Roumeyssa","SLIMANI CYLIA","TAHIR INES","TALBI KARIM","TAMDA TINHINANE","TEGUEMOUNT SABRINA","ZAOUIA ROUMAISSA","ZEGHOUINI SARAH","ZENBRI ANYES","ZIANE Alicia","CHABBI ZAKI","CHABANE BRAHIM","CHABANE CHAOUCHE Yanis","LOUNICI LYNA","HAMITOUCHE ROUMAISSA","BELKADI OUAHIBA","OUSSADI DJAZIRA"].map(n => ({ nomPrenom: n, groupe: "G06", lieu: "Salle 13 Bloc A" })),
             ...["HADDAD HANANE","OUBELLIL THANINA","ZENIA Melissa","YAHIATENE CELIA","KHOUMERI SARAH","ADLI Nadine","KAROUF NABIL","REDOUANI AYMENE","BENALI IMANE","RADJA Ali","AIT MOHAMMED SLIMANE","LAHOUAZI SYPHAX","KACI SARAH","MESSAOUDI YOUSSRA","DIDANE KAMEL","BERCHICHE Nesrine","NAIT KACI KARIM","CHALAH CHAYMA","BENCHALAL Sylia","DRIF Imene","BOUALEM THINHINANE"].map(n => ({ nomPrenom: n, groupe: "G06", lieu: "Salle 14 Bloc A" }))
         ];
-
-        // ======================== DONNÉES LICENCE 3 MANAGEMENT (groupes 01, 02, 03) ========================
+        // ======================== LICENCE 3 ========================
         const studentsL3Management = [
-            // G01 - Amphi Amzal
             ...["KACI AISSA Hakima","RAHANI Djedjiga","OULMANE Lyna","DAHMOUN Sihem","AINOUZ Dalia","DJAROUN Chaima","OSMANI Faiza","REKHOU Rabah","SLIMI Essaid","AIT ZIANE Dania","HADIM Amal","COULIBALY Yaya","AMEDDAH Leiticia","BERKAL Hayette","ABBAD Terkia","DANOUN Ines","AIT BEN HAMOU Said","AIT AICHE Salem","MAACHA Serine","MANSERI Ihsane","DIALLO Tidiane","HADJAM Sarah","ATTAR Amel","CHELOUCHE Amel","ATLAOUI Mohamed yacine","KLOUL Lina","DALI Yasmine","BOUALEM Hana","MAHENNI Meriem","MAZAGHRANE Amel","LOUNIS Melinda","TALBI Dyhia","HADID Ibtissam","ALILECHE Zahra","BEN MOHAND Sonia","AIT SAADA Kenza","ATHMANI Chaima","TARMELIT Lysa"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Amphi Amzal" })),
-            // G02 - Amphi Amzal
             ...["ACHOUR Imane","LAIB Mohand ou said","BECHIHI Sabrina","BELKHIR Syrine","CHEKLAT Rania","NAIT LARBI Imane","BOUDIA Leatitia","HAKEM Masten","HADDADJ Younes arezki","AMARA Yasmina","AOUGAR Sara hana","LARFI Melissa","AIDER Sonia","MAALEM Nabila","ADDOUCHE Arris","SADI Damia","AIT AOUDIA Hacene","HAROUCHE Imane","IGHEROUSSENE Ouiza","BENDOU Tinhinane","CHERIEF Lyna","DEMMOU Saada","AMTSIF Yasmine","ASSAM Melissa","SOUAK Katia","MATOUK Djouhra","BENAKLI Kamelia","BENSAADI Taous","BEN MOUHOUB Laeticia","AIT ZERROUK Walid","BELHOCINE Lydia","AOURAGHE Yacine","AKKOU Samra","BELLIL Nadege","CHEBALLAH Lina","BEN MAMMAR Arezki","GUERCHOUH Katia"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Amphi Amzal" })),
-            // G03 - Salle 02 Bloc B
             ...["ALLOUN Mouhoub","KIAS Ikram","FAREZ Abdelhak","SADAOUI Sonia","CHAREF Anis","OUDDANE Siham","AIT YOUCEF Mohamed lamine","AMOKRANE Ourdia","ZERROUKI Zehour","TAKOURABT Lydia","BOURAOUIA Lydia","DJOUADI Amine","MERAD El hadi","ARIBI Meriem","OULD SLIMANE Amine","AMOUBOUDI Chanez","SELMI Manel","KESSI Massinissa","SMAILI Laetitia","KERBEL Nedjma","AISSANI Chanez","HASSAM Amina zohra","ZAID Massi","ACHOUR Katia","COULIBALY Fatoumata Gnana","AMRAR Sonia","GHERBI Juba","DJEMA Damia","YOUNSI Ouafia","AIT BEN HAMOU Ameziane","AMEDDAH Wissam","BELLOUT Imane","MADI Redouane","MEZIANE Rayane","AIT MOHAMMED Nora","MOKRANI Billal","RAMDANE Aymane","BAYOU Rachid"].map(n => ({ nomPrenom: n, groupe: "G03", lieu: "Salle 02 Bloc B" }))
         ];
-
-        // ======================== DONNÉES LICENCE 3 ENTREPRENEURIAT (groupe 01) ========================
         const studentsL3Entrepreneuriat = [
             ...["MEZAGUER Myriam","BOUAMARA Kenza","OULD SAADI Abdennour","NEBBALI Djouher","BEN MEDJKANE Brahim","KHELF Mokrane","ZEMOUR Aldjia","TOUABI Lyes","BENZIANE Rabie","BEY Abdelmalek","HADDOUCHE Kenza","HADJAB Walid","TOUAT Ghiles","ABDELMOUMENE LEATICIA","OUKHOUYA Abderrahmane","HAMMICHE Yazid","AIT SAI Zidane","SAOUDI Rayane","BELHOCINE Adel","BOUHALA Tassadit","MOUKAH Said","AKKOU Amar","GUETTOUCHE Lakhdar","ZELMAT Chabha-manel","TEMMAR Louiza","BELKHIR Idir","SAIT Hanane","RAMDANE PACHA Sihem","AMMOUCHE Lina","LAMARI Syphax","CHEBIL Sofiane","AKSIL Kenza","MEDJDOUB Leaticia","TEBAKH Roza","ZAIDI Celia","AOUIMEUR Fatma zohra","MOUFFOK Ouarda","LIAZIDI Liza"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 01 Bloc A" }))
         ];
-
-        // ======================== DONNÉES LICENCE 3 MRH (groupes 01 et 02) ========================
         const studentsL3MRH = [
-            // G01 - Amphi Mammeri
             ...["FALI Ikram","GRIM Liza","HADDADI Cyline","KHADIR Ahmed","HASSENAOUI Abdelmadjid","BENNEOUALA Hanane","SIDIBE BOUBACAR","BERKANI Sonia","BENNACER Radia","OUYAHIA Lilia","HAMITOUCHE Thiziri","CHABAA Lyza","HADJ RABIA Youcef","BELKESSAM Nesrine","GUECHETOULI MASSINISSA","DERDER Linda","MESSAOUDENE Karim","ABERKANE Thiziri","ZALOUK Sara","AMAROUCHENE Tassadit","BERCHICHE Sarah","CHERIEF Melissa","BENSEBA Kahina","HADJ ARAB Melissa","AMOKRANE Amine","ALIOUA Siham","OUSLIMANE Yamina","BOUDJEMLINE Souad","AIT YOUCEF Massinissa","ALLAM Mira","SADMI Yamina","CHAOU Souad","CHEKKAOUI Katia","ISSAD Thiziri","SELMOUN Soraya","ACHOURI Zakaria","ADJMOUT Ouissam","AILI Ibrahim","BEN SI SAID Larbi","AIT DJOUDI Mounira"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Amphi Mammeri" })),
-            // G02 - Amphi Mammeri
             ...["BENAYAD Lina","RABIA Yasmine","HAMADI Lilia","AMROUNI Syphax","MAHIOUT Hamza","HAFRAOUI Amira","MECHAI Yanis","HASSAINE Karim","ARAB Younes","KASSOURI Maylisse","BENAKLI Leiticia","AMEGHROUS Nadira","ZERROUKI Hamida","MERAD Chavane aghiles","YAGOUNI Nadira","CHERIFI Yousra","ALLAB Imane","BELKADI Faroudja","ZOUAGHI Sofiane","YOUSNADJ Nassim","KHERCHI Kenza","OUTAYEB Hafidha","CHETTIR Lamia","HADJ ABDERRAHMANE Yasmine","MOKHTARI Ouarda","KACHA Ikrame","HASSAINE Asma","IGHILAGHA Lydia","BOUSSA Lyes","BOUARAB Hanane","ARIB Kamelia","BELMELLAT Nadine","MELLAL Wassim","AMROUCHE Slimane","CHERIFI Nour el houda","HALLES Sabrina","HADJ MOHAND Amar","KOULOUGLI Fairouz","CHERIEF Ouiza","CHEMLAL Salim"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Amphi Mammeri" }))
         ];
 
-        // État
-        let currentNiveau = "licence3";
-        let currentFiliereL3 = "management"; // "management", "entrepreneuriat", "mrh"
-        let currentStudents = studentsL3Management;
+        // ======================== MASTER 1 - MS (Management Stratégique) ========================
+        const studentsMasterMS = [
+            ...["BENNABI Thalouith","BELKACEM Yanis","MERZOUGUI Yasmine","BELMOKHTAR Celia","BOUSSAA Zakaria","NAHI Leticia","SIMAHIDDINE Sabrina","TADJER Riadh","ZEGROUR Dyhia","ICHEDDADENE Dehbia","ABDELLI Nacim","ACHAB Mohamed","AHMAN Dihia","AHMED ALI Massi"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 02 Bloc A" })),
+            ...["AIT IDDIR Kenza","BELAIDI Tileli","BOUDJELAL Amina","BELHOCINE Liza","BELKACEMI Younes","CHABANE Manel","CHABANE Tinhinane","DAHMANI Fatima -zohra","DAHMOUN Kaddour abdelali","DAMIR Amina","GHEZAL Kenza","DAH Saleck el vadel","AIT BOUABDALLAH Ramzi"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 03 Bloc A" })),
+            ...["LANDRI Sonia","ATMIMOU Yanis","HADJ AHMED Thamila","HAMADOUCHE Lysa","HAMMI Annaïs","MAYOUF Hanane","MESSAOUDI Anais","MOHANDI Kenza","MOKEDEM Ahlam wassila","NOURINE Nesrine","OMANI Ourdia","OUERDI Laeticia","SEBAOUI SOUHILA"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Salle 04 Bloc A" })),
+            ...["SEGHIR Habiba","SMAIL Salim","TAAZIBT Siham","ABBAS Oussama","TIBHIRT Rezki","YACINE Sadek","ZAMOUM Siham","ZIDELMAL Lisa","BENSAID Nerdjes","MAKHLOUF Said","ATMIMOU Malha","MOHAMED Ahmed","MAGRAOUI Yanis"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Salle 05 Bloc A" }))
+        ];
+        // ======================== MASTER 1 - MF (Management Financier) ========================
+        const studentsMasterMF = [
+            ...["BENARIM Hayat","ABBAS Lounes","ABDENNOUR Mohamed","ABDI Lysa","ADJAS Lynda","AGOUNINESSOUK Amayas","AIT GHERBI Safia","AIT MEZIANE Ryma","AKKOUCHE Kaci","AMER OUALI Lyza","AMROUS Walid","BABOU Anis","BAYOUD Sarah","BELAID Nihad","BELAIDI Sabrina","BELFAKED Melissa","BOUARAB Ines","BOUDJEMAA Anais ikram","BOUDJENAH Yacine"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 06 Bloc A" })),
+            ...["BOUKERSI Dania","BOULARBI Zahia","BOULARIAS Said","CHERFAOUI LOUBNA","DAHMANI Youva","DJEBBAR Kahina","DRIRECHE Dehbia","FERHAT Nora","FILALI Lilia","FLICI Amira","FODIL Nabil","GUELMA Juba","HADJOU Katia","HALIT Dalina","HAMDANI Lounes","HAMMOUDI Mayes","HANNACHI Mounir","BOUMGHAR Mohamed","SAID OUSLIMANE Thanina"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 07 Bloc A" })),
+            ...["LARAB Mohamed-amziane","AZZOUG Youcef","BELAMRI Yastene","BOUDAOUD Moussa","BEN BACHIR Lilia","BEN HADDA Fazia","HEFRAOUI Samia","HOCINE Manel","HOUMANI Faroudja","IGHEMOURACENE Asma","IKHELIF Yasmine","IMERZOUKENE Yacine","KADDACHE Tinhinane","KERRAD Katia","KHADRAOUI Meriem","KHEMIRT Meriam","KHRAIMECH Farah","KRIDECHE Mustapha","LABBACI Ammar","LAHMEK Melissa ania"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Salle 08 Bloc A" })),
+            ...["LAMRANI Lylia","LOULI Katia","LOUNI Diana","OULD LARBI Chahira","SI BACHIR Lilia","SILHADI Ines","SMILI Hana","SOUDED Melissa","TEKLI Yasmine","ZEGHIEM Chaima","CHAFA Abdelaziz","CHIKH Islam","BENRABAH Djouher","MEZINE Younes","HIMENE Tassadit","SEMSOUM Melissa","BELHOCINE Nazim","MEDJDOUB Mokrane","HAKEM Mellissa"].map(n => ({ nomPrenom: n, groupe: "G02", lieu: "Salle 09 Bloc A" }))
+        ];
+        // ======================== MASTER 1 - MRH ========================
+        const studentsMasterMRH = [
+            ...["MOHAMEDOU ANNE ABDELLAHI","EL ABADY Aicheta","ABDOULAYE DIALLO Oumou kala","BENHAMNA Lydia","KIFOUCHE Daoud","DJOUDI Kahina","TAHI Kenza","BERRACHED Imane","HAMDADACHE Melissa","LEHARANI Amina","BENDAOUI Amani","HADBI Amar","HAKIMI Laeticia","BEN BELKACEM Souhila","BEN BELKACEM Jugurtha","TOUATI Ouarda"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 10 Bloc A" })),
+            ...["KESRI Manel","BARA Hayat","ZILLAL Faouzi","HALEM Roumaissa","SAHLI Kahina","KHATAOUI Kenza","AMARI Rosa","HADDAD Celia","GOUDJIL Sylia","RAAB Kenza","TOUADI Yasmine","DJAFOUR Ahlam","MAHDID Kenza","AMOURA Katia","TOUADI Nahida","DEHLOUM Yasmine","INOURI Fatiha"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 11 Bloc A" })),
+            ...["MEHADDI Khaled","SI HADJ MOHAND Yacine","INNOURI Leila","FERTAL Ahcene","AIT AISSA Sonia","HARB Tahar","LEKHAL Thiziri","MOUZAOUI Katia","SADOUD Samia","AIT AIDER Liza","BELAIDI Redouane","BERCHICHE Rahim","HAMICHE Aghiles","HAMIZI Amar","SELLAH SADJIA","SOUEIDATT Oumou elmouminine","RAHMANI NASSIMA"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 12 Bloc A" }))
+        ];
+        // ======================== MASTER 1 - GP (Gestion Publique) ========================
+        const studentsMasterGP = [
+            ...["MOHAMMEDI Zina","MOHAMMEDI Sara","DAHMANI Thilelli","BENAMARA Liza","HAMLAT Tinhinane","MEKHTOUB Lisa","DJABER Melissa","MOUHAOUCHE Sonia","OUAHMED Imane","ADEM Youva","LAHOUALI Yasmine","ABED Nawel","MALKI Said bakli","MEHADDI Islam","MEFTALI Boudjema","TESBIA Ghiles","MEGHERBI Terkia","KEBAILI Jugurtha"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 13 Bloc A" }))
+        ];
+		
+		// ======================== MASTER 1 - MES ========================
+        const studentsMasterMES = [
+            ...["YAMOUN Elena yacout","HETTAL Massinissa","KEBIR Fatima","KESRAOUI Ouardia","MELLAL Lisa","HADDADI Lydia","MEZIANE Fatma","BOUZIANE Nawel","BELHADJ Sarah souad","BENHAMZA Sonia","BERKAL Romaissa","BEN IMEDDOURENE Sofiane","SALMI Samir","HADJ ABDERRAHMANE Nada","BELLOUNI Lotfi","HANNOUN Laetitia","YAHIAOUI Samia","DAHMOUH Mohand saïd","KHIDER Nadia","KAHIL Dihya","FERRAGH Marya","ALKAMA Rabah","CHALLAL Amine","BRAHITI Koceila"].map(n => ({ nomPrenom: n, groupe: "G01", lieu: "Salle 14 Bloc A" }))
+        ];
+
+
+        // État global
+        let currentNiveau = "master1";
+        let currentSpecialite = "MS";
+        let currentStudents = studentsMasterMS;
         let currentGroup = "all";
         let searchTerm = "";
 
@@ -394,30 +398,31 @@
                     <button class="section-btn" onclick="showSection('G1')">Section G1</button>
                     <button class="section-btn" onclick="showSection('G2')">Section G2</button>
                 `;
-                if (!currentFiliereL3) currentFiliereL3 = null;
-                showSection('G1'); // par défaut G1
+                showSection('G1');
             } else if (niveau === 'licence2') {
                 sectionTabsDiv.innerHTML = `<button class="section-btn active" style="background:var(--primary); color:white;">Gestion</button>`;
                 currentStudents = studentsL2;
-                currentFiliereL3 = null;
-                currentGroup = "all";
-                searchTerm = "";
-                document.getElementById('searchInput').value = "";
-                renderFilters();
-                updateTable();
+                resetFiltersAndRender();
             } else if (niveau === 'licence3') {
                 sectionTabsDiv.innerHTML = `
-                    <button class="section-btn ${currentFiliereL3 === 'management' ? 'active' : ''}" onclick="showFiliereL3('management')">Management</button>
-                    <button class="section-btn ${currentFiliereL3 === 'entrepreneuriat' ? 'active' : ''}" onclick="showFiliereL3('entrepreneuriat')">Entrepreneuriat</button>
-                    <button class="section-btn ${currentFiliereL3 === 'mrh' ? 'active' : ''}" onclick="showFiliereL3('mrh')">MRH</button>
+                    <button class="section-btn" onclick="showFiliereL3('management')">Management</button>
+                    <button class="section-btn" onclick="showFiliereL3('entrepreneuriat')">Entrepreneuriat</button>
+                    <button class="section-btn" onclick="showFiliereL3('mrh')">MRH</button>
                 `;
-                if (!currentFiliereL3) currentFiliereL3 = 'management';
-                showFiliereL3(currentFiliereL3);
+                showFiliereL3('management');
+            } else if (niveau === 'master1') {
+                sectionTabsDiv.innerHTML = `
+                    <button class="section-btn" onclick="showSpecialiteMaster('GP')">GP</button>
+                    <button class="section-btn" onclick="showSpecialiteMaster('MF')">MF</button>
+                    <button class="section-btn" onclick="showSpecialiteMaster('MS')">MS</button>
+                    <button class="section-btn" onclick="showSpecialiteMaster('MES')">MES</button>
+                    <button class="section-btn" onclick="showSpecialiteMaster('MRH')">MRH</button>
+                `;
+                showSpecialiteMaster('MS');
             } else {
                 sectionTabsDiv.innerHTML = '';
                 currentStudents = [];
-                renderFilters();
-                updateTable();
+                resetFiltersAndRender();
             }
         }
 
@@ -431,15 +436,10 @@
                 document.querySelector('.section-btn:last-child').classList.add('active');
                 currentStudents = studentsG2;
             }
-            currentGroup = "all";
-            searchTerm = "";
-            document.getElementById('searchInput').value = "";
-            renderFilters();
-            updateTable();
+            resetFiltersAndRender();
         }
 
         function showFiliereL3(filiere) {
-            currentFiliereL3 = filiere;
             document.querySelectorAll('#sectionTabs .section-btn').forEach(btn => btn.classList.remove('active'));
             if (filiere === 'management') {
                 document.querySelector('#sectionTabs .section-btn:first-child').classList.add('active');
@@ -451,6 +451,26 @@
                 document.querySelector('#sectionTabs .section-btn:nth-child(3)').classList.add('active');
                 currentStudents = studentsL3MRH;
             }
+            resetFiltersAndRender();
+        }
+
+        function showSpecialiteMaster(spec) {
+            currentSpecialite = spec;
+            document.querySelectorAll('#sectionTabs .section-btn').forEach(btn => btn.classList.remove('active'));
+            const btns = document.querySelectorAll('#sectionTabs .section-btn');
+            const index = { 'GP':0, 'MF':1, 'MS':2, 'MES':3, 'MRH':4 }[spec];
+            if (btns[index]) btns[index].classList.add('active');
+            
+            if (spec === 'MS') currentStudents = studentsMasterMS;
+            else if (spec === 'MF') currentStudents = studentsMasterMF;
+            else if (spec === 'MRH') currentStudents = studentsMasterMRH;
+            else if (spec === 'GP') currentStudents = studentsMasterGP;
+			else if (spec === 'MES') currentStudents = studentsMasterMES;
+            else currentStudents = []; // MES non disponible
+            resetFiltersAndRender();
+        }
+
+        function resetFiltersAndRender() {
             currentGroup = "all";
             searchTerm = "";
             document.getElementById('searchInput').value = "";
@@ -461,9 +481,12 @@
         function renderFilters() {
             const groupes = [...new Set(currentStudents.map(s => s.groupe))].sort();
             const container = document.getElementById('groupFilters');
-            container.innerHTML = `<button class="filter-btn active" data-group="all">Tous les groupes</button>` +
-                groupes.map(g => `<button class="filter-btn" data-group="${g}">${g}</button>`).join('');
-            
+            if (currentStudents.length === 0) {
+                container.innerHTML = `<button class="filter-btn active" data-group="all">Tous</button>`;
+            } else {
+                container.innerHTML = `<button class="filter-btn active" data-group="all">Tous les groupes</button>` +
+                    groupes.map(g => `<button class="filter-btn" data-group="${g}">${g}</button>`).join('');
+            }
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -475,6 +498,12 @@
         }
 
         function updateTable() {
+            if (currentStudents.length === 0 && currentNiveau === 'master1' && currentSpecialite === 'MES') {
+                document.getElementById('tableBody').innerHTML = `<tr><td colspan="3" class="no-results">Données non disponibles pour cette spécialité</td></tr>`;
+                document.getElementById('stats').innerHTML = `0 étudiants affichés (données à venir)`;
+                return;
+            }
+            
             let filtered = currentStudents;
             if (currentGroup !== "all") {
                 filtered = filtered.filter(s => s.groupe === currentGroup);
@@ -484,7 +513,6 @@
                 filtered = filtered.filter(s => s.nomPrenom.toLowerCase().includes(term));
             }
             
-            // Tri : par groupe puis par lieu
             filtered.sort((a,b) => {
                 if (a.groupe !== b.groupe) return a.groupe.localeCompare(b.groupe);
                 return a.lieu.localeCompare(b.lieu);
@@ -523,13 +551,9 @@
             }
             
             tbody.innerHTML = html;
-            
-            const totalFiltered = filtered.length;
-            const totalAll = currentStudents.length;
-            document.getElementById('stats').innerHTML = `${totalFiltered} étudiants affichés sur ${totalAll} au total`;
+            document.getElementById('stats').innerHTML = `${filtered.length} étudiants affichés sur ${currentStudents.length} au total`;
         }
 
-        // Recherche en temps réel
         document.getElementById('searchInput').addEventListener('input', (e) => {
             searchTerm = e.target.value;
             updateTable();
@@ -539,8 +563,8 @@
             document.getElementById('mainNav').classList.toggle('open');
         }
 
-        // Initialisation : afficher Licence 3 Management par défaut
-        showNiveau('licence3');
+        // Initialisation
+        showNiveau('master1');
     </script>
 </body>
 </html>
