@@ -564,14 +564,14 @@ main { padding: 20px; max-width: 100%; }
 <header>
 <div class="header-main">
 <div class="logo" onclick="window.location.href='index.html'">
-<div class="logo-icon"><i class="fas fa-graduation-cap"> </div>
+<div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
 <div class="logo-text"><h1>Sciences de Gestion</h1><p>FSECSG, UMMTO</p></div>
 </div>
-<button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"> </button>
+<button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
 <nav id="mainNav">
-<a href="index.html"><i class="fas fa-home">  Accueil</a>
-<a href="examens.html" class="active"><i class="fas fa-calendar-alt">  Examens</a>
-<a href="feuillederoute.html"><i class="fas fa-map">  Feuille de Route</a>
+<a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+<a href="examens.html" class="active"><i class="fas fa-calendar-alt"></i> Examens</a>
+<a href="feuillederoute.html"><i class="fas fa-map"></i> Feuille de Route</a>
 </nav>
 </div>
 </header>
@@ -588,19 +588,19 @@ main { padding: 20px; max-width: 100%; }
         <div class="step-title">Choisissez votre niveau</div>
         <div class="cards-grid">
             <div class="option-card" onclick="selectNiveau('licence1', this)">
-                <div class="card-icon"><i class="fas fa-user-graduate"> </div>
+                <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
                 <span>Licence 1 TC</span>
             </div>
             <div class="option-card" onclick="selectNiveau('licence2', this)">
-                <div class="card-icon"><i class="fas fa-user-graduate"> </div>
+                <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
                 <span>Licence 2 Gestion</span>
             </div>
             <div class="option-card" onclick="selectNiveau('licence3', this)">
-                <div class="card-icon"><i class="fas fa-user-graduate"> </div>
+                <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
                 <span>Licence 3</span>
             </div>
             <div class="option-card" onclick="selectNiveau('master1', this)">
-                <div class="card-icon"><i class="fas fa-university"> </div>
+                <div class="card-icon"><i class="fas fa-university"></i></div>
                 <span>Master 1</span>
             </div>
         </div>
@@ -616,10 +616,10 @@ main { padding: 20px; max-width: 100%; }
     <div class="step-section hidden" id="step-type">
         <div class="step-title">Choisissez la session</div>
         <div class="pills-container">
-            <button class="pill" data-type="emd" onclick="selectType('emd', this)"><i class="fas fa-file-alt">  EMD</button>
-            <button class="pill" data-type="dette" id="btn-dette" onclick="selectType('dette', this)"><i class="fas fa-exclamation-triangle">  Dettes</button>
-            <button class="pill" data-type="remplacement" onclick="selectType('remplacement', this)"><i class="fas fa-exchange-alt">  Remplacement</button>
-            <button class="pill" data-type="rattrapage" onclick="selectType('rattrapage', this)"><i class="fas fa-redo">  Rattrapage</button>
+            <button class="pill" data-type="emd" onclick="selectType('emd', this)"><i class="fas fa-file-alt"></i> EMD</button>
+            <button class="pill" data-type="dette" id="btn-dette" onclick="selectType('dette', this)"><i class="fas fa-exclamation-triangle"></i> Dettes</button>
+            <button class="pill" data-type="remplacement" onclick="selectType('remplacement', this)"><i class="fas fa-exchange-alt"></i> Remplacement</button>
+            <button class="pill" data-type="rattrapage" onclick="selectType('rattrapage', this)"><i class="fas fa-redo"></i> Rattrapage</button>
         </div>
     </div>
 
@@ -636,10 +636,10 @@ main { padding: 20px; max-width: 100%; }
     
     <div class="info-section">
         <div style="display:flex; align-items:center; gap:12px; color:var(--primary-dark); font-weight: 500; font-size:13px;">
-            <i class="fas fa-info-circle">
+            <i class="fas fa-info-circle"></i>.
         </div>
         <button class="print-btn" onclick="window.print()">
-            <i class="fas fa-print">  Imprimer le planning
+            <i class="fas fa-print"></i> Imprimer le planning
         </button>
     </div>
 </div>
@@ -1161,7 +1161,7 @@ specs.forEach(spec => {
 const icon = specialiteIcons[spec.id] || 'fa-circle';
 grid.innerHTML += `
 <div class="option-card" onclick="selectSpecialite('${spec.id}', this)">
-<div class="card-icon"><i class="fas ${icon}"> </div>
+<div class="card-icon"><i class="fas ${icon}"></i></div>
 <span>${spec.label}</span>
 </div>
 `;
@@ -1289,7 +1289,7 @@ return Object.keys(dataSource);
 
 function formatLieuHtml(lieuStr) {
 if (!lieuStr) return "";
-return lieuStr.split('\n').map(l => `<span class="lieu-line"><i class="fas fa-map-marker-alt">  ${escapeHtml(l)}</span>`).join("");
+return lieuStr.split('\n').map(l => `<span class="lieu-line"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(l)}</span>`).join("");
 }
 
 function escapeHtml(s) {
@@ -1316,7 +1316,7 @@ const tableContainer = document.getElementById('table-container');
 if (!sectionData || !sectionData.modules || sectionData.modules.length === 0) {
 tableContainer.innerHTML = `
 <div class="empty-state">
-<i class="fas fa-calendar-times"> 
+<i class="fas fa-calendar-times"></i>
 <p>Aucun planning d'examen trouv&eacute; pour cette s&eacute;lection.</p>
 </div>`;
 showStep('result-section');
@@ -1332,10 +1332,10 @@ let html = `
 <table class="exam-table">
 <thead>
 <tr>
-<th><i class="fas fa-calendar-day">  Date</th>
-<th><i class="fas fa-clock">  Horaire</th>
-<th><i class="fas fa-book">  Module</th>
-<th><i class="fas fa-map-marker-alt">  Lieu</th>
+<th><i class="fas fa-calendar-day"></i> Date</th>
+<th><i class="fas fa-clock"></i> Horaire</th>
+<th><i class="fas fa-book"></i> Module</th>
+<th><i class="fas fa-map-marker-alt"></i> Lieu</th>
 </tr>
 </thead>
 <tbody>
@@ -1364,7 +1364,7 @@ html += `
 <td><span class="date-badge">${escapeHtml(m.date || "A programmer")}</span></td>
 <td><span class="time-badge">${escapeHtml(m.horaire || "11h00-12h30")}</span></td>
 <td><strong>${escapeHtml(m.module)}</strong></td>
-<td class="lieu-cell"><i class="fas fa-map-marker-alt">  ${escapeHtml(m.lieuOverride)}</td>
+<td class="lieu-cell"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(m.lieuOverride)}</td>
 </tr>`;
 i++;
 } else {
@@ -1392,7 +1392,7 @@ html += `
 <td><span class="date-badge">${escapeHtml(m.date || "A programmer")}</span></td>
 <td><span class="time-badge">${escapeHtml(m.horaire || "11h00-12h30")}</span></td>
 <td><strong>${escapeHtml(m.module)}</strong></td>
-<td class="lieu-cell"><i class="fas fa-map-marker-alt">  ${m.lieuOverride ? escapeHtml(m.lieuOverride) : "Non sp&eacute;cifi\u00e9"}</td>
+<td class="lieu-cell"><i class="fas fa-map-marker-alt"></i> ${m.lieuOverride ? escapeHtml(m.lieuOverride) : "Non sp&eacute;cifi\u00e9"}</td>
 </tr>`;
 }
 }
