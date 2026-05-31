@@ -949,6 +949,7 @@
                 linkUrl: "examens.html",
                 linkText: "Accéder aux plannings"
             },
+			
 			{
 			id: 8,
                 title: "CONSULTATION DES COPIES",
@@ -959,7 +960,32 @@
                 isLink: true,
                 linkUrl: "examens.html",
                 linkText: "Accéder aux plannings"
-            }
+            },
+			
+         {
+  id: 9,
+  title: "Convocation",
+  content: 
+    "<p style='color: #000; font-size: 1.1em; margin: 0;'>Les étudiants dont les noms figurent ci-dessous sont convoqués au Secrétariat du département des Sciences de Gestion le mardi 2 juin 2026 à 13 h.</p><br>" +
+    "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse: collapse; font-size: 0.95em; width: 100%;'>" +
+    "<thead><tr style='background-color: #f8f9fa;'><th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Nom</th>" +
+    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Prénom</th>" +
+    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Niveau</th>" +
+    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Groupe</th></tr></thead>" +
+    "<tbody>" +
+    "<tr><td>DABOUZ</td><td>Amar Amayas</td><td>L1</td><td>29</td></tr>" +
+    "<tr><td>DRIF</td><td>Liticia</td><td>L1</td><td>32</td></tr>" +
+    "<tr><td>ELHADJEN</td><td>Malik</td><td>L1</td><td>33</td></tr>" +
+    "<tr><td>GUENNOUN</td><td>Rayane</td><td>L1</td><td>36</td></tr>" +
+    "<tr><td>HADDAG</td><td>Said</td><td>L1</td><td>37</td></tr>" +
+    "<tr><td>ATMIMOU</td><td>Yanis</td><td>Master</td><td>—</td></tr>" +
+    "<tr><td>AHMED ALI</td><td>Massinissa</td><td>Master</td><td>—</td></tr>" +
+    "</tbody></table><br>" +
+    "<p style='color: #000; font-size: 1em; margin: 0;'><em>Merci de vous présenter muni(e) de votre carte d’étudiant.</em></p>",
+  date: "2026-05-31",
+  category: "Avis",
+  isUrgent: false
+}
 			
 			
 	
@@ -1023,7 +1049,7 @@
                                         <i class="far fa-file-pdf"></i> ${item.fileName}
                                     </span>
                                     <button class="btn-download" onclick="alert('Téléchargement de: ${item.fileName} (Simulation)')">
-                                        <i class="fas fa-download"></i> Télécharger
+                                     
                                     </button>
                                 </div>`
                         )}
