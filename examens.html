@@ -49,7 +49,6 @@
 
         h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--text-dark); }
 
-        /* Barre supérieure */
         .top-bar {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
             color: white;
@@ -60,7 +59,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Header */
         header {
             background: rgba(15, 23, 42, 0.98);
             backdrop-filter: blur(10px);
@@ -122,7 +120,6 @@
 
         .menu-toggle { display: none; background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
 
-        /* Contenu principal */
         main {
             flex: 1;
             padding: 48px 24px;
@@ -151,7 +148,6 @@
             margin: 0 auto;
         }
 
-        /* Sections */
         .selection-flow {
             display: flex;
             flex-direction: column;
@@ -176,7 +172,6 @@
             text-align: center;
         }
 
-        /* Grilles adaptatives */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -248,7 +243,6 @@
             transform: scale(1.1);
         }
 
-        /* États Actifs */
         .option-card.active-niveau {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -273,7 +267,6 @@
             color: white;
         }
 
-        /* Boutons de type d'examen (pills) */
         .pills-container {
             display: flex;
             gap: 12px;
@@ -309,12 +302,15 @@
             border-color: var(--primary-dark);
             box-shadow: 0 8px 20px -6px rgba(16, 185, 129, 0.4);
         }
-        .pill.active-type[data-type="dette"] {
+        
+        .pill.active-type[data-type="dette"],
+        .pill.active-type[data-type="dette_session2"] {
             background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
             color: white;
             border-color: #d97706;
             box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.4);
         }
+        
         .pill.active-type[data-type="remplacement"] {
             background: linear-gradient(135deg, var(--purple) 0%, #6d28d9 100%);
             color: white;
@@ -336,7 +332,6 @@
 
         .pill.hidden-pill { display: none; }
 
-        /* Semestres */
         .semester-container {
             display: flex;
             gap: 10px;
@@ -371,7 +366,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* Tableau des résultats */
         .result-section {
             animation: fadeInUp 0.6s ease-out both;
             animation-delay: 0.1s;
@@ -460,7 +454,23 @@
             font-weight: 500;
         }
 
-        /* Section info et impression */
+        .pdf-container {
+            width: 100%;
+            height: 80vh;
+            min-height: 600px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        .pdf-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .info-section {
             background: linear-gradient(135deg, var(--primary-light) 0%, #ecfdf5 100%);
             border-radius: var(--radius);
@@ -494,7 +504,6 @@
         }
         .print-btn:active { transform: translateY(0); }
 
-        /* Footer */
         footer {
             background: var(--secondary);
             color: #94a3b8;
@@ -511,7 +520,6 @@
             color: #64748b;
         }
 
-        /* Animations */
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -521,7 +529,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--secondary-light); flex-direction: column; padding: 16px; }
             nav.open { display: flex; }
@@ -542,6 +549,7 @@
             .option-card .card-icon { width: 40px; height: 40px; font-size: 16px; }
             .exam-table th, .exam-table td { padding: 10px 8px; font-size: 11px; }
             .lieu-cell { max-width: 200px; font-size: 11px; }
+            .pdf-container { height: 50vh; min-height: 400px; }
         }
 
         @media print {
@@ -556,10 +564,8 @@
 </head>
 <body>
 
-    <!-- Barre supérieure -->
     <div class="top-bar">Faculté des Sciences Économiques, Commerciales et des Sciences de Gestion</div>
 
-    <!-- En-tête -->
     <header>
         <div class="header-main">
             <div class="logo" onclick="window.location.href='index.html'">
@@ -581,9 +587,7 @@
             <p>Année Universitaire 2025/2026</p>
         </div>
 
-        <!-- Flux de sélection -->
         <div class="selection-flow">
-            <!-- Étape 1 : Niveau -->
             <div class="step-section" id="step-niveau">
                 <div class="step-title">Choisissez votre niveau</div>
                 <div class="cards-grid">
@@ -606,32 +610,29 @@
                 </div>
             </div>
 
-            <!-- Étape 2 : Spécialité (affichée seulement pour L3 et M1) -->
             <div class="step-section hidden" id="step-specialite">
                 <div class="step-title">Choisissez votre spécialité</div>
                 <div class="cards-grid" id="specialite-grid"></div>
             </div>
 
-            <!-- Étape 3 : Type d'examen -->
             <div class="step-section hidden" id="step-type">
                 <div class="step-title">Choisissez la session</div>
                 <div class="pills-container">
                     <button class="pill" data-type="emd" onclick="selectType('emd', this)"><i class="fas fa-file-alt"></i> EMD</button>
                     <button class="pill" data-type="consultation" onclick="selectType('consultation', this)"><i class="fas fa-search"></i> Consultation des copies</button>
-                    <button class="pill" data-type="dette" id="btn-dette" onclick="selectType('dette', this)"><i class="fas fa-exclamation-triangle"></i> Dettes</button>
+                    <button class="pill" data-type="dette" id="btn-dette" onclick="selectType('dette', this)"><i class="fas fa-exclamation-triangle"></i> Dettes session 1</button>
                     <button class="pill" data-type="remplacement" onclick="selectType('remplacement', this)"><i class="fas fa-exchange-alt"></i> Remplacement</button>
                     <button class="pill" data-type="rattrapage" onclick="selectType('rattrapage', this)"><i class="fas fa-redo"></i> Rattrapage</button>
+                    <button class="pill" data-type="dette_session2" id="btn-dette-s2" onclick="selectType('dette_session2', this)"><i class="fas fa-exclamation-circle"></i> Dettes session 2</button>
                 </div>
             </div>
 
-            <!-- Étape 4 : Semestre (affiché seulement pour les dettes) -->
             <div class="step-section hidden" id="step-semestre">
                 <div class="step-title">Choisissez la période</div>
                 <div class="semester-container" id="semester-container"></div>
             </div>
         </div>
 
-        <!-- Résultats -->
         <div class="step-section hidden" id="result-section">
             <div class="table-container" id="table-container"></div>
             <div class="info-section">
@@ -652,10 +653,6 @@
     </footer>
 
     <script>
-        /* ===========================================================
-           DONNÉES DES EXAMENS (examData)
-           Structure : examData.niveau[.spécialité].typeExam.semestre
-           =========================================================== */
         const examData = {
             // ----- LICENCE 1 -----
             licence1: {
@@ -717,6 +714,18 @@
                         ]
                     }
                 },
+                dette_session2: {
+                    semestre1: {
+                        lieu: "",
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/166Xnt476UWo7igtPcEMh7TSHouTCs3Hv/preview"
+                    },
+                    semestre2: {
+                        lieu: "",
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/166Xnt476UWo7igtPcEMh7TSHouTCs3Hv/preview"
+                    }
+                },
                 remplacement: {
                     semestre2: {
                         lieu: "Amphi Amzal",
@@ -734,12 +743,17 @@
                     }
                 },
                 rattrapage: {
-                    semestre2: { lieu: "", modules: [] },
-                    semestre1: { lieu: "", modules: [] }
+                    semestre2: { 
+                        lieu: "", 
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/1RTzLR9CiKo-JzgeS64cm8GQaqMTteuwC/preview"
+                    },
+                    semestre1: { 
+                        lieu: "", 
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/1RTzLR9CiKo-JzgeS64cm8GQaqMTteuwC/preview"
+                    }
                 },
-                
-
-// --CONSULTATION DES COPIES L1 LICENCE 1 -------------------------
                 consultation: {
                     semestre2: {
                         lieu: "Amphi Amzal",
@@ -812,6 +826,18 @@
                         ]
                     }
                 },
+                dette_session2: {
+                    semestre3: {
+                        lieu: "",
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/1-qUFkslFI0l5kackHcBaNGY48F64vtx5/preview"
+                    },
+                    semestre4: {
+                        lieu: "",
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/1-qUFkslFI0l5kackHcBaNGY48F64vtx5/preview"
+                    }
+                },
                 remplacement: {
                     semestre4: {
                         lieu: "Amphi Hambli",
@@ -826,10 +852,13 @@
                         ]
                     }
                 },
-                rattrapage: { semestre6: { lieu: "", modules: [] } },
-
-// --CONSULTATION DES COPIES L2 LICENCE 2 -------------------------
-
+                rattrapage: {
+                    semestre4: {
+                        lieu: "",
+                        modules: [],
+                        pdfUrl: "https://drive.google.com/file/d/1natU_3iDsqdPfmGEL9zBVFWd98xrFF97/preview"
+                    }
+                },
                 consultation: {
                     semestre4: {
                         lieu: "Amphi Hambli",
@@ -841,14 +870,12 @@
                             { date: "01/06/2026", horaire: "13h00", module: "Macro économie" },
                             { date: "02/06/2026", horaire: "09h00", module: "Gestion d'Entreprise" },
                             { date: "02/06/2026", horaire: "10h00", module: "SIG" }
-							
-							
                         ]
                     }
                 }
             },
 
-            // ----- LICENCE 3 (avec spécialités) -----
+            // ----- LICENCE 3 -----
             licence3: {
                 management: {
                     emd: {
@@ -876,11 +903,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre6: { lieu: "", modules: [] } },
-					
-					
-// --CONSULTATION DES COPIES L3 MANAGEMENT -------------------------
-					
+                    rattrapage: {
+                        semestre6: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/1xhBFU-eBG2KAE56Iy8W8i93ebrDr_V0B/preview"
+                        }
+                    },
                     consultation: {
                         semestre6: {
                             lieu: "Salle 07 Bloc A",
@@ -895,8 +924,6 @@
                         }
                     }
                 },
-				
-
                 entrepreneuriat: {
                     emd: {
                         semestre6: {
@@ -923,9 +950,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre6: { lieu: "", modules: [] } },
-					
-// -- CONSULTATION DES COPIES L3 ENTREPRENARIAT -------------------------
+                    rattrapage: {
+                        semestre6: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/1Bl3uI1gbpEGOGwFsezUuoapyFhFapuar/preview"
+                        }
+                    },
                     consultation: {
                         semestre6: {
                             lieu: "Salle 06 Bloc A",
@@ -965,9 +996,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre6: { lieu: "", modules: [] } },
-
-// -- CONSULTATION DES COPIES L3 MRH -------------------------
+                    rattrapage: {
+                        semestre6: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/12O38VgpaHZwZsnoNsqy4YnC-fI1ccYxA/preview"
+                        }
+                    },
                     consultation: {
                         semestre6: {
                             lieu: "Salle 05 Bloc A",
@@ -983,8 +1018,7 @@
                 }
             },
 
-
-            // ----- MASTER 1 (avec spécialités) -----
+            // ----- MASTER 1 -----
             master1: {
                 strategique: {
                     emd: {
@@ -1015,9 +1049,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre2: { lieu: "", modules: [] } },
-
-// -- CONSULTATION DES COPIES M1 MS -------------------------
+                    rattrapage: {
+                        semestre2: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/17vqFLP9Grs-rOfmVh1mpOLUh14oY3R4O/preview"
+                        }
+                    },
                     consultation: {
                         semestre2: {
                             lieu: "Salle 4 Bloc A",
@@ -1033,11 +1071,6 @@
                         }
                     }
                 },
-				
-				
-				
-				
-				
                 mrh: {
                     emd: {
                         semestre2: {
@@ -1067,9 +1100,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre2: { lieu: "", modules: [] } },
-					
-// -- CONSULTATION DES COPIES M1 MRH -------------------------
+                    rattrapage: {
+                        semestre2: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/1BwfqEAvaT7m77eCl_ATqGSKjik0x3uca/preview"
+                        }
+                    },
                     consultation: {
                         semestre2: {
                             lieu: "Salle 3 bloc A",
@@ -1085,10 +1122,6 @@
                         }
                     }
                 },
-				
-				
-				
-				
                 "gestion-publique": {
                     emd: {
                         semestre2: {
@@ -1100,7 +1133,6 @@
                                 { date: "Jeu 14/05/2026", horaire: "13h00-14h30", module: "Méthodes quantitatives de Mgt" },
                                 { date: "Dim 17/05/2026", horaire: "13h00-14h30", module: "Evaluation des projets publics" },
                                 { date: "Lun 18/05/2026", horaire: "13h00-14h30", module: "Méthodologie de préparation d'un Mémoire" }
-
                             ]
                         }
                     },
@@ -1114,20 +1146,23 @@
                                 { date: "24/05/2026", horaire: "13h30-15h00", module: "MRH dans le SP" },
                                 { date: "25/05/2026", horaire: "09h00-10h30", module: "Evaluation des projets publics" },
                                 { date: "25/05/2026", horaire: "10h30-12h00", module: "Méthodologie de préparation d'un Mémoire" }
-
                             ]
                         }
                     },
-                    rattrapage: { semestre2: { lieu: "", modules: [] } },
-					
-// -- CONSULTATION DES COPIES M1 GP -------------------------
+                    rattrapage: {
+                        semestre2: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/1HvVTrjkYIJRIeb-_ntTOMdbgJC9zHV8j/preview"
+                        }
+                    },
                     consultation: {
                         semestre2: {
                             lieu: "Salle 2 Bloc A",
                             modules: [
                                 { date: "01/06/2026", horaire: "09h00", module: "Droit de la Fonction Pub" },
                                 { date: "01/06/2026", horaire: "10h00", module: "Contrôle et Audit dans le Secteur Pub" },
-                                { date: "01/06/2026", horaire: "110h00", module: "MRH dans le SP" },
+                                { date: "01/06/2026", horaire: "11h00", module: "MRH dans le SP" },
                                 { date: "01/06/2026", horaire: "12h00", module: "Méthodes quantitatives de Mgt" },
                                 { date: "01/06/2026", horaire: "13h00", module: "Evaluation des projets publics" },
                                 { date: "01/06/2026", horaire: "14h00", module: "Méthodologie de préparation d'un Mémoire" }
@@ -1135,15 +1170,6 @@
                         }
                     }
                 },
-				
-				
-				
-				
-				
-				
-				
-				
-				
                 mes: {
                     emd: {
                         semestre2: {
@@ -1173,9 +1199,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre2: { lieu: "", modules: [] } },
-					
-// -- CONSULTATION DES COPIES M1 MES -------------------------
+                    rattrapage: {
+                        semestre2: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/1IXbbgzOMN5kiFWq2HxC1cOV2Or01rVva/preview"
+                        }
+                    },
                     consultation: {
                         semestre2: {
                             lieu: "Salle des doc, bloc A",
@@ -1220,9 +1250,13 @@
                             ]
                         }
                     },
-                    rattrapage: { semestre2: { lieu: "", modules: [] } },
-					
-// -- CONSULTATION DES COPIES M1 MF -------------------------
+                    rattrapage: {
+                        semestre2: {
+                            lieu: "",
+                            modules: [],
+                            pdfUrl: "https://drive.google.com/file/d/1pJtbyClNbs1lwFfRmtLYWZvEtoHmzQM_/preview"
+                        }
+                    },
                     consultation: {
                         semestre2: {
                             lieu: "Salle 2 Bloc A",
@@ -1248,7 +1282,6 @@
         let currentSemestre = "";
         const niveauxSansDette = ['licence3', 'master1'];
 
-        // Icônes des spécialités
         const specialiteIcons = {
             tronc: "fa-layer-group",
             gestion: "fa-briefcase",
@@ -1261,16 +1294,10 @@
             mes: "fa-heartbeat"
         };
 
-        /* ===========================================================
-           FONCTIONS DE L'INTERFACE
-           =========================================================== */
-
-        // Menu mobile
         function toggleMenu() {
             document.getElementById('mainNav').classList.toggle('open');
         }
 
-        // Retourne le semestre par défaut selon le niveau
         function getDefaultSemesterForCurrentNiveau() {
             if (currentNiveau === 'licence1') return 'semestre2';
             if (currentNiveau === 'licence2') return 'semestre4';
@@ -1279,7 +1306,6 @@
             return 'semestre2';
         }
 
-        // Affiche une étape
         function showStep(id) {
             const el = document.getElementById(id);
             el.classList.remove('hidden');
@@ -1288,14 +1314,12 @@
             el.style.animation = 'fadeInUp 0.5s ease-out both';
         }
 
-        // Masque une étape
         function hideStep(id) {
             const el = document.getElementById(id);
             el.classList.add('hidden');
             el.style.display = 'none';
         }
 
-        // Réinitialise les étapes après le niveau
         function resetStepsAfter() {
             hideStep('step-specialite');
             hideStep('step-type');
@@ -1304,14 +1328,16 @@
             document.getElementById('table-container').innerHTML = '';
         }
 
-        // Affiche ou masque le bouton "Dettes"
         function updateDetteBtn() {
             const btn = document.getElementById('btn-dette');
+            const btnS2 = document.getElementById('btn-dette-s2');
             if (!btn) return;
             if (!hasDette()) {
                 btn.classList.add('hidden-pill');
+                if (btnS2) btnS2.classList.add('hidden-pill');
             } else {
                 btn.classList.remove('hidden-pill');
+                if (btnS2) btnS2.classList.remove('hidden-pill');
             }
         }
 
@@ -1320,7 +1346,6 @@
             return !niveauxSansDette.includes(currentNiveau);
         }
 
-        // Sélection du niveau
         function selectNiveau(niveau, el) {
             currentNiveau = niveau;
             currentSpecialite = "";
@@ -1366,7 +1391,6 @@
             }
         }
 
-        // Retourne les spécialités d'un niveau
         function getSpecialitesForNiveau(niveau) {
             if (niveau === 'licence3') {
                 return [
@@ -1387,7 +1411,6 @@
             return [];
         }
 
-        // Sélection de la spécialité
         function selectSpecialite(spec, el) {
             currentSpecialite = spec;
             currentExamType = "";
@@ -1406,7 +1429,6 @@
             showStep('step-type');
         }
 
-        // Sélection du type d'examen
         function selectType(type, el) {
             currentExamType = type;
             currentSemestre = "";
@@ -1421,13 +1443,12 @@
             updateSemesterStep();
         }
 
-        // Met à jour l'étape semestre (uniquement pour les dettes)
         function updateSemesterStep() {
             const container = document.getElementById('semester-container');
             container.innerHTML = "";
 
             let semesters = [];
-            if (currentExamType === 'dette') {
+            if (currentExamType === 'dette' || currentExamType === 'dette_session2') {
                 if (currentNiveau === 'licence1') {
                     semesters = ['semestre1', 'semestre2'];
                 } else if (currentNiveau === 'licence2') {
@@ -1464,7 +1485,6 @@
             updateDisplay();
         }
 
-        // Formatage du lieu
         function formatLieuHtml(lieuStr) {
             if (!lieuStr) return "";
             return lieuStr.split('\n').map(l => `<span class="lieu-line"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(l)}</span>`).join("");
@@ -1475,7 +1495,6 @@
             return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
         }
 
-        // Construction du tableau HTML à partir des données de section
         function buildTableHTML(sectionData) {
             const modules = sectionData.modules;
             const sharedLieu = sectionData.lieu || "";
@@ -1554,10 +1573,8 @@
             return html;
         }
 
-        // Mise à jour de l'affichage des résultats
         function updateDisplay() {
             let sectionData = null;
-            // Utilisation directe du type courant (consultation est maintenant un type à part entière)
             const dataType = currentExamType;
             try {
                 if (currentNiveau === 'licence1') {
@@ -1573,6 +1590,15 @@
 
             const tableContainer = document.getElementById('table-container');
 
+            if (sectionData && sectionData.pdfUrl) {
+                tableContainer.innerHTML = `
+                <div class="pdf-container">
+                    <iframe src="${sectionData.pdfUrl}" allow="autoplay"></iframe>
+                </div>`;
+                showStep('result-section');
+                return;
+            }
+
             if (!sectionData || !sectionData.modules || sectionData.modules.length === 0) {
                 tableContainer.innerHTML = `
                 <div class="empty-state">
@@ -1584,7 +1610,6 @@
             }
 
             let finalHTML = '';
-            // Titre spécifique pour la consultation
             if (currentExamType === 'consultation') {
                 finalHTML += `
                 <div style="text-align:center; margin-bottom:24px; color:var(--primary-dark); font-family: 'Playfair Display', serif; font-size:22px;">
