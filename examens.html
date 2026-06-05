@@ -1448,13 +1448,19 @@
             container.innerHTML = "";
 
             let semesters = [];
-            if (currentExamType === 'dette' || currentExamType === 'dette_session2') {
-                if (currentNiveau === 'licence1') {
-                    semesters = ['semestre1', 'semestre2'];
-                } else if (currentNiveau === 'licence2') {
-                    semesters = ['semestre3', 'semestre4'];
-                }
-            }
+            if (currentExamType === 'dette') {
+    if (currentNiveau === 'licence1') {
+        semesters = ['semestre1', 'semestre2'];
+    } else if (currentNiveau === 'licence2') {
+        semesters = ['semestre3', 'semestre4'];
+    }
+} else if (currentExamType === 'dette_session2') {
+    if (currentNiveau === 'licence1') {
+        semesters = ['semestre2'];
+    } else if (currentNiveau === 'licence2') {
+        semesters = ['semestre4'];
+    }
+}
 
             if (semesters.length === 0) {
                 hideStep('step-semestre');
