@@ -829,9 +829,9 @@
                 <h3>Horaires d'Accueil</h3>
                 <p><i class="fas fa-clock" style="color: var(--primary); margin-right: 8px;"></i><strong>Dimanche - Jeudi:</strong></p>
                 <ul>
-                    <li>Secrétariat Pédagogique: 08h30 - 12h00, 13h00 - 15h30</li>
+                    <li>Secrétariat du département: 08h30 - 12h00, 13h00 - 15h30</li>
                     <li>Réception Chef de Dépt: 08h30 - 12h00 (Dimanche, Lundi, Mercredi, Jeudi)</li>
-                    <li>Scolarité: 08h30 - 15h30</li>
+                    <li>Scolarité: 08h30 - 15h30 (Dimanche, lundi et mercredi)</li>
                 </ul>
                 <p style="font-size: 11px; font-style: italic; margin-top: 12px;">* Fermé les weekends (Vendredi, Samedi) et les jours fériés.</p>
             </div>
@@ -1070,6 +1070,28 @@
   date: "2026-07-06",
   category: "Avis",
   isUrgent: false
+},
+
+{
+    id: 16,
+    title: "Avis aux étudiants de L1-TC",
+    content: 
+        "<p>Dans le cadre de l'orientation vers les filières de 2ᵉ année, tous les étudiants de 1ʳᵉ année Tronc Commun sont invités à remplir obligatoirement la fiche de vœux d'orientation.</p>" +
+        "<p style='text-align:center;margin:15px 0;'>" +
+        "<a href='https://docs.google.com/forms/d/e/1FAIpQLScuhetop6gBCcIaiSyfAQxaYCeO6cf5LC4XYJWfL9Lr9oT07w/viewform?usp=sharing&ouid=116388335105191684869' target='_blank' style='color:#2563eb;font-weight:bold;'>Cliquez ici pour accéder au formulaire de vœux</a>" +
+        "</p>" +
+        "<p><strong>Points importants :</strong></p>" +
+        "<ul>" +
+        "<li>Tous les étudiants doivent remplir la fiche, y compris ceux qui l'ont déjà faite.</li>" +
+        "<li>Date limite : <strong>jeudi 16 juillet 2026</strong>.</li>" +
+        "<li>Aucune fiche ne sera acceptée après cette date.</li>" +
+        "</ul>" +
+        "<p><strong>Remarque :</strong> Après validation, vérifiez que vous avez reçu l'accusé de réception dans votre e-mail.</p>" +
+        "<p>Nous invitons l'ensemble des étudiants concernés à respecter ce délai.</p>" +
+        "<p style='margin-top:20px;padding-top:15px;border-top:1px solid #ddd;'>Mme TADJINE-DAHMOUNE Rhadia<br>Vice Doyenne Chargée des Etudes<br>FSECSG</p>",
+    date: "2026-07-14",
+    category: "Soutenance",
+    isUrgent: false
 }
 	
 	
@@ -1095,52 +1117,59 @@
             return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-        function renderAnnonces() {
-            const container = document.getElementById('annoncesContainer');
-            let filtered = annoncesData.filter(item => currentFilter === 'all' || item.category === currentFilter);
-            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-            const displayed = filtered.slice(0, visibleCount);
-            
-            if (displayed.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:60px; background:white; border-radius:16px;">
-                    <i class="fas fa-bell-slash" style="font-size:48px; color:#cbd5e1; margin-bottom:16px; display:block;"></i>
-                    <p>Aucune annonce dans cette catégorie pour le moment.</p>
-                </div>`;
-                return;
-            }
-            
-            container.innerHTML = displayed.map(item => `
-                <div class="annonce-card ${item.isUrgent ? 'urgent' : ''}">
-                    <div class="annonce-badge ${item.isUrgent ? 'badge-urgent' : getCategoryClass(item.category)}">
-                        ${item.isUrgent ? '<i class="fas fa-exclamation-circle"></i> URGENT' : item.category}
-                    </div>
-                    <div class="annonce-content">
-                        <div class="annonce-category ${getCategoryClass(item.category)}">${item.category}</div>
-                        <h3>${item.title}</h3>
-                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-                            <span style="font-size: 11px; color: var(--text-light);"><i class="far fa-calendar-alt"></i> ${formatDate(item.date)}</span>
-                        </div>
-                        <p style="white-space: pre-line;">${item.content}</p>
-                        ${item.isCustom ? item.customHtml : (
-                            item.isLink ? 
-                                `<div class="annonce-footer">
-                                    <a href="${item.linkUrl}" class="btn-download btn-link" style="background: var(--primary); color: white; text-decoration: none;">
-                                        <i class="fas fa-external-link-alt"></i> ${item.linkText}
-                                    </a>
-                                </div>` :
-                                `<div class="annonce-footer">
-                                    <span class="file-name" style="font-size: 11px; color: var(--text-light);">
-                                        <i class="far fa-file-pdf"></i> ${item.fileName}
-                                    </span>
-                                    <button class="btn-download" onclick="alert('Téléchargement de: ${item.fileName} (Simulation)')">
-                                     
-                                    </button>
-                                </div>`
-                        )}
-                    </div>
-                </div>
-            `).join('');
+       function renderAnnonces() {
+    const container = document.getElementById('annoncesContainer');
+    let filtered = annoncesData.filter(item => currentFilter === 'all' || item.category === currentFilter);
+    filtered.sort((a, b) => {
+        if (a.date !== b.date) {
+            return new Date(b.date) - new Date(a.date);
         }
+        return b.id - a.id;
+    });
+    const displayed = filtered.slice(0, visibleCount);
+    
+    if (displayed.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:60px; background:white; border-radius:16px;">
+            <i class="fas fa-bell-slash" style="font-size:48px; color:#cbd5e1; margin-bottom:16px; display:block;"></i>
+            <p>Aucune annonce dans cette catégorie pour le moment.</p>
+        </div>`;
+        return;
+    }
+    
+    container.innerHTML = displayed.map(item => {
+        // Construire le footer uniquement si nécessaire
+        let footerHtml = '';
+        if (item.isCustom) {
+            footerHtml = item.customHtml;
+        } else if (item.isLink) {
+            footerHtml = `
+                <div class="annonce-footer">
+                    <a href="${item.linkUrl}" class="btn-download btn-link" style="background: var(--primary); color: white; text-decoration: none;">
+                        <i class="fas fa-external-link-alt"></i> ${item.linkText || 'Accéder'}
+                    </a>
+                </div>
+            `;
+        }
+        // Si ni isLink ni isCustom, on n'affiche rien → footerHtml reste ''
+        
+        return `
+            <div class="annonce-card ${item.isUrgent ? 'urgent' : ''}">
+                <div class="annonce-badge ${item.isUrgent ? 'badge-urgent' : getCategoryClass(item.category)}">
+                    ${item.isUrgent ? '<i class="fas fa-exclamation-circle"></i> URGENT' : item.category}
+                </div>
+                <div class="annonce-content">
+                    <div class="annonce-category ${getCategoryClass(item.category)}">${item.category}</div>
+                    <h3>${item.title}</h3>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                        <span style="font-size: 11px; color: var(--text-light);"><i class="far fa-calendar-alt"></i> ${formatDate(item.date)}</span>
+                    </div>
+                    <p style="white-space: pre-line;">${item.content}</p>
+                    ${footerHtml}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
         function filterAnnonces(category) {
             currentFilter = category;
