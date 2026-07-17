@@ -369,6 +369,10 @@
             background: #fef3c7;
             color: #b45309;
         }
+        .badge-orientation {
+            background: #ecfdf5;
+            color: #059669;
+        }
         .annonce-content {
             padding: 20px;
         }
@@ -685,7 +689,8 @@
             <nav id="mainNav">
                 <a href="#" class="active"><i class="fas fa-home"></i> Accueil</a>
                 <a href="examens.html"><i class="fas fa-calendar-alt"></i> Examens</a>
-                <a href="soutenance.html"><i class="fas fa-user-graduate"></i> Soutenance et orientation</a>
+                <a href="soutenance.html"><i class="fas fa-user-graduate"></i> Soutenances</a>
+                <a href="orientation.html"><i class="fas fa-compass"></i> Orientations</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Licence</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-landmark"></i> Master</a>
@@ -719,6 +724,7 @@
                     <button class="filter-btn" onclick="filterAnnonces('Soutenance')">Soutenances</button>
                     <button class="filter-btn" onclick="filterAnnonces('Événement')">Événements</button>
                     <button class="filter-btn" onclick="filterAnnonces('Avis')">Avis</button>
+                    <button class="filter-btn" onclick="filterAnnonces('Orientation')">Orientation</button>
                 </div>
             </div>
             <div id="annoncesContainer" class="annonces-grid">
@@ -872,7 +878,7 @@
                 title: "Fiches de vœux – Passages L2 → L3 et L3 → Master",
                 content: "Les étudiants de L2 et L3 sont tenus de formuler leurs vœux d'orientation pour l'année universitaire prochaine.\nVeuillez remplir le formulaire correspondant à votre niveau.",
                 date: "2026-04-29",
-                category: "Avis",
+                category: "Orientation",
                 isUrgent: false,
                 isCustom: true,
                 customHtml: `
@@ -904,8 +910,8 @@
                 linkUrl: "feuillederoute.html",
                 linkText: "Voir la feuille de route"
             },
-			
-			{
+            
+            {
                 id: 4,
                 title: "Répartition des étudiants par lieux d'examens",
                 content: "Veuillez trouver votre lieu d'affectation en cliquant sur le bouton ci-dessous. \n ",
@@ -917,7 +923,7 @@
                 linkText: "Cliquez ici pour accéder à la liste"
             },
 
-			{
+            {
                 id: 5,
                 title: "Master 2 – Prolongation des délais de dépôt et de soutenance des mémoires",
                 content: "Les étudiants en Master 2 sont informés qu'ils disposent désormais :\n - jusqu'au 24 mai 2026 pour envoyer la version pdf des mémoires aux encadrants,\n - de la période du 24 mai au 9 juin 2026 pour la tenue des soutenance (le planning des soutenances sera affiché ultérieurement).\n ",
@@ -928,8 +934,8 @@
                 linkUrl: "feuillederoute.html",
                 linkText: "Cliquez ici pour accéder à la feuille de route"
             },
-			{
-			id: 6,
+            {
+            id: 6,
                 title: "DATES DES EXAMENS DE REPLACEMENT",
                 content: "Les examens de remplacement sont fixés aux 24 et 25 Mai 2026.\n Le planning sera publié dans les prochains jours (voir la feuille de route).\n ",
                 date: "2026-05-19",
@@ -939,7 +945,7 @@
                 linkUrl: "feuillederoute.html",
                 linkText: "Accéder à la feuille de route"
             },
-			{
+            {
             id: 7,
                 title: "PLANNINGS DES EXAMENS DE REPLACEMENT",
                 content: "Veuillez consulter le planning des examens de remplacement dans l'espace « Examens ».\n ",
@@ -950,9 +956,9 @@
                 linkUrl: "examens.html",
                 linkText: "Accéder aux plannings"
             },
-			
-			{
-			id: 8,
+            
+            {
+            id: 8,
                 title: "CONSULTATION DES COPIES",
                 content: "Veuillez consulter le planning de consultation des copies dans l'espace EXAMENS.\n ",
                 date: "2026-05-30",
@@ -962,7 +968,7 @@
                 linkUrl: "examens.html",
                 linkText: "Accéder aux plannings"
             },
-				
+                
          {
   id: 9,
   title: "Convocation",
@@ -1001,10 +1007,10 @@
     linkUrl: "https://drive.google.com/drive/folders/19Sk1LNlBQFQSxuSZhnvRhDoSd3qrwb4V?usp=drive",
     linkText: "Accéder aux notes de dette"
 },
-			{
-			id: 11,
+            {
+            id: 11,
                 title: "PLANNING DES SOUTENANCES",
-                content: "Veuillez trouver le planning des prochaines soutenances dans l'espace 'Soutenance et orientation'\n ",
+                content: "Veuillez trouver le planning des prochaines soutenances dans l'espace 'Soutenances'\n ",
                 date: "2026-06-01",
                 category: "Soutenance",
                 isUrgent: false,
@@ -1013,8 +1019,8 @@
                 linkText: "Accéder au planning"
             },
 
-			{
-			id: 12,
+            {
+            id: 12,
                 title: "PLANNING DES EXAMENS DE RATTRAPAGE ET DE DETTES SESSION 2 DES SEMESTRES IMPAIRS",
                 content: "Veuillez trouver les plannings des examens de rattrapage et de dettes session 2 des emestres impairs'\n ",
                 date: "2026-06-14",
@@ -1026,19 +1032,19 @@
             },
 
 
-			{
-			id: 13,
+            {
+            id: 13,
                 title: "AVIS AUX ETUDIANTS DE L1-TC",
-                content: "En raison de la coïncidence de la journée de demain, mardi 16 juin 2026, avec Awal Mouharram, l’examen initialement programmé à cette date est reporté au mercredi 17 juin 2026, à la même heure et au même lieu.'\n'M. MAHTOUT Idir'\n'Chef du Département des Sciences de Gestion'\n",
+                content: "En raison de la coïncidence de la journée de demain, mardi 16 juin 2026, avec Awal Mouharram, l'examen initialement programmé à cette date est reporté au mercredi 17 juin 2026, à la même heure et au même lieu.'\n'M. MAHTOUT Idir'\n'Chef du Département des Sciences de Gestion'\n",
                 date: "2026-06-14",
                 category: "Avis",
                 isUrgent: false,
                 isLink: true,
-				linkUrl: "",
+                linkUrl: "",
                 linkText: ""
             },
             {
-			id: 14,
+            id: 14,
                 title: "PLANNING DES SOUTENANCES / SESSION II",
                 content: "Veuillez consulter le planning des soutenances dans l'espace EXAMENS.\n ",
                 date: "2026-06-25",
@@ -1063,7 +1069,7 @@
     "<tr><td>ALVARO </td><td>Polo Mentero</td><td>L1</td><td>28</td></tr>" +
     "<tr><td>EYOBELET-OBAKA</td><td>Josias-Euny</td><td>L1</td><td>33</td></tr>" +
     "<tr><td>ESSTETI</td><td>Aya</td><td>L1</td><td>33</td></tr>" +
-	"<tr><td>FARES</td><td>Yasmina</td><td>L1</td><td>33</td></tr>" +  
+    "<tr><td>FARES</td><td>Yasmina</td><td>L1</td><td>33</td></tr>" +  
     "<tr><td>LAHRECHE Ania L2 05 G2</td><td>Ania</td><td>L2</td><td>05</td></tr>" +
     "</tbody></table><br>" +
     "<p style='color: #000; font-size: 1em; margin: 0;'><em>Merci de vous présenter muni(e) de votre carte d'étudiant.</em></p>",
@@ -1090,11 +1096,11 @@
         "<p>Nous invitons l'ensemble des étudiants concernés à respecter ce délai.</p>" +
         "<p style='margin-top:20px;padding-top:15px;border-top:1px solid #ddd;'>Mme TADJINE-DAHMOUNE Rhadia<br>Vice Doyenne Chargée des Etudes<br>FSECSG</p>",
     date: "2026-07-14",
-    category: "Avis",
+    category: "Orientation",
     isUrgent: false
 }
-	
-	
+    
+    
         ];
 
         let currentFilter = "all";
@@ -1107,7 +1113,8 @@
                 'Emploi du temps': 'badge-emploi',
                 'Événement': 'badge-evenement',
                 'Avis': 'badge-avis',
-                'Rapport de stage': 'badge-rapport'
+                'Rapport de stage': 'badge-rapport',
+                'Orientation': 'badge-orientation'
             };
             return classes[category] || 'badge-avis';
         }
