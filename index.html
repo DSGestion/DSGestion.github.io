@@ -141,7 +141,7 @@
             font-size: 24px;
             cursor: pointer;
         }
-        /* Main */
+  
         main {
             flex: 1;
             padding: 40px 20px;
@@ -149,7 +149,7 @@
             margin: 0 auto;
             width: 100%;
         }
-        /* Hero */
+
         .hero-banner {
             background: linear-gradient(135deg, var(--secondary) 0%, #064e3b 50%, var(--secondary) 100%);
             border-radius: 24px;
@@ -559,7 +559,7 @@
             color: var(--text-light);
             margin: 0;
         }
-        /* Footer */
+
         footer {
             background: var(--secondary);
             color: #94a3b8;
@@ -691,6 +691,7 @@
                 <a href="examens.html"><i class="fas fa-calendar-alt"></i> Examens</a>
                 <a href="soutenance.html"><i class="fas fa-user-graduate"></i> Soutenances</a>
                 <a href="orientation.html"><i class="fas fa-compass"></i> Orientations</a>
+                <a href="emploidutemp.html"><i class="fas fa-calendar-week"></i> Emploi du Temps</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Textes Réglementaires</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-gavel"></i> Licence</a>
                 <a href="javascript:void(0);" onclick="return false;" style="cursor: not-allowed; opacity: 0.6;"><i class="fas fa-landmark"></i> Master</a>
@@ -785,7 +786,7 @@
                     <div class="quick-link" onclick="document.getElementById('annonces').scrollIntoView({behavior:'smooth'})">
                         <div class="quick-link-icon"><i class="fas fa-bullhorn"></i></div>
                         <div class="quick-link-text">
-                            <h4>Dernières Annonces</h4>
+                            <h4>Dernières annonces</h4>
                             <p>Examens, soutenances, emplois du temps</p>
                         </div>
                     </div>
@@ -860,8 +861,24 @@
     </footer>
 
     <script>
-        // Données des annonces
+
         const annoncesData = [
+            {
+                id: 20,
+                title: "Début des cours - Année universitaire 2026/2027",
+                content:
+                    "<p style='margin-bottom:12px;'>Les cours débuteront le <strong>mardi 22/09/2026</strong>.</p>" +
+                    "<p style='margin-bottom:16px;'>Veuillez consulter les plannings dans l'espace <strong>Emploi du Temps</strong>.</p>" +
+                    "<p style='text-align:center;margin-top:20px;'>" +
+                    "<a href='emploidutemp.html' target='_self' style='background:#0284c7;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;display:inline-flex;align-items:center;gap:10px;font-size:14px;box-shadow:0 4px 12px rgba(2,132,199,0.35);'>" +
+                    "<i class='fas fa-calendar-week'></i> Consulter les emplois du temps" +
+                    "</a>" +
+                    "</p>",
+                date: "2026-09-19",
+                category: "Emploi du temps",
+                isUrgent: false,
+                isCustom: true
+            },
             {
                 id: 1,
                 title: "Plannings des examens de L1, L2, L3 et Master",
@@ -910,7 +927,6 @@
                 linkUrl: "feuillederoute.html",
                 linkText: "Voir la feuille de route"
             },
-            
             {
                 id: 4,
                 title: "Répartition des étudiants par lieux d'examens",
@@ -922,7 +938,6 @@
                 linkUrl: "lieuexamen.html",
                 linkText: "Cliquez ici pour accéder à la liste"
             },
-
             {
                 id: 5,
                 title: "Master 2 – Prolongation des délais de dépôt et de soutenance des mémoires",
@@ -935,7 +950,7 @@
                 linkText: "Cliquez ici pour accéder à la feuille de route"
             },
             {
-            id: 6,
+                id: 6,
                 title: "DATES DES EXAMENS DE REPLACEMENT",
                 content: "Les examens de remplacement sont fixés aux 24 et 25 Mai 2026.\n Le planning sera publié dans les prochains jours (voir la feuille de route).\n ",
                 date: "2026-05-19",
@@ -946,7 +961,7 @@
                 linkText: "Accéder à la feuille de route"
             },
             {
-            id: 7,
+                id: 7,
                 title: "PLANNINGS DES EXAMENS DE REPLACEMENT",
                 content: "Veuillez consulter le planning des examens de remplacement dans l'espace « Examens ».\n ",
                 date: "2026-05-21",
@@ -956,9 +971,8 @@
                 linkUrl: "examens.html",
                 linkText: "Accéder aux plannings"
             },
-            
             {
-            id: 8,
+                id: 8,
                 title: "CONSULTATION DES COPIES",
                 content: "Veuillez consulter le planning de consultation des copies dans l'espace EXAMENS.\n ",
                 date: "2026-05-30",
@@ -968,47 +982,43 @@
                 linkUrl: "examens.html",
                 linkText: "Accéder aux plannings"
             },
-                
-         {
-  id: 9,
-  title: "Convocation",
-  content: 
-    "<p style='color: #000; font-size: 0.8em; margin: 0;'>Les étudiants dont les noms figurent ci-dessous sont convoqués au Secrétariat du département des Sciences de Gestion le mardi 2 juin 2026 à 13 h.</p><br>" +
-    "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse: collapse; font-size: 0.95em; width: 100%;'>" +
-    "<thead><tr style='background-color: #f8f9fa;'><th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Nom</th>" +
-    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Prénom</th>" +
-    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Niveau</th>" +
-    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Groupe</th></tr></thead>" +
-    "<tbody>" +
-    "<tr><td>DABOUZ</td><td>Amar Amayas</td><td>L1</td><td>29</td></tr>" +
-    "<tr><td>DRIF</td><td>Liticia</td><td>L1</td><td>32</td></tr>" +
-    "<tr><td>ELHADJEN</td><td>Malik</td><td>L1</td><td>33</td></tr>" +
-    "<tr><td>GUENNOUN</td><td>Rayane</td><td>L1</td><td>36</td></tr>" +
-    "<tr><td>HADDAG</td><td>Said</td><td>L1</td><td>37</td></tr>" +
-    "<tr><td>ATMIMOU</td><td>Yanis</td><td>Master</td><td>—</td></tr>" +
-    "<tr><td>AHMED ALI</td><td>Massinissa</td><td>Master</td><td>—</td></tr>" +
-    "</tbody></table><br>" +
-    "<p style='color: #000; font-size: 1em; margin: 0;'><em>Merci de vous présenter muni(e) de votre carte d'étudiant.</em></p>",
-  date: "2026-05-31",
-  category: "Avis",
-  isUrgent: false
-},
-
-
-{
-    id: 10,
-    title: "NOTES DES EXAMENS DE DETTE",
-    content: "Veuillez consulter les notes des consultation des examens de dettes sur\n ",
-    date: "2026-06-01",
-    category: "Examen",
-    isUrgent: false,
-    isLink: true,
-  
-    linkUrl: "https://drive.google.com/drive/folders/19Sk1LNlBQFQSxuSZhnvRhDoSd3qrwb4V?usp=drive",
-    linkText: "Accéder aux notes de dette"
-},
             {
-            id: 11,
+                id: 9,
+                title: "Convocation",
+                content:
+                    "<p style='color: #000; font-size: 0.8em; margin: 0;'>Les étudiants dont les noms figurent ci-dessous sont convoqués au Secrétariat du département des Sciences de Gestion le mardi 2 juin 2026 à 13 h.</p><br>" +
+                    "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse: collapse; font-size: 0.95em; width: 100%;'>" +
+                    "<thead><tr style='background-color: #f8f9fa;'><th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Nom</th>" +
+                    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Prénom</th>" +
+                    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Niveau</th>" +
+                    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Groupe</th></tr></thead>" +
+                    "<tbody>" +
+                    "<tr><td>DABOUZ</td><td>Amar Amayas</td><td>L1</td><td>29</td></tr>" +
+                    "<tr><td>DRIF</td><td>Liticia</td><td>L1</td><td>32</td></tr>" +
+                    "<tr><td>ELHADJEN</td><td>Malik</td><td>L1</td><td>33</td></tr>" +
+                    "<tr><td>GUENNOUN</td><td>Rayane</td><td>L1</td><td>36</td></tr>" +
+                    "<tr><td>HADDAG</td><td>Said</td><td>L1</td><td>37</td></tr>" +
+                    "<tr><td>ATMIMOU</td><td>Yanis</td><td>Master</td><td>—</td></tr>" +
+                    "<tr><td>AHMED ALI</td><td>Massinissa</td><td>Master</td><td>—</td></tr>" +
+                    "</tbody></table><br>" +
+                    "<p style='color: #000; font-size: 1em; margin: 0;'><em>Merci de vous présenter muni(e) de votre carte d'étudiant.</em></p>",
+                date: "2026-05-31",
+                category: "Avis",
+                isUrgent: false
+            },
+            {
+                id: 10,
+                title: "NOTES DES EXAMENS DE DETTE",
+                content: "Veuillez consulter les notes des consultation des examens de dettes sur\n ",
+                date: "2026-06-01",
+                category: "Examen",
+                isUrgent: false,
+                isLink: true,
+                linkUrl: "https://drive.google.com/drive/folders/19Sk1LNlBQFQSxuSZhnvRhDoSd3qrwb4V?usp=drive",
+                linkText: "Accéder aux notes de dette"
+            },
+            {
+                id: 11,
                 title: "PLANNING DES SOUTENANCES",
                 content: "Veuillez trouver le planning des prochaines soutenances dans l'espace 'Soutenances'\n ",
                 date: "2026-06-01",
@@ -1018,9 +1028,8 @@
                 linkUrl: "soutenance.html",
                 linkText: "Accéder au planning"
             },
-
             {
-            id: 12,
+                id: 12,
                 title: "PLANNING DES EXAMENS DE RATTRAPAGE ET DE DETTES SESSION 2 DES SEMESTRES IMPAIRS",
                 content: "Veuillez trouver les plannings des examens de rattrapage et de dettes session 2 des emestres impairs'\n ",
                 date: "2026-06-14",
@@ -1030,10 +1039,8 @@
                 linkUrl: "examens.html",
                 linkText: " => Accéder au planning"
             },
-
-
             {
-            id: 13,
+                id: 13,
                 title: "AVIS AUX ETUDIANTS DE L1-TC",
                 content: "En raison de la coïncidence de la journée de demain, mardi 16 juin 2026, avec Awal Mouharram, l'examen initialement programmé à cette date est reporté au mercredi 17 juin 2026, à la même heure et au même lieu.'\n'M. MAHTOUT Idir'\n'Chef du Département des Sciences de Gestion'\n",
                 date: "2026-06-14",
@@ -1044,7 +1051,7 @@
                 linkText: ""
             },
             {
-            id: 14,
+                id: 14,
                 title: "PLANNING DES SOUTENANCES / SESSION II",
                 content: "Veuillez consulter le planning des soutenances dans l'espace EXAMENS.\n ",
                 date: "2026-06-25",
@@ -1054,100 +1061,89 @@
                 linkUrl: "soutenance.html",
                 linkText: "Accéder aux plannings"
             },
-
- {
-  id: 15,
-  title: "Convocation",
-  content: 
-    "<p style='color: #000; font-size: 0.8em; margin: 0;'>Les étudiants dont les noms figurent ci-dessous sont convoqués au Secrétariat du département des Sciences de Gestion le mercredi 08/07/2026 à 13 h.</p><br>" +
-    "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse: collapse; font-size: 0.95em; width: 100%;'>" +
-    "<thead><tr style='background-color: #f8f9fa;'><th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Nom</th>" +
-    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Prénom</th>" +
-    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Niveau</th>" +
-    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Groupe</th></tr></thead>" +
-    "<tbody>" +
-    "<tr><td>ALVARO </td><td>Polo Mentero</td><td>L1</td><td>28</td></tr>" +
-    "<tr><td>EYOBELET-OBAKA</td><td>Josias-Euny</td><td>L1</td><td>33</td></tr>" +
-    "<tr><td>ESSTETI</td><td>Aya</td><td>L1</td><td>33</td></tr>" +
-    "<tr><td>FARES</td><td>Yasmina</td><td>L1</td><td>33</td></tr>" +  
-    "<tr><td>LAHRECHE Ania L2 05 G2</td><td>Ania</td><td>L2</td><td>05</td></tr>" +
-    "</tbody></table><br>" +
-    "<p style='color: #000; font-size: 1em; margin: 0;'><em>Merci de vous présenter muni(e) de votre carte d'étudiant.</em></p>",
-  date: "2026-07-06",
-  category: "Avis",
-  isUrgent: false
-},
-
-{
-    id: 16,
-    title: "Avis aux étudiants de L1-TC",
-    content: 
-        "<p>Dans le cadre de l'orientation vers les filières de 2ᵉ année, tous les étudiants de 1ʳᵉ année Tronc Commun sont invités à remplir obligatoirement la fiche de vœux d'orientation.</p>" +
-        "<p style='text-align:center;margin:15px 0;'>" +
-        "<a href='https://docs.google.com/forms/d/e/1FAIpQLScuhetop6gBCcIaiSyfAQxaYCeO6cf5LC4XYJWfL9Lr9oT07w/viewform?usp=sharing&ouid=116388335105191684869' target='_blank' style='background:#3b82f6;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;'>Accéder au formulaire de vœux</a>" +
-        "</p>" +
-        "<p><strong>Points importants :</strong></p>" +
-        "<div style='margin-left: 8px;'>" +
-        "<p style='margin-bottom: 4px;'>- Tous les étudiants doivent remplir la fiche, y compris ceux qui l'ont déjà faite.</p>" +
-        "<p style='margin-bottom: 4px;'>- Date limite : <strong>jeudi 16 juillet 2026</strong>.</p>" +
-        "<p style='margin-bottom: 4px;'>- Aucune fiche ne sera acceptée après cette date.</p>" +
-        "</div>" +
-        "<p><strong>Remarque :</strong> Après validation, vérifiez que vous avez reçu l'accusé de réception dans votre e-mail.</p>" +
-        "<p>Nous invitons l'ensemble des étudiants concernés à respecter ce délai.</p>" +
-        "<p style='margin-top:20px;padding-top:15px;border-top:1px solid #ddd;'>Mme TADJINE-DAHMOUNE Rhadia<br>Vice Doyenne Chargée des Etudes<br>FSECSG</p>",
-    date: "2026-07-14",
-    category: "Orientation",
-    isUrgent: false
-},
-
             {
-    id: 17,
-    title: "Résultats des affectations vers L3 et Master",
-    content: 
-        "<p> Consultez les résultats des orientations vers L3 et Master de la filière Sciences de gestion sur l'espace des orientation.</p>" +
-        "<p style='text-align:center;margin:15px 0;'>" +
-        "<a href='https://dsgestion.github.io/orientation.html' target='_blank' style='background:#3b82f6;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;'>Cliquez ici pour acéder</a>",
-        
-    date: "2026-07-17",
-    category: "Orientation",
-    isUrgent: false
-},
-
+                id: 15,
+                title: "Convocation",
+                content:
+                    "<p style='color: #000; font-size: 0.8em; margin: 0;'>Les étudiants dont les noms figurent ci-dessous sont convoqués au Secrétariat du département des Sciences de Gestion le mercredi 08/07/2026 à 13 h.</p><br>" +
+                    "<table border='1' cellpadding='6' cellspacing='0' style='border-collapse: collapse; font-size: 0.95em; width: 100%;'>" +
+                    "<thead><tr style='background-color: #f8f9fa;'><th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Nom</th>" +
+                    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Prénom</th>" +
+                    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Niveau</th>" +
+                    "<th style='padding: 6px; text-align: left; border: 1px solid #ddd;'>Groupe</th></tr></thead>" +
+                    "<tbody>" +
+                    "<tr><td>ALVARO </td><td>Polo Mentero</td><td>L1</td><td>28</td></tr>" +
+                    "<tr><td>EYOBELET-OBAKA</td><td>Josias-Euny</td><td>L1</td><td>33</td></tr>" +
+                    "<tr><td>ESSTETI</td><td>Aya</td><td>L1</td><td>33</td></tr>" +
+                    "<tr><td>FARES</td><td>Yasmina</td><td>L1</td><td>33</td></tr>" +
+                    "<tr><td>LAHRECHE Ania L2 05 G2</td><td>Ania</td><td>L2</td><td>05</td></tr>" +
+                    "</tbody></table><br>" +
+                    "<p style='color: #000; font-size: 1em; margin: 0;'><em>Merci de vous présenter muni(e) de votre carte d'étudiant.</em></p>",
+                date: "2026-07-06",
+                category: "Avis",
+                isUrgent: false
+            },
             {
-    id: 18,
-    title: "Recours sur les orientations L2 → L3 et L3 → Master",
-    content: 
-        "<p>Les étudiants concernés par les orientations peuvent déposer un recours via les liens ci-dessous :</p>" +
-        "<div style='display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0;'>" +
-        "<a href='https://forms.gle/6PEsJXWTxAiVRmiq8' target='_blank' style='flex:1; min-width:200px; text-decoration: none;'>" +
-        "<button style='width:100%; background: #059669; color: white; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px;'>Recours L2 → L3</button>" +
-        "</a>" +
-        "<a href='https://forms.gle/ssiKAiy8PbBHbycS9' target='_blank' style='flex:1; min-width:200px; text-decoration: none;'>" +
-        "<button style='width:100%; background: #0f172a; color: white; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px;'>Recours L3 → Master</button>" +
-        "</a>" +
-        "</div>" +
-        "<p style='font-size: 0.9em; color: #64748b;'>Les recours sont ouverts jusqu'au 19/07/2026 à 18h00.</p>",
-    date: "2026-07-18",
-    category: "Orientation",
-    isUrgent: false
-},
-
+                id: 16,
+                title: "Avis aux étudiants de L1-TC",
+                content:
+                    "<p>Dans le cadre de l'orientation vers les filières de 2ᵉ année, tous les étudiants de 1ʳᵉ année Tronc Commun sont invités à remplir obligatoirement la fiche de vœux d'orientation.</p>" +
+                    "<p style='text-align:center;margin:15px 0;'>" +
+                    "<a href='https://docs.google.com/forms/d/e/1FAIpQLScuhetop6gBCcIaiSyfAQxaYCeO6cf5LC4XYJWfL9Lr9oT07w/viewform?usp=sharing&ouid=116388335105191684869' target='_blank' style='background:#3b82f6;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;'>Accéder au formulaire de vœux</a>" +
+                    "</p>" +
+                    "<p><strong>Points importants :</strong></p>" +
+                    "<div style='margin-left: 8px;'>" +
+                    "<p style='margin-bottom: 4px;'>- Tous les étudiants doivent remplir la fiche, y compris ceux qui l'ont déjà faite.</p>" +
+                    "<p style='margin-bottom: 4px;'>- Date limite : <strong>jeudi 16 juillet 2026</strong>.</p>" +
+                    "<p style='margin-bottom: 4px;'>- Aucune fiche ne sera acceptée après cette date.</p>" +
+                    "</div>" +
+                    "<p><strong>Remarque :</strong> Après validation, vérifiez que vous avez reçu l'accusé de réception dans votre e-mail.</p>" +
+                    "<p>Nous invitons l'ensemble des étudiants concernés à respecter ce délai.</p>" +
+                    "<p style='margin-top:20px;padding-top:15px;border-top:1px solid #ddd;'>Mme TADJINE-DAHMOUNE Rhadia<br>Vice Doyenne Chargée des Etudes<br>FSECSG</p>",
+                date: "2026-07-14",
+                category: "Orientation",
+                isUrgent: false
+            },
             {
-    id: 19,
-    title: "ORIENTATIONS APRES TRAITEMENT DES RECOURS",
-    content: 
-        "<p> Consultez les résultats définitifs des orientations vers L3 et Master de la filière Sciences de gestion sur l'espace des orientation.</p>" +
-        "<p style='text-align:center;margin:15px 0;'>" +
-        "<a href='https://dsgestion.github.io/orientation.html' target='_blank' style='background:#B84B66;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;'>Cliquez ici pour acéder</a>",
-        
-    date: "2026-07-20",
-    category: "Orientation",
-    isUrgent: false
-}
-
-            
-    
-    
+                id: 17,
+                title: "Résultats des affectations vers L3 et Master",
+                content:
+                    "<p> Consultez les résultats des orientations vers L3 et Master de la filière Sciences de gestion sur l'espace des orientation.</p>" +
+                    "<p style='text-align:center;margin:15px 0;'>" +
+                    "<a href='https://dsgestion.github.io/orientation.html' target='_blank' style='background:#3b82f6;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;'>Cliquez ici pour acéder</a>",
+                date: "2026-07-17",
+                category: "Orientation",
+                isUrgent: false
+            },
+            {
+                id: 18,
+                title: "Recours sur les orientations L2 → L3 et L3 → Master",
+                content:
+                    "<p>Les étudiants concernés par les orientations peuvent déposer un recours via les liens ci-dessous :</p>" +
+                    "<div style='display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0;'>" +
+                    "<a href='https://forms.gle/6PEsJXWTxAiVRmiq8' target='_blank' style='flex:1; min-width:200px; text-decoration: none;'>" +
+                    "<button style='width:100%; background: #059669; color: white; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px;'>Recours L2 → L3</button>" +
+                    "</a>" +
+                    "<a href='https://forms.gle/ssiKAiy8PbBHbycS9' target='_blank' style='flex:1; min-width:200px; text-decoration: none;'>" +
+                    "<button style='width:100%; background: #0f172a; color: white; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 14px;'>Recours L3 → Master</button>" +
+                    "</a>" +
+                    "</div>" +
+                    "<p style='font-size: 0.9em; color: #64748b;'>Les recours sont ouverts jusqu'au 19/07/2026 à 18h00.</p>",
+                date: "2026-07-18",
+                category: "Orientation",
+                isUrgent: false
+            },
+            {
+                id: 19,
+                title: "ORIENTATIONS APRES TRAITEMENT DES RECOURS",
+                content:
+                    "<p> Consultez les résultats définitifs des orientations vers L3 et Master de la filière Sciences de gestion sur l'espace des orientation.</p>" +
+                    "<p style='text-align:center;margin:15px 0;'>" +
+                    "<a href='https://dsgestion.github.io/orientation.html' target='_blank' style='background:#B84B66;color:white;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;'>Cliquez ici pour acéder</a>",
+                date: "2026-07-20",
+                category: "Orientation",
+                isUrgent: false
+            }
         ];
 
         let currentFilter = "all";
@@ -1171,59 +1167,59 @@
             return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
-       function renderAnnonces() {
-    const container = document.getElementById('annoncesContainer');
-    let filtered = annoncesData.filter(item => currentFilter === 'all' || item.category === currentFilter);
-    filtered.sort((a, b) => {
-        if (a.date !== b.date) {
-            return new Date(b.date) - new Date(a.date);
-        }
-        return b.id - a.id;
-    });
-    const displayed = filtered.slice(0, visibleCount);
-    
-    if (displayed.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:60px; background:white; border-radius:16px;">
-            <i class="fas fa-bell-slash" style="font-size:48px; color:#cbd5e1; margin-bottom:16px; display:block;"></i>
-            <p>Aucune annonce dans cette catégorie pour le moment.</p>
-        </div>`;
-        return;
-    }
-    
-    container.innerHTML = displayed.map(item => {
-        // Construire le footer uniquement si nécessaire
-        let footerHtml = '';
-        if (item.isCustom) {
-            footerHtml = item.customHtml;
-        } else if (item.isLink) {
-            footerHtml = `
-                <div class="annonce-footer">
-                    <a href="${item.linkUrl}" class="btn-download btn-link" style="background: var(--primary); color: white; text-decoration: none;">
-                        <i class="fas fa-external-link-alt"></i> ${item.linkText || 'Accéder'}
-                    </a>
-                </div>
-            `;
-        }
-        // Si ni isLink ni isCustom, on n'affiche rien → footerHtml reste ''
-        
-        return `
-            <div class="annonce-card ${item.isUrgent ? 'urgent' : ''}">
-                <div class="annonce-badge ${item.isUrgent ? 'badge-urgent' : getCategoryClass(item.category)}">
-                    ${item.isUrgent ? '<i class="fas fa-exclamation-circle"></i> URGENT' : item.category}
-                </div>
-                <div class="annonce-content">
-                    <div class="annonce-category ${getCategoryClass(item.category)}">${item.category}</div>
-                    <h3>${item.title}</h3>
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-                        <span style="font-size: 11px; color: var(--text-light);"><i class="far fa-calendar-alt"></i> ${formatDate(item.date)}</span>
+        function renderAnnonces() {
+            const container = document.getElementById('annoncesContainer');
+            let filtered = annoncesData.filter(item => currentFilter === 'all' || item.category === currentFilter);
+            filtered.sort((a, b) => {
+                if (a.date !== b.date) {
+                    return new Date(b.date) - new Date(a.date);
+                }
+                return b.id - a.id;
+            });
+            const displayed = filtered.slice(0, visibleCount);
+
+            if (displayed.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding:60px; background:white; border-radius:16px;">
+                    <i class="fas fa-bell-slash" style="font-size:48px; color:#cbd5e1; margin-bottom:16px; display:block;"></i>
+                    <p>Aucune annonce dans cette catégorie pour le moment.</p>
+                </div>`;
+                return;
+            }
+
+            container.innerHTML = displayed.map(item => {
+                // Construire le footer uniquement si nécessaire
+                let footerHtml = '';
+                if (item.isCustom) {
+                    footerHtml = item.customHtml;
+                } else if (item.isLink) {
+                    footerHtml = `
+                        <div class="annonce-footer">
+                            <a href="${item.linkUrl}" class="btn-download btn-link" style="background: var(--primary); color: white; text-decoration: none;">
+                                <i class="fas fa-external-link-alt"></i> ${item.linkText || 'Accéder'}
+                            </a>
+                        </div>
+                    `;
+                }
+            
+
+                return `
+                    <div class="annonce-card ${item.isUrgent ? 'urgent' : ''}">
+                        <div class="annonce-badge ${item.isUrgent ? 'badge-urgent' : getCategoryClass(item.category)}">
+                            ${item.isUrgent ? '<i class="fas fa-exclamation-circle"></i> URGENT' : item.category}
+                        </div>
+                        <div class="annonce-content">
+                            <div class="annonce-category ${getCategoryClass(item.category)}">${item.category}</div>
+                            <h3>${item.title}</h3>
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                                <span style="font-size: 11px; color: var(--text-light);"><i class="far fa-calendar-alt"></i> ${formatDate(item.date)}</span>
+                            </div>
+                            <p style="white-space: pre-line;">${item.content}</p>
+                            ${footerHtml}
+                        </div>
                     </div>
-                    <p style="white-space: pre-line;">${item.content}</p>
-                    ${footerHtml}
-                </div>
-            </div>
-        `;
-    }).join('');
-}
+                `;
+            }).join('');
+        }
 
         function filterAnnonces(category) {
             currentFilter = category;
@@ -1251,7 +1247,7 @@
             document.getElementById('mainNav').classList.toggle('open');
         }
 
-        // Initialisation
+   
         renderAnnonces();
     </script>
 </body>
