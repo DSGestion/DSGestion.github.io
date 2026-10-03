@@ -316,7 +316,7 @@ footer{background:var(--secondary);color:#94a3b8;padding:40px 24px 30px;margin-t
 </div>
 </div>
 <div class="quick-row" id="teacherGroupRow" style="display:none;">
-<span class="quick-label"><i class="fas fa-layer-group"></i> Niveau/Spécialité</span>
+<span class="quick-label"><i class="fas fa-layer-group"></i> Classe / Section</span>
 <div class="combobox" id="groupCombobox">
 <input type="text" id="groupComboInput" class="combobox-input" placeholder="Toutes les classes..." autocomplete="off" spellcheck="false">
 <button type="button" class="combobox-toggle" id="groupComboToggle" tabindex="-1"><i class="fas fa-chevron-down"></i></button>
@@ -1241,7 +1241,7 @@ function openExportSiteDialog() {
     var subtitle = document.getElementById('exportModalSubtitle');
     subtitle.innerHTML = 'Cochez les <strong>niveaux et sections/spécialités</strong> à inclure. Le fichier <strong>index.html</strong> généré sera prêt à publier sur GitHub Pages.';
 
-    // ?? ZONE D'OPTION — checkbox pour afficher/masquer les charges enseignants
+    // 🔑 ZONE D'OPTION — checkbox pour afficher/masquer les charges enseignants
     var optZone = document.getElementById('exportOptionZone');
     optZone.innerHTML = ''
         + '<label class="export-option-line" for="exportShowCharges">'
@@ -1359,7 +1359,7 @@ function confirmExportView() {
         html += '</body></html>';
         downloadHTML(html, 'Emploi_' + safeName(sections[0].title) + '.html');
         closeExportDialog();
-        showToast('? Export réussi !', 'success');
+        showToast('✅ Export réussi !', 'success');
     } catch (e) { console.error(e); showToast('Erreur : ' + e.message, 'error'); }
 }
 
@@ -1370,13 +1370,13 @@ function confirmExportSite() {
         var filteredData = buildFilteredDataForSite(selected);
         var totalLevels = Object.keys(filteredData).length;
         if (totalLevels === 0) { showToast('Aucune donnée à exporter.', 'error'); return; }
-        // ?? On récupère l'état de la checkbox
+        // 🔑 On récupère l'état de la checkbox
         var cb = document.getElementById('exportShowCharges');
         if (cb) exportSiteShowCharges = !!cb.checked;
         var siteHTML = buildSiteHTML(filteredData, exportSiteShowCharges);
         downloadHTML(siteHTML, 'index.html');
         closeExportDialog();
-        showToast('? Site généré avec ' + totalLevels + ' niveau(x) !', 'success');
+        showToast('✅ Site généré avec ' + totalLevels + ' niveau(x) !', 'success');
     } catch (e) { console.error(e); showToast('Erreur : ' + e.message, 'error'); }
 }
 
