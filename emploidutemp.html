@@ -1,4 +1,13 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Emplois du temps — FSECSG, UMMTO</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><style>
+local html = [==[
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emplois du temps - Département des Sciences de Gestion</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
 :root{--primary:#059669;--primary-dark:#047857;--primary-light:#d1fae5;--secondary:#0f172a;--secondary-light:#1e293b;--accent:#f59e0b;--danger:#e11d48;--blue:#0284c7;--purple:#7c3aed;--text:#334155;--text-light:#64748b;--text-dark:#0f172a;--border:#e2e8f0;--grid-line:#475569;--shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -2px rgba(0,0,0,0.1);--shadow-lg:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -4px rgba(0,0,0,0.1);--shadow-xl:0 20px 25px -5px rgba(0,0,0,0.1),0 8px 10px -6px rgba(0,0,0,0.1);--radius:16px;--radius-sm:12px;--radius-xs:8px}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -6,15 +15,25 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(180deg,#f0fdf4 0%
 h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-dark)}
 .top-bar{background:linear-gradient(90deg,var(--primary-dark),var(--primary));color:white;text-align:center;padding:10px 20px;font-size:13px;font-weight:500;letter-spacing:0.3px}
 header{background:rgba(15,23,42,0.98);backdrop-filter:blur(10px);position:sticky;top:0;z-index:1000;box-shadow:var(--shadow-lg)}
-.header-main{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1280px;margin:0 auto}
-.logo{display:flex;align-items:center;gap:14px}
-.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;color:white;font-size:20px;box-shadow:0 4px 12px rgba(5,150,105,0.3)}
+.header-main{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 24px;max-width:1280px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;color:white;font-size:20px;box-shadow:0 4px 12px rgba(5,150,105,0.3);flex-shrink:0}
 .logo-text h1{font-size:17px;color:white;font-weight:700;letter-spacing:-0.2px}
 .logo-text p{font-size:11px;color:#94a3b8;font-weight:500}
+.home-btn{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border:none;border-radius:var(--radius-xs);font-family:'Inter',sans-serif;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 12px rgba(5,150,105,0.35);white-space:nowrap;flex-shrink:0}
+.home-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(5,150,105,0.5);background:linear-gradient(135deg,#10b981,#059669)}
+.home-btn i{font-size:14px}
 main{flex:1;padding:32px 24px 48px;max-width:1400px;margin:0 auto;width:100%}
-.page-header{text-align:center;margin-bottom:32px}
+.page-header{text-align:center;margin-bottom:24px}
 .page-header h2{font-size:36px;color:var(--secondary);margin-bottom:12px;font-weight:700}
 .page-header p{color:var(--text-light);font-size:15px;max-width:500px;margin:0 auto}
+.view-mode-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.view-tab{padding:12px 26px;background:white;border:2px solid var(--border);border-radius:100px;font-size:13px;font-weight:700;color:var(--text);cursor:pointer;transition:all 0.25s;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:9px;box-shadow:var(--shadow-md)}
+.view-tab:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px)}
+.view-tab i{font-size:14px}
+.view-tab.active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border-color:var(--primary-dark);box-shadow:0 8px 20px -4px rgba(16,185,129,0.4)}
+.view-tab.active i{color:white}
+.view-tab[data-mode="enseignant"].active{background:linear-gradient(135deg,var(--purple),#6d28d9);border-color:#6d28d9;box-shadow:0 8px 20px -4px rgba(124,58,237,0.4)}
 .cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:800px;margin:0 auto 32px;width:100%}
 .option-card{position:relative;background:white;border:2px solid var(--border);border-radius:var(--radius-sm);padding:20px 12px;text-align:center;cursor:pointer;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--text);overflow:hidden}
 .option-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-xl);border-color:#cbd5e1}
@@ -22,18 +41,44 @@ main{flex:1;padding:32px 24px 48px;max-width:1400px;margin:0 auto;width:100%}
 .option-card:hover .card-icon{transform:scale(1.1)}
 .option-card.active-niveau{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:white;border-color:var(--primary-dark);box-shadow:0 12px 24px -8px rgba(16,185,129,0.4);transform:translateY(-2px)}
 .option-card.active-niveau .card-icon{background:rgba(255,255,255,0.2);color:white}
-.quick-selectors{display:flex;flex-direction:column;gap:14px;background:white;border-radius:var(--radius);border:1px solid var(--border);padding:18px 20px;margin-bottom:24px;box-shadow:var(--shadow-md)}
+.quick-selectors{display:flex;flex-direction:column;gap:14px;background:white;border-radius:var(--radius);border:1px solid var(--border);padding:18px 20px;margin-bottom:24px;box-shadow:var(--shadow-md);overflow:visible}
 .quick-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.quick-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);min-width:110px;display:inline-flex;align-items:center;gap:6px}
+.quick-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);min-width:130px;display:inline-flex;align-items:center;gap:6px}
 .quick-label i{color:var(--primary);font-size:13px}
 .quick-pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
 .quick-pill{padding:9px 18px;background:white;border:2px solid var(--border);border-radius:100px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px}
 .quick-pill:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .quick-pill.active{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:white;border-color:var(--primary-dark);box-shadow:0 6px 16px -4px rgba(16,185,129,0.4)}
 .quick-pill.spec-pill.active{background:linear-gradient(135deg,var(--blue),#0369a1);border-color:#0369a1;box-shadow:0 6px 16px -4px rgba(2,132,199,0.4)}
+.combobox{position:relative;flex:1;max-width:520px;display:flex;align-items:center;min-width:200px}
+.combobox-input{padding:11px 42px 11px 16px;font-size:13.5px;font-weight:500;border:2px solid var(--border);border-radius:10px;background:white;color:var(--text-dark);outline:none;font-family:'Inter',sans-serif;transition:all 0.2s;width:100%}
+.combobox-input:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(124,58,237,0.12)}
+.combobox-input::placeholder{color:#94a3b8;font-weight:400}
+.combobox-toggle{position:absolute;right:6px;background:transparent;border:none;color:var(--text-light);cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.15s}
+.combobox-toggle:hover{background:#f1f5f9;color:var(--purple)}
+.combobox-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border:2px solid var(--border);border-radius:12px;max-height:340px;overflow-y:auto;box-shadow:0 20px 40px -10px rgba(0,0,0,0.25);z-index:200;display:none;padding:4px}
+.combobox-dropdown.open{display:block;animation:dropIn 0.18s ease-out}
+@keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.combobox-option{padding:10px 14px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:8px;transition:background 0.12s;color:var(--text-dark)}
+.combobox-option:hover,.combobox-option.highlight{background:#f0fdf4}
+.combobox-option.selected{background:linear-gradient(90deg,#ede9fe,#f5f3ff);color:#5b21b6;font-weight:700}
+.combobox-option .opt-name{flex:1;display:flex;align-items:center;min-width:0}
+.combobox-option .opt-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.combobox-option .opt-count{font-size:11px;font-weight:700;padding:2px 9px;border-radius:100px;background:rgba(124,58,237,0.12);color:#5b21b6;flex-shrink:0}
+.combobox-option.selected .opt-count{background:rgba(124,58,237,0.25)}
+.combobox-empty{padding:18px;text-align:center;color:var(--text-light);font-size:12.5px;font-style:italic}
+.combobox-empty i{display:block;font-size:22px;margin-bottom:8px;color:#cbd5e1;font-style:normal}
+.dept-load-banner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#ede9fe 0%,#f5f3ff 100%);border:2px solid #a78bfa;border-radius:12px;padding:14px 18px;box-shadow:0 4px 12px rgba(124,58,237,0.12);flex-wrap:wrap}
+.dept-load-banner .dlb-icon{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 4px 12px rgba(124,58,237,0.35)}
+.dept-load-banner .dlb-text{font-size:15px;font-weight:700;color:#4c1d95;line-height:1.4}
+.dept-load-banner .dlb-text .dlb-value{color:#5b21b6;font-family:'Playfair Display',serif;font-size:22px;font-weight:800;margin-left:6px;letter-spacing:-0.3px;vertical-align:middle}
+.dept-load-banner .dlb-teacher{color:#6d28d9;font-style:italic;font-weight:800}
 .result-section{animation:fadeInUp 0.6s ease-out both}
 .result-header{text-align:center;margin-bottom:20px}
 .result-header h3{font-size:22px;color:var(--secondary);font-weight:700;margin-bottom:6px}
+.result-header h3 i.header-icon{font-size:19px;margin-right:8px;vertical-align:middle}
+.result-header h3 .h3-ctx{color:var(--purple);font-weight:700}
+.result-header h3 .h3-pdf{color:#dc2626;font-weight:700;font-size:0.75em;margin-left:10px;vertical-align:middle}
 .group-filter-bar{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:2px solid #f59e0b;border-radius:12px;padding:14px 20px;margin-bottom:16px;flex-wrap:wrap;box-shadow:0 4px 12px rgba(245,158,11,0.15)}
 .group-filter-bar label{font-size:13px;font-weight:700;color:#78350f;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:0.5px;margin:0}
 .group-filter-bar label i{color:#d97706;font-size:15px}
@@ -56,6 +101,7 @@ main{flex:1;padding:32px 24px 48px;max-width:1400px;margin:0 auto;width:100%}
 .cell-module{padding:4px 5px;border-radius:5px;margin-bottom:3px;font-size:10px;line-height:1.25;border-left:3px solid;background:#f1f5f9;color:var(--text-dark);transition:transform 0.2s,box-shadow 0.2s}
 .cell-module:hover{transform:translateX(2px);box-shadow:var(--shadow-md)}
 .cell-module:last-child{margin-bottom:0}
+.cell-module .cm-ctx{display:inline-block;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:3px;background:rgba(124,58,237,0.14);color:#5b21b6;letter-spacing:0.2px;margin-bottom:3px;text-transform:uppercase}
 .cell-module .cm-module-name{font-weight:800;display:block;margin-bottom:2px;font-size:10.5px;color:#0f172a;line-height:1.2}
 .cell-module .cm-type{display:inline-block;padding:1px 5px;border-radius:3px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;margin-right:3px;vertical-align:middle;line-height:1.3}
 .cell-module .cm-info-row{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;color:var(--text-light);vertical-align:middle;margin-right:4px;line-height:1.3}
@@ -78,6 +124,19 @@ main{flex:1;padding:32px 24px 48px;max-width:1400px;margin:0 auto;width:100%}
 .pending-message{text-align:center;padding:50px 20px;background:white;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-md)}
 .pending-message i{font-size:48px;color:#93c5fd;margin-bottom:14px;display:block}
 .pending-message p{font-size:15px;font-weight:600;color:#1e40af}
+.pending-message.teacher i{color:#c4b5fd}
+.pending-message.teacher p{color:#5b21b6}
+.pdf-viewer-wrapper{background:white;border-radius:var(--radius);border:2px solid var(--grid-line);box-shadow:var(--shadow-lg);margin-bottom:24px;overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - 260px);min-height:620px}
+.pdf-viewer-header{background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);color:white;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.pdf-viewer-header .pdf-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}
+.pdf-viewer-header .pdf-title i{font-size:16px}
+.pdf-viewer-header .pdf-open-btn{background:rgba(255,255,255,0.2);color:white;border:1.5px solid rgba(255,255,255,0.35);padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all 0.2s;text-decoration:none;font-family:'Inter',sans-serif}
+.pdf-viewer-header .pdf-open-btn:hover{background:rgba(255,255,255,0.35);transform:translateY(-1px)}
+.pdf-iframe{flex:1;width:100%;border:none;background:#f1f5f9;display:block}
+.pdf-fallback{padding:30px 20px;text-align:center;color:var(--text-light);font-size:13.5px;background:#f8fafc;border-top:1px solid var(--border)}
+.pdf-fallback i{display:block;font-size:36px;color:#cbd5e1;margin-bottom:12px}
+.pdf-fallback a{color:#dc2626;font-weight:700;text-decoration:none}
+.pdf-fallback a:hover{text-decoration:underline}
 .info-section{background:linear-gradient(135deg,var(--primary-light) 0%,#ecfdf5 100%);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border:1px solid #bbf7d0}
 .legend-section{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .legend-item{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--primary-dark)}
@@ -108,6 +167,15 @@ main{flex:1;padding:32px 24px 48px;max-width:1400px;margin:0 auto;width:100%}
 .export-toolbar-btn:hover{border-color:var(--primary);color:var(--primary);background:#f0fdf4}
 .export-toolbar-btn.primary{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;border-color:transparent}
 .export-toolbar-btn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 16px -4px rgba(79,70,229,0.4)}
+
+/* ==== OPTION LINE (checkbox charge enseignant) ==== */
+.export-option-line{display:flex;align-items:center;gap:12px;padding:14px 24px;background:linear-gradient(135deg,#ede9fe 0%,#f5f3ff 100%);border-bottom:1px solid #c4b5fd;cursor:pointer;transition:background 0.2s}
+.export-option-line:hover{background:linear-gradient(135deg,#ddd6fe 0%,#ede9fe 100%)}
+.export-option-line input[type="checkbox"]{width:20px;height:20px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0}
+.export-option-line .eol-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:white;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;box-shadow:0 4px 10px rgba(124,58,237,0.3)}
+.export-option-line .eol-text{flex:1;font-size:13px;font-weight:700;color:#4c1d95;line-height:1.35}
+.export-option-line .eol-text small{display:block;font-size:11px;font-weight:600;color:#6d28d9;opacity:0.8;margin-top:2px;font-style:italic}
+
 .export-modal-body{flex:1;overflow-y:auto;padding:16px 24px}
 .export-group-header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:10px;margin-bottom:8px;cursor:pointer;transition:all 0.2s}
 .export-group-header:hover{border-color:#22c55e;background:linear-gradient(135deg,#dcfce7,#bbf7d0)}
@@ -142,6 +210,14 @@ footer{background:var(--secondary);color:#94a3b8;padding:40px 24px 30px;margin-t
 @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @media (max-width:768px){
   .page-header h2{font-size:26px}
+  .header-main{padding:12px 14px;gap:8px}
+  .logo-text h1{font-size:14px}
+  .logo-text p{font-size:10px}
+  .logo-icon{width:38px;height:38px;font-size:17px}
+  .home-btn{padding:9px 14px;font-size:12px}
+  .home-btn span{display:none}
+  .home-btn i{font-size:15px}
+  .view-tab{padding:10px 18px;font-size:12px}
   .cards-grid{grid-template-columns:repeat(2,1fr);gap:12px}
   .option-card{padding:16px 8px;font-size:12px}
   .option-card .card-icon{width:40px;height:40px;font-size:16px}
@@ -154,9 +230,1669 @@ footer{background:var(--secondary);color:#94a3b8;padding:40px 24px 30px;margin-t
   .horaire-cell .h-end{font-size:8.5px}
   .horaire-cell .h-sep{width:10px;margin:1px 0}
   .cell-module{font-size:9.5px;padding:3px 4px}
-  .quick-label{min-width:auto}
+  .cell-module .cm-ctx{font-size:8px;padding:1px 4px}
+  .quick-label{min-width:auto;font-size:11px}
   .group-filter-bar{flex-direction:column;align-items:stretch}
   .group-filter-select{width:100%}
+  .combobox{max-width:100%;width:100%}
+  .combobox-input{font-size:16px}
+  .pdf-viewer-wrapper{height:calc(100vh - 200px);min-height:450px}
+  .result-header h3{font-size:18px}
+  .dept-load-banner{padding:11px 14px}
+  .dept-load-banner .dlb-icon{width:36px;height:36px;font-size:15px}
+  .dept-load-banner .dlb-text{font-size:13px}
+  .dept-load-banner .dlb-text .dlb-value{font-size:18px}
+  .export-option-line{padding:12px 16px}
+  .export-option-line .eol-text{font-size:12px}
 }
-@media print{.top-bar,header,.cards-grid,.quick-selectors,.info-section,.export-modal-overlay,.group-filter-bar,footer{display:none !important}body{background:white}main{padding:20px;max-width:100%}.timetable-wrapper{border:none;box-shadow:none;max-height:none;overflow:visible}.timetable thead th{background:#0f172a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;position:static !important;box-shadow:none !important}.timetable tbody td:first-child{position:static !important;box-shadow:none !important;background:#f1f5f9 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cell-module{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-</style></head><body><div class="top-bar">Faculté des Sciences Économiques, Commerciales et des Sciences de Gestion</div><header><div class="header-main"><div class="logo"><div class="logo-icon"><i class="fas fa-graduation-cap"></i></div><div class="logo-text"><h1>Sciences de Gestion</h1><p>FSECSG, UMMTO</p></div></div></div></header><main><div class="page-header"><h2>Emplois du temps</h2><p>Année Universitaire 2026/2027</p></div><div class="cards-grid" id="levelsGrid"><div class="option-card" data-niveau="licence2"><div class="card-icon"><i class="fas fa-user-graduate"></i></div><span>Licence 2 Gestion</span></div><div class="option-card" data-niveau="licence3"><div class="card-icon"><i class="fas fa-user-graduate"></i></div><span>Licence 3</span></div><div class="option-card" data-niveau="master1"><div class="card-icon"><i class="fas fa-university"></i></div><span>Master 1</span></div></div><div id="quickSelectors" class="quick-selectors" style="display:none;"><div class="quick-row" id="semQuickRow" style="display:none;"><span class="quick-label"><i class="fas fa-calendar-alt"></i> Semestre</span><div class="quick-pills" id="semQuickPills"></div></div><div class="quick-row" id="specQuickRow" style="display:none;"><span class="quick-label"><i class="fas fa-bookmark"></i> Section / Spécialité</span><div class="quick-pills" id="specQuickPills"></div></div></div><div id="resultSection" style="display:none;"><div class="result-header" id="resultHeader"></div><div id="groupFilterBar" class="group-filter-bar" style="display:none;"><label><i class="fas fa-users"></i> Choisissez votre groupe TD</label><select id="groupFilterSelect" class="group-filter-select"><option value="">Tous les groupes</option></select><span class="group-filter-info">Sélectionnez votre numéro de groupe pour ne voir que vos TD.</span></div><div class="timetable-wrapper" id="timetable-container"></div><div class="info-section" id="infoSection" style="display:none;margin-top:20px;"><div class="legend-section"><span class="legend-item"><span class="legend-dot CM"></span> CM — Cours Magistral</span><span class="legend-item"><span class="legend-dot G"></span> G — Groupe (TD)</span><span class="legend-item"><span class="legend-dot TP"></span> TP — Travaux Pratiques</span></div><button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimer</button></div></div></main><footer><div class="footer-bottom"><p>&copy; 2026 Département des Sciences de Gestion &mdash; FSECSG, Université Mouloud MAMMERI Tizi Ouzou</p></div></footer><script>var emploiData = {"licence2":{"label":"Licence 2 Gestion","specialites":{"L2.SG":{"label":"L2.SG","fullName":"L2.SG","abreviation":"","semestres":{"semestre3":[{"j":0,"h":2,"module":"Mathématiques fin","type":"TD","salle":"A.2","ens":"HACHEMI Z.","grp":"7"},{"j":0,"h":3,"module":"Méthodologie","type":"TD","salle":"A.2","ens":"LOGAR R.","grp":"8"},{"j":0,"h":4,"module":"Mathématiques fin","type":"TD","salle":"A.2","ens":"HACHEMI Z.","grp":"8"},{"j":2,"h":0,"module":"Statistiques 3","type":"TD","salle":"A.2","ens":"LIAZIDI N.","grp":"8"},{"j":2,"h":4,"module":"Macroéco 1","type":"TD","salle":"A.2","ens":"LAZIB L.","grp":"5"},{"j":3,"h":2,"module":"Macroéco 1","type":"TD","salle":"A.2","ens":"MOULAI K.","grp":"8"},{"j":3,"h":3,"module":"Méthodologie","type":"TD","salle":"A.2","ens":"LOGAR R.","grp":"7"},{"j":3,"h":4,"module":"Macroéco 1","type":"TD","salle":"A.2","ens":"MOULAI K.","grp":"7"},{"j":4,"h":0,"module":"Comptabilité de gest","type":"TD","salle":"A.2","ens":"HADJOU A.","grp":"2"},{"j":4,"h":1,"module":"Macroéco 1","type":"TD","salle":"A.2","ens":"LAZIB L.","grp":"2"},{"j":4,"h":2,"module":"Méthodologie","type":"TD","salle":"A.2","ens":"OULD-TALEB O.","grp":"2"},{"j":4,"h":3,"module":"Mathématiques fin","type":"TD","salle":"A.2","ens":"ZOUAIMIA N.","grp":"2"},{"j":0,"h":2,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.3","ens":"BOUKROU A.","grp":"5"},{"j":0,"h":3,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.3","ens":"BOUKROU A.","grp":"2"},{"j":0,"h":4,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.3","ens":"BOUKROU A.","grp":"4"},{"j":1,"h":3,"module":"Finance pub","type":"TD","salle":"A.3","ens":"DAHMOUNI A.","grp":"7"},{"j":2,"h":4,"module":"Statistiques 3","type":"TD","salle":"A.3","ens":"LIAZIDI N.","grp":"2"},{"j":2,"h":5,"module":"Statistiques 3","type":"TD","salle":"A.3","ens":"BENCHABANE T.","grp":"6"},{"j":3,"h":3,"module":"Macroéco 1","type":"TD","salle":"A.3","ens":"MOULAI K.","grp":"6"},{"j":3,"h":4,"module":"Méthodologie","type":"TD","salle":"A.3","ens":"LOGAR R.","grp":"6"},{"j":4,"h":0,"module":"Méthodologie","type":"TD","salle":"A.3","ens":"OULD-TALEB O.","grp":"3"},{"j":4,"h":1,"module":"Mathématiques fin","type":"TD","salle":"A.3","ens":"ZOUAIMIA N.","grp":"3"},{"j":4,"h":2,"module":"Macroéco 1","type":"TD","salle":"A.3","ens":"LAZIB L.","grp":"3"},{"j":4,"h":3,"module":"Comptabilité de gest","type":"TD","salle":"A.3","ens":"HADJOU A.","grp":"3"},{"j":1,"h":3,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.4","ens":"KHODJA M.","grp":"6"},{"j":1,"h":4,"module":"Finance pub","type":"TD","salle":"A.4","ens":"DAHMOUNI A.","grp":"8"},{"j":3,"h":3,"module":"Finance pub","type":"TD","salle":"A.4","ens":"KHAZNADJI M.","grp":"4"},{"j":3,"h":4,"module":"Finance pub","type":"TD","salle":"A.4","ens":"KHAZNADJI M.","grp":"2"},{"j":4,"h":0,"module":"Mathématiques fin","type":"TD","salle":"A.4","ens":"ZOUAIMIA N.","grp":"4"},{"j":4,"h":1,"module":"Méthodologie","type":"TD","salle":"A.4","ens":"OULD-TALEB O.","grp":"4"},{"j":3,"h":3,"module":"Statistiques 3","type":"TD","salle":"A.5","ens":"LIAZIDI N.","grp":"3"},{"j":3,"h":4,"module":"Statistiques 3","type":"TD","salle":"A.5","ens":"LIAZIDI N.","grp":"1"},{"j":4,"h":0,"module":"Mathématiques fin","type":"TD","salle":"A.5","ens":"HACHEMI Z.","grp":"5"},{"j":4,"h":1,"module":"Comptabilité de gest","type":"TD","salle":"A.5","ens":"GUERMAH H.","grp":"5"},{"j":4,"h":3,"module":"Finance pub","type":"TD","salle":"A.5","ens":"DAHMOUNI A.","grp":"5"},{"j":0,"h":2,"module":"Finance pub","type":"TD","salle":"A.6","ens":"KHAZNADJI M.","grp":"1"},{"j":3,"h":4,"module":"Comptabilité de gest","type":"TD","salle":"A.6","ens":"GUERMAH H.","grp":"8"},{"j":4,"h":0,"module":"Comptabilité de gest","type":"TD","salle":"A.6","ens":"GUERMAH H.","grp":"6"},{"j":4,"h":1,"module":"Mathématiques fin","type":"TD","salle":"A.6","ens":"HACHEMI Z.","grp":"6"},{"j":4,"h":2,"module":"Finance pub","type":"TD","salle":"A.6","ens":"DAHMOUNI A.","grp":"6"},{"j":4,"h":3,"module":"Macroéco 1","type":"TD","salle":"A.6","ens":"LAZIB L.","grp":"4"},{"j":0,"h":3,"module":"Finance pub","type":"TD","salle":"A.7","ens":"KHAZNADJI M.","grp":"3"},{"j":4,"h":1,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.7","ens":"MAACHA D.","grp":"7"},{"j":3,"h":2,"module":"Mathématiques fin","type":"TD","salle":"A.8","ens":"ZOUAIMIA N.","grp":"5"},{"j":4,"h":0,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.8","ens":"MAACHA D.","grp":"8"},{"j":4,"h":3,"module":"Comptabilité de gest","type":"TD","salle":"A.9","ens":"GUERMAH H.","grp":"7"},{"j":3,"h":3,"module":"Méthodologie","type":"TD","salle":"A.10","ens":"OULD-TALEB O.","grp":"5"},{"j":1,"h":4,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.11","ens":"BOUKROU A.","grp":"1"},{"j":2,"h":4,"module":"Statistiques 3","type":"TD","salle":"A.11","ens":"BENCHABANE T.","grp":"7"},{"j":3,"h":2,"module":"Introduction à l'IA","type":"TD","salle":"A.11","ens":"-----","grp":"2"},{"j":3,"h":3,"module":"Introduction à l'IA","type":"TD","salle":"A.11","ens":"-----","grp":"1"},{"j":3,"h":4,"module":"Introduction à l'IA","type":"TD","salle":"A.11","ens":"-----","grp":"3"},{"j":1,"h":3,"module":"Fondamentaux du mgt mod 1","type":"TD","salle":"A.12","ens":"BOUKROU A.","grp":"3"},{"j":3,"h":2,"module":"Statistiques 3","type":"TD","salle":"A.12","ens":"LIAZIDI N.","grp":"4"},{"j":0,"h":0,"module":"Finance pub","type":"CM","salle":"Amphi AMZAL","ens":"KHAZNADJI M.","grp":""},{"j":0,"h":1,"module":"Fondamentaux du mgt mod 1","type":"CM","salle":"Amphi AMZAL","ens":"BOUKROU A.","grp":""},{"j":0,"h":5,"module":"Anglais éco gl","type":"CM","salle":"Amphi AMZAL","ens":"FELLAH D.","grp":""},{"j":1,"h":0,"module":"Comptabilité de gest","type":"CM","salle":"Amphi AMZAL","ens":"HADJOU A.","grp":""},{"j":1,"h":1,"module":"Comptabilité de gest","type":"CM","salle":"Amphi AMZAL","ens":"HADJOU A.","grp":""},{"j":1,"h":2,"module":"Introduction à l'IA","type":"CM","salle":"Amphi AMZAL","ens":"OUDNI N.","grp":""},{"j":2,"h":2,"module":"Macroéco 1","type":"CM","salle":"Amphi AMZAL","ens":"LAZIB L.","grp":""},{"j":2,"h":3,"module":"Statistiques 3","type":"CM","salle":"Amphi AMZAL","ens":"LIAZIDI N.","grp":""},{"j":3,"h":0,"module":"Mathématiques fin","type":"CM","salle":"Amphi AMZAL","ens":"ZOUAIMIA N.","grp":""},{"j":3,"h":1,"module":"Méthodologie","type":"CM","salle":"Amphi AMZAL","ens":"OULD-TALEB O.","grp":""},{"j":3,"h":5,"module":"Économie mon","type":"CM","salle":"Amphi AMZAL","ens":"DAHMOUNI A.","grp":""},{"j":4,"h":0,"module":"Macroéco 1","type":"TD","salle":"C.1","ens":"LAZIB L.","grp":"1"},{"j":4,"h":1,"module":"Comptabilité de gest","type":"TD","salle":"C.1","ens":"HADJOU A.","grp":"1"},{"j":4,"h":2,"module":"Mathématiques fin","type":"TD","salle":"C.1","ens":"ZOUAIMIA N.","grp":"1"},{"j":4,"h":3,"module":"Méthodologie","type":"TD","salle":"C.1","ens":"OULD-TALEB O.","grp":"1"},{"j":1,"h":4,"module":"Introduction à l'IA","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"4"}]},"hasCourses":true}}},"licence3":{"label":"Licence 3","specialites":{"L3.MGT":{"label":"L3.MGT","fullName":"L3.MGT","abreviation":"L3.MGT","semestres":{"semestre5":[{"j":2,"h":3,"module":"Management des proj","type":"TD","salle":"A.2","ens":"TARMOUL C.","grp":"3"},{"j":3,"h":0,"module":"MRH","type":"TD","salle":"A.2","ens":"KHODJA M.","grp":"2"},{"j":3,"h":1,"module":"Techniques de sondage","type":"TD","salle":"A.2","ens":"ZAADI S.","grp":"4"},{"j":2,"h":3,"module":"MRH","type":"TD","salle":"A.3","ens":"KHODJA M.","grp":"4"},{"j":4,"h":3,"module":"Anglais","type":"TD","salle":"A.4","ens":"FELLAH D.","grp":"1"},{"j":2,"h":2,"module":"MRH","type":"TD","salle":"A.5","ens":"KHODJA M.","grp":"1"},{"j":3,"h":2,"module":"Management  de la TI","type":"TD","salle":"A.5","ens":"MEKSEM A.","grp":"4"},{"j":3,"h":0,"module":"Droit des aff","type":"TD","salle":"A.6","ens":"-----","grp":"3"},{"j":3,"h":1,"module":"MRH","type":"TD","salle":"A.6","ens":"KHODJA M.","grp":"3"},{"j":3,"h":2,"module":"Management fin.","type":"TD","salle":"A.6","ens":"MAHOUCHE Y.","grp":"2"},{"j":1,"h":2,"module":"Droit des aff","type":"TD","salle":"A.7","ens":"-----","grp":"4"},{"j":3,"h":1,"module":"Droit des aff","type":"TD","salle":"A.7","ens":"-----","grp":"2"},{"j":3,"h":2,"module":"Droit des aff","type":"TD","salle":"A.7","ens":"-----","grp":"1"},{"j":4,"h":1,"module":"Management  de la TI","type":"TD","salle":"A.8","ens":"MEKSEM A.","grp":"2"},{"j":4,"h":2,"module":"Anglais","type":"TD","salle":"A.8","ens":"FELLAH D.","grp":"2"},{"j":4,"h":3,"module":"Structure et Org de l'Ese","type":"TD","salle":"A.8","ens":"ZERKHEFAOUI L.","grp":"2"},{"j":1,"h":2,"module":"Management des proj","type":"TD","salle":"A.9","ens":"MEKSEM N.","grp":"1"},{"j":2,"h":2,"module":"Management des proj","type":"TD","salle":"A.10","ens":"RACHEDI A.","grp":"2"},{"j":4,"h":0,"module":"Management  de la TI","type":"TD","salle":"A.10","ens":"MEKSEM A.","grp":"1"},{"j":4,"h":1,"module":"Management fin.","type":"TD","salle":"A.10","ens":"MAHOUCHE Y.","grp":"1"},{"j":4,"h":2,"module":"Structure et Org de l'Ese","type":"TD","salle":"A.10","ens":"ZERKHEFAOUI L.","grp":"1"},{"j":1,"h":3,"module":"Management des proj","type":"TD","salle":"A.11","ens":"MEKSEM N.","grp":"4"},{"j":4,"h":0,"module":"Anglais","type":"TD","salle":"A.11","ens":"FELLAH D.","grp":"4"},{"j":4,"h":1,"module":"Structure et Org de l'Ese","type":"TD","salle":"A.11","ens":"ZERKHEFAOUI L.","grp":"4"},{"j":4,"h":2,"module":"Management fin.","type":"TD","salle":"A.11","ens":"MAHOUCHE Y.","grp":"4"},{"j":4,"h":0,"module":"Structure et Org de l'Ese","type":"TD","salle":"A.12","ens":"ZERKHEFAOUI L.","grp":"3"},{"j":4,"h":1,"module":"Anglais","type":"TD","salle":"A.12","ens":"FELLAH D.","grp":"3"},{"j":4,"h":2,"module":"Management  de la TI","type":"TD","salle":"A.12","ens":"MEKSEM A.","grp":"3"},{"j":4,"h":3,"module":"Management fin.","type":"TD","salle":"A.12","ens":"MAHOUCHE Y.","grp":"3"},{"j":2,"h":0,"module":"Management des proj","type":"CM","salle":"Amphi AMZAL","ens":"RACHEDI A.","grp":""},{"j":2,"h":1,"module":"Structure et Org de l'Ese","type":"CM","salle":"Amphi AMZAL","ens":"ZERKHEFAOUI L.","grp":""},{"j":3,"h":3,"module":"Management  de la TI","type":"CM","salle":"Amphi AMZAL","ens":"MEKSEM A.","grp":""},{"j":3,"h":4,"module":"Management fin.","type":"CM","salle":"Amphi AMZAL","ens":"MAHOUCHE Y.","grp":""},{"j":1,"h":0,"module":"Techniques de sondage","type":"CM","salle":"Amphi MAMMERI","ens":"TESSADA Y.","grp":""},{"j":1,"h":1,"module":"MRH","type":"CM","salle":"Amphi MAMMERI","ens":"KHODJA M.","grp":""},{"j":5,"h":3,"module":"Droit des aff","type":"CM","salle":"En ligne","ens":"-----","grp":""},{"j":1,"h":2,"module":"Techniques de sondage","type":"TD","salle":"Salle Machine","ens":"ZAADI S.","grp":"3"},{"j":1,"h":3,"module":"Techniques de sondage","type":"TD","salle":"Salle Machine","ens":"ZAADI S.","grp":"2"},{"j":3,"h":0,"module":"Techniques de sondage","type":"TD","salle":"Salle Machine","ens":"ZAADI S.","grp":"1"}]},"hasCourses":true},"L3.MRH":{"label":"L3.MRH","fullName":"L3.MRH","abreviation":"L3.MRH","semestres":{"semestre5":[{"j":0,"h":0,"module":"Droit du tra","type":"TD","salle":"A.3","ens":"AYAD B.","grp":"2"},{"j":0,"h":1,"module":"Management de la TI","type":"TD","salle":"A.3","ens":"OU OTMANE A.","grp":"2"},{"j":0,"h":0,"module":"Management de la TI","type":"TD","salle":"A.5","ens":"OU OTMANE A.","grp":"1"},{"j":0,"h":1,"module":"Droit du tra","type":"TD","salle":"A.5","ens":"AYAD B.","grp":"1"},{"j":3,"h":0,"module":"Communication org","type":"TD","salle":"A.5","ens":"BILEK L.","grp":"1"},{"j":3,"h":1,"module":"Communication org","type":"TD","salle":"A.5","ens":"BILEK L.","grp":"2"},{"j":1,"h":3,"module":"Management strat","type":"TD","salle":"A.8","ens":"KEHRI S.","grp":"2"},{"j":1,"h":4,"module":"Management strat","type":"TD","salle":"A.8","ens":"KEHRI S.","grp":"1"},{"j":2,"h":0,"module":"Principes du MRH","type":"TD","salle":"A.8","ens":"MAACHA D.","grp":"2"},{"j":0,"h":4,"module":"Droit du tra","type":"CM","salle":"A.10","ens":"AYAD B.","grp":""},{"j":1,"h":3,"module":"Management des carr","type":"TD","salle":"A.10","ens":"BOUROKBA R.","grp":"1"},{"j":1,"h":4,"module":"Management des carr","type":"TD","salle":"A.10","ens":"BOUROKBA R.","grp":"2"},{"j":2,"h":1,"module":"Principes du MRH","type":"TD","salle":"A.11","ens":"MAACHA D.","grp":"1"},{"j":3,"h":0,"module":"Anglais","type":"TD","salle":"A.11","ens":"FELLAH D.","grp":"2"},{"j":3,"h":1,"module":"Anglais","type":"TD","salle":"A.11","ens":"FELLAH D.","grp":"1"},{"j":0,"h":3,"module":"Management de la TI","type":"CM","salle":"Amphi AMZAL","ens":"OU OTMANE A.","grp":""},{"j":2,"h":2,"module":"Principes du MRH","type":"CM","salle":"Amphi MAMMERI","ens":"MAACHA D.","grp":""},{"j":3,"h":3,"module":"Communication org","type":"CM","salle":"GS.SG","ens":"BILEK L.","grp":""},{"j":3,"h":4,"module":"Techniques de sondage","type":"CM","salle":"GS.SG","ens":"ZAADI S.","grp":""},{"j":1,"h":0,"module":"Management des carr","type":"CM","salle":"Petite salle 1.SG","ens":"BOUROKBA R.","grp":""},{"j":1,"h":1,"module":"Management strat","type":"CM","salle":"Petite salle 1.SG","ens":"KEHRI S.","grp":""},{"j":2,"h":0,"module":"Techniques de sondage","type":"TD","salle":"Salle Machine","ens":"ZAADI S.","grp":"1"},{"j":2,"h":1,"module":"Techniques de sondage","type":"TD","salle":"Salle Machine","ens":"ZAADI S.","grp":"2"}]},"hasCourses":true}}},"master1":{"label":"Master 1","specialites":{"M1.MES":{"label":"M1.MES","fullName":"M1.MES","abreviation":"M1.MES","semestres":{"semestre1":[{"j":2,"h":0,"module":"Le management des ser pub","type":"CM","salle":"A.3","ens":"BENAMARA K.","grp":""},{"j":2,"h":1,"module":"Le management des ser pub","type":"TD","salle":"A.3","ens":"BENAMARA K.","grp":"1"},{"j":0,"h":0,"module":"Introduction au mgt hosp","type":"CM","salle":"A.8","ens":"CHERIEF W.","grp":""},{"j":0,"h":1,"module":"Introduction au mgt hosp","type":"TD","salle":"A.8","ens":"MOHELEBI S.","grp":"1"},{"j":0,"h":4,"module":"Management des RH en milieu hosp","type":"TD","salle":"A.8","ens":"MOHELEBI S.","grp":"1"},{"j":2,"h":3,"module":"Langue étrangère 1","type":"TD","salle":"A.8","ens":"FELLAH D.","grp":"1"},{"j":2,"h":4,"module":"SI math et stat","type":"CM","salle":"A.8","ens":"HADDADOU","grp":""},{"j":2,"h":5,"module":"SI math et stat","type":"TD","salle":"A.8","ens":"HADDADOU","grp":"1"},{"j":0,"h":2,"module":"Management des RH en milieu hosp","type":"CM","salle":"A.9","ens":"MOHELEBI S.","grp":""},{"j":1,"h":4,"module":"Comptabilité et fin des établ de santé","type":"CM","salle":"A.9","ens":"HAMMADI L.","grp":""},{"j":1,"h":5,"module":"Comptabilité et fin des établ de santé","type":"TD","salle":"A.9","ens":"HAMMADI L.","grp":"1"},{"j":1,"h":0,"module":"Economie de la santé et de la PS 1","type":"CM","salle":"A.10","ens":"SALMI M.","grp":""},{"j":1,"h":1,"module":"Economie de la santé et de la PS 1","type":"CM","salle":"A.10","ens":"SALMI M.","grp":""},{"j":1,"h":2,"module":"Economie de la santé et de la PS 1","type":"TD","salle":"A.10","ens":"SALMI M.","grp":"1"}]},"hasCourses":true},"M1.MF":{"label":"M1.MF","fullName":"M1.MF","abreviation":"M1.MF","semestres":{"semestre1":[{"j":0,"h":0,"module":"Planification et CTL fin","type":"CM","salle":"A.2","ens":"SAIDANI Z.","grp":""},{"j":0,"h":1,"module":"Planification et CTL fin","type":"TD","salle":"A.2","ens":"SAIDANI Z.","grp":"1"},{"j":2,"h":3,"module":"Management fin av","type":"CM","salle":"A.4","ens":"SADOUD A.","grp":""},{"j":2,"h":4,"module":"Management fin av","type":"TD","salle":"A.4","ens":"SADOUD A.","grp":"1"},{"j":3,"h":0,"module":"Lean Startup","type":"CM","salle":"A.4","ens":"CHIKH S.","grp":""},{"j":3,"h":1,"module":"Lean Startup","type":"TD","salle":"A.4","ens":"CHIKH S.","grp":"1"},{"j":0,"h":4,"module":"Analyse des séries temp","type":"CM","salle":"A.7","ens":"OUNASSI H.","grp":""},{"j":0,"h":5,"module":"Analyse des séries temp","type":"TD","salle":"A.7","ens":"OUNASSI H.","grp":"1"},{"j":1,"h":0,"module":"E-Management","type":"CM","salle":"A.7","ens":"MAHTOUT I.","grp":""},{"j":1,"h":1,"module":"E-Management","type":"TD","salle":"A.7","ens":"LASBEUR M.","grp":"1"},{"j":1,"h":3,"module":"Comptabilité des Stés","type":"CM","salle":"A.7","ens":"RASSOUL N.","grp":""},{"j":2,"h":0,"module":"Ingénierie fin","type":"CM","salle":"A.7","ens":"BEN MAKHLOUF Y.","grp":""},{"j":2,"h":1,"module":"Ingénierie fin","type":"TD","salle":"A.7","ens":"BEN MAKHLOUF Y.","grp":"1"},{"j":0,"h":3,"module":"Rédaction et prés Plans d’aff en anglais","type":"TD","salle":"A.11","ens":"HACHEMI Z.","grp":"1"},{"j":1,"h":4,"module":"Comptabilité des Stés","type":"TD","salle":"A.12","ens":"RASSOUL N.","grp":"1"}]},"hasCourses":true},"M1.MRH":{"label":"M1.MRH","fullName":"M1.MRH","abreviation":"M1.MRH","semestres":{"semestre1":[{"j":1,"h":4,"module":"Ingénierie fonc","type":"TD","salle":"A.3","ens":"SI MANSOUR F.","grp":"1"},{"j":3,"h":1,"module":"Culture de l’org","type":"TD","salle":"A.3","ens":"BOUROKBA R.","grp":"1"},{"j":3,"h":2,"module":"Culture de l’org","type":"TD","salle":"A.3","ens":"BOUROKBA R.","grp":"2"},{"j":1,"h":3,"module":"Management des salaires et des inc 1","type":"TD","salle":"A.5","ens":"OUCHALAL H.","grp":"1"},{"j":0,"h":0,"module":"Contrôle managérial soc","type":"TD","salle":"A.6","ens":"LEHAD R.","grp":"1"},{"j":0,"h":1,"module":"Comportement org","type":"TD","salle":"A.6","ens":"-----","grp":"1"},{"j":1,"h":3,"module":"Ingénierie fonc","type":"TD","salle":"A.6","ens":"SI MANSOUR F.","grp":"2"},{"j":1,"h":4,"module":"Management des salaires et des inc 1","type":"TD","salle":"A.6","ens":"OUCHALAL H.","grp":"2"},{"j":2,"h":2,"module":"Rédaction et prés Plans d’aff en anglais","type":"TD","salle":"A.6","ens":"HACHEMI Z.","grp":"1"},{"j":2,"h":2,"module":"Lean Startup","type":"TD","salle":"A.7","ens":"BOURKACHE F.","grp":"2"},{"j":2,"h":3,"module":"Rédaction et prés Plans d’aff en anglais","type":"TD","salle":"A.7","ens":"HACHEMI Z.","grp":"2"},{"j":0,"h":0,"module":"Comportement org","type":"TD","salle":"A.10","ens":"-----","grp":"2"},{"j":0,"h":1,"module":"Contrôle managérial soc","type":"TD","salle":"A.10","ens":"LEHAD R.","grp":"2"},{"j":2,"h":0,"module":"Lean Startup","type":"TD","salle":"A.12","ens":"BOURKACHE F.","grp":"1"},{"j":2,"h":1,"module":"Lean Startup","type":"CM","salle":"Amphi MAMMERI","ens":"BOURKACHE F.","grp":""},{"j":0,"h":3,"module":"Contrôle managérial soc","type":"CM","salle":"GS.SG","ens":"LEHAD R.","grp":""},{"j":0,"h":4,"module":"Comportement org","type":"CM","salle":"GS.SG","ens":"OUAMAR S.","grp":""},{"j":1,"h":0,"module":"Culture de l’org","type":"CM","salle":"GS.SG","ens":"HAMOUTENE O.","grp":""},{"j":1,"h":1,"module":"Ingénierie fonc","type":"CM","salle":"GS.SG","ens":"SI MANSOUR F.","grp":""},{"j":3,"h":0,"module":"Management des salaires et des inc 1","type":"CM","salle":"GS.SG","ens":"OUCHALAL H.","grp":""},{"j":3,"h":1,"module":"Applications du DL","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"2"},{"j":3,"h":2,"module":"Applications du DL","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"1"},{"j":3,"h":4,"module":"Applications du DL","type":"CM","salle":"Salle Machine","ens":"OUDNI N.","grp":""}]},"hasCourses":true},"M1.MS":{"label":"M1.MS","fullName":"M1.MS","abreviation":"M1.MS","semestres":{"semestre1":[{"j":2,"h":5,"module":"Intelligence stratégique","type":"TD","salle":"A.2","ens":"TESSADA Y.","grp":"2"},{"j":0,"h":3,"module":"Knowledge mgt","type":"TD","salle":"A.4","ens":"MEZIAINI Y.","grp":"1"},{"j":0,"h":4,"module":"Rédaction et prés  Plans d’aff en anglais","type":"TD","salle":"A.4","ens":"CHEKAOUI S.","grp":"1"},{"j":0,"h":5,"module":"Management de la créa et de  l'inno","type":"TD","salle":"A.4","ens":"-----","grp":"1"},{"j":1,"h":0,"module":"Management strat  des RH","type":"TD","salle":"A.4","ens":"DRIR M.","grp":"1"},{"j":1,"h":1,"module":"Analyse strat et comp","type":"TD","salle":"A.4","ens":"TESSADA Y.","grp":"1"},{"j":1,"h":2,"module":"Lean Startup","type":"TD","salle":"A.4","ens":"SEGUENI F.","grp":"1"},{"j":1,"h":5,"module":"Intelligence stratégique","type":"TD","salle":"A.4","ens":"TESSADA Y.","grp":"3"},{"j":0,"h":3,"module":"Management de la créa et de  l'inno","type":"TD","salle":"A.5","ens":"-----","grp":"2"},{"j":0,"h":4,"module":"Knowledge mgt","type":"TD","salle":"A.5","ens":"MEZIAINI Y.","grp":"2"},{"j":0,"h":5,"module":"Rédaction et prés  Plans d’aff en anglais","type":"TD","salle":"A.5","ens":"CHEKAOUI S.","grp":"2"},{"j":1,"h":0,"module":"Lean Startup","type":"TD","salle":"A.5","ens":"SEGUENI F.","grp":"3"},{"j":1,"h":1,"module":"Management strat  des RH","type":"TD","salle":"A.5","ens":"DRIR M.","grp":"3"},{"j":1,"h":2,"module":"Analyse strat et comp","type":"TD","salle":"A.5","ens":"TESSADA Y.","grp":"3"},{"j":2,"h":4,"module":"Applications du DL","type":"TD","salle":"A.5","ens":"OUDNI N.","grp":"2"},{"j":0,"h":3,"module":"Rédaction et prés  Plans d’aff en anglais","type":"TD","salle":"A.6","ens":"CHEKAOUI S.","grp":"3"},{"j":0,"h":4,"module":"Management de la créa et de  l'inno","type":"TD","salle":"A.6","ens":"-----","grp":"3"},{"j":0,"h":5,"module":"Knowledge mgt","type":"TD","salle":"A.6","ens":"MEZIAINI Y.","grp":"3"},{"j":1,"h":0,"module":"Analyse strat et comp","type":"TD","salle":"A.6","ens":"-----","grp":"2"},{"j":1,"h":2,"module":"Management strat  des RH","type":"TD","salle":"A.6","ens":"DRIR M.","grp":"2"},{"j":2,"h":4,"module":"Intelligence stratégique","type":"TD","salle":"A.6","ens":"TESSADA Y.","grp":"1"},{"j":1,"h":3,"module":"Lean Startup","type":"TD","salle":"A.9","ens":"SEGUENI F.","grp":"2"},{"j":5,"h":4,"module":"Applications du DL","type":"CM","salle":"En ligne","ens":"OUDNI N.","grp":""},{"j":2,"h":0,"module":"Management de la créa et de  l'inno","type":"CM","salle":"Gde salle B.2","ens":"ZERKHEFAOUI L.","grp":""},{"j":2,"h":1,"module":"Management strat  des RH","type":"CM","salle":"Gde salle B.2","ens":"DRIR M.","grp":""},{"j":2,"h":2,"module":"Analyse strat et comp","type":"CM","salle":"Gde salle B.2","ens":"TESSADA Y.","grp":""},{"j":0,"h":0,"module":"Intelligence stratégique","type":"CM","salle":"GS.SG","ens":"MATMAR D.","grp":""},{"j":0,"h":1,"module":"Knowledge mgt","type":"CM","salle":"GS.SG","ens":"MEZIAINI Y.","grp":""},{"j":1,"h":4,"module":"Lean Startup","type":"CM","salle":"Petite salle 1.SG","ens":"SEGUENI F.","grp":""},{"j":1,"h":5,"module":"Applications du DL","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"1"}]},"hasCourses":true},"M2.GP":{"label":"M2.GP","fullName":"M2.GP","abreviation":"M2.GP","semestres":{"semestre1":[{"j":3,"h":4,"module":"Opérations de trésorerie","type":"CM","salle":"A.7","ens":"RAMDINI","grp":""},{"j":3,"h":5,"module":"Opérations de trésorerie","type":"TD","salle":"A.7","ens":"RAMDINI","grp":"1"},{"j":2,"h":3,"module":"Gestion et délégation des SP","type":"CM","salle":"A.10","ens":"BEN MAKHLOUF Y.","grp":""},{"j":2,"h":4,"module":"Gestion et délégation des SP","type":"TD","salle":"A.10","ens":"BEN MAKHLOUF Y.","grp":"1"},{"j":3,"h":0,"module":"Séminaire en marketing des SP","type":"TD","salle":"A.10","ens":"SI SALAH K.","grp":"1"},{"j":3,"h":1,"module":"Contrôle de gestion pub","type":"CM","salle":"A.10","ens":"DAHMOUNI A.","grp":""},{"j":3,"h":2,"module":"Contrôle de gestion pub","type":"TD","salle":"A.10","ens":"DAHMOUNI A.","grp":"1"},{"j":2,"h":0,"module":"Management élec","type":"CM","salle":"GS.SG","ens":"CHEKAOUI S.","grp":""},{"j":2,"h":1,"module":"Management élec","type":"TD","salle":"GS.SG","ens":"CHEKAOUI S.","grp":"1"},{"j":4,"h":0,"module":"Droit des établissements pub","type":"CM","salle":"Petite salle 1.SG","ens":"BELHOCINE K.","grp":""},{"j":4,"h":1,"module":"Droit des établissements pub","type":"TD","salle":"Petite salle 1.SG","ens":"BELHOCINE K.","grp":"1"},{"j":4,"h":2,"module":"Conception et analyse des PP","type":"CM","salle":"Petite salle 1.SG","ens":"MOULAI K.","grp":""},{"j":4,"h":3,"module":"Conception et analyse des PP","type":"TD","salle":"Petite salle 1.SG","ens":"MOULAI K.","grp":"1"},{"j":2,"h":5,"module":"Logiciels stat lib","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"1"}]},"hasCourses":true},"M2.MES":{"label":"M2.MES","fullName":"M2.MES","abreviation":"M2.MES","semestres":{"semestre1":[{"j":1,"h":3,"module":"Gestion des risques sanitaires","type":"TD","salle":"A.2","ens":"MOHELEBI S.","grp":"1"},{"j":1,"h":4,"module":"Gestion des risques sanitaires","type":"CM","salle":"A.2","ens":"MOHELEBI S.","grp":""},{"j":1,"h":1,"module":"Entrepreneuriat","type":"CM","salle":"A.6","ens":"ACHIR M.","grp":""},{"j":0,"h":0,"module":"Méthodologie de la recherche","type":"CM","salle":"A.7","ens":"BELKHAMSA O.","grp":""},{"j":0,"h":1,"module":"Méthodologie de la recherche","type":"TD","salle":"A.7","ens":"BELKHAMSA O.","grp":"1"},{"j":0,"h":2,"module":"Anglais 2","type":"TD","salle":"A.7","ens":"FELLAH D.","grp":"1"},{"j":2,"h":0,"module":"Gestion et éval de la qté en milieu hosp","type":"CM","salle":"A.9","ens":"SALMI M.","grp":""},{"j":2,"h":1,"module":"Gestion et éval de la qté en milieu hosp","type":"CM","salle":"A.9","ens":"SALMI M.","grp":""},{"j":2,"h":2,"module":"Gestion et éval de la qté en milieu hosp","type":"TD","salle":"A.9","ens":"SALMI M.","grp":"1"},{"j":2,"h":4,"module":"Gestion du changement","type":"CM","salle":"A.9","ens":"BILEK L.","grp":""},{"j":2,"h":5,"module":"Gestion du changement","type":"TD","salle":"A.9","ens":"BILEK L.","grp":"1"},{"j":0,"h":4,"module":"Sécurité du patient et gestion des risques à l’H","type":"CM","salle":"A.11","ens":"FERHAT M.","grp":""},{"j":0,"h":5,"module":"Sécurité du patient et gestion des risques à l’H","type":"TD","salle":"A.11","ens":"FERHAT M.","grp":"1"},{"j":1,"h":0,"module":"Entrepreneuriat","type":"TD","salle":"A.11","ens":"ACHIR M.","grp":"1"}]},"hasCourses":true},"M2.MF":{"label":"M2.MF","fullName":"M2.MF","abreviation":"M2.MF","semestres":{"semestre1":[{"j":1,"h":5,"module":"Opérations de  trésorerie","type":"CM","salle":"A.3","ens":"RASSOUL N.","grp":""},{"j":2,"h":0,"module":"Séminaire en MF","type":"TD","salle":"A.5","ens":"SADOUD A.","grp":"1"},{"j":2,"h":1,"module":"Management des  inst fin et  financement","type":"TD","salle":"A.5","ens":"OU OTMANE A.","grp":"1"},{"j":2,"h":0,"module":"Management des  inst fin et  financement","type":"TD","salle":"A.6","ens":"OU OTMANE A.","grp":"2"},{"j":2,"h":1,"module":"Séminaire en MF","type":"TD","salle":"A.6","ens":"SADOUD A.","grp":"2"},{"j":0,"h":2,"module":"Finance islamique","type":"TD","salle":"A.8","ens":"ACHIR M.","grp":"1"},{"j":0,"h":3,"module":"Opérations de  trésorerie","type":"TD","salle":"A.8","ens":"RASSOUL N.","grp":"1"},{"j":1,"h":0,"module":"Management des  risques fin","type":"TD","salle":"A.8","ens":"SADOUD A.","grp":"1"},{"j":1,"h":1,"module":"Technologie  fin et IA","type":"TD","salle":"A.8","ens":"BOURKACHE F.","grp":"1"},{"j":1,"h":0,"module":"Technologie  fin et IA","type":"TD","salle":"A.9","ens":"BOURKACHE F.","grp":"2"},{"j":1,"h":1,"module":"Management des  risques fin","type":"TD","salle":"A.9","ens":"SADOUD A.","grp":"2"},{"j":0,"h":2,"module":"Opérations de  trésorerie","type":"TD","salle":"A.10","ens":"RASSOUL N.","grp":"2"},{"j":0,"h":3,"module":"Finance islamique","type":"TD","salle":"A.10","ens":"ACHIR M.","grp":"2"},{"j":0,"h":4,"module":"Finance islamique","type":"CM","salle":"Amphi AMZAL","ens":"ACHIR M.","grp":""},{"j":1,"h":3,"module":"Technologie  fin et IA","type":"CM","salle":"Amphi AMZAL","ens":"BOURKACHE F.","grp":""},{"j":1,"h":4,"module":"Management des  risques fin","type":"CM","salle":"Amphi AMZAL","ens":"SADOUD A.","grp":""},{"j":2,"h":2,"module":"Management des  inst fin et  financement","type":"CM","salle":"GS.SG","ens":"OU OTMANE A.","grp":""},{"j":0,"h":5,"module":"Logiciels stat lib","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"1"},{"j":0,"h":5,"module":"Logiciels stat lib","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"2"}]},"hasCourses":true},"M2.MRH":{"label":"M2.MRH","fullName":"M2.MRH","abreviation":"M2.MRH","semestres":{"semestre1":[{"j":1,"h":4,"module":"Droit de la fonction pub","type":"CM","salle":"A.5","ens":"BELHOCINE K.","grp":""},{"j":1,"h":5,"module":"Droit de la fonction pub","type":"TD","salle":"A.5","ens":"BELHOCINE K.","grp":"1"},{"j":0,"h":0,"module":"Management des comp","type":"CM","salle":"A.9","ens":"SI MANSOUR F.","grp":""},{"j":0,"h":1,"module":"Management des comp","type":"TD","salle":"A.9","ens":"SI MANSOUR F.","grp":"1"},{"j":0,"h":3,"module":"Leadership adm","type":"CM","salle":"A.9","ens":"SI SALAH K.","grp":""},{"j":0,"h":4,"module":"Leadership adm","type":"TD","salle":"A.9","ens":"SI SALAH K.","grp":"1"},{"j":2,"h":0,"module":"Management des risques soc","type":"CM","salle":"A.10","ens":"LEHAD R.","grp":""},{"j":2,"h":1,"module":"Management des risques soc","type":"TD","salle":"A.10","ens":"LEHAD R.","grp":"1"},{"j":1,"h":0,"module":"Séminaire sur le MRH","type":"TD","salle":"A.12","ens":"KEHRI S.","grp":"1"},{"j":1,"h":1,"module":"Management de changement","type":"CM","salle":"A.12","ens":"HAMOUTENE O.","grp":""},{"j":1,"h":2,"module":"Management de changement","type":"TD","salle":"A.12","ens":"HAMOUTENE O.","grp":"1"},{"j":2,"h":2,"module":"Logiciels stat lib","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"1"}]},"hasCourses":true},"M2.MS":{"label":"M2.MS","fullName":"M2.MS","abreviation":"M2.MS","semestres":{"semestre1":[{"j":1,"h":1,"module":"Management des réseaux soc","type":"CM","salle":"A.3","ens":"CHEKAOUI S.","grp":""},{"j":1,"h":2,"module":"Management des réseaux soc","type":"TD","salle":"A.3","ens":"CHEKAOUI S.","grp":"1"},{"j":0,"h":0,"module":"Séminaire en mgt strat","type":"TD","salle":"A.4","ens":"MEZIAINI Y.","grp":"1"},{"j":0,"h":1,"module":"Management de chang strat","type":"CM","salle":"A.4","ens":"MATMAR D.","grp":""},{"j":0,"h":2,"module":"Management de chang strat","type":"TD","salle":"A.4","ens":"MATMAR D.","grp":"1"},{"j":2,"h":0,"module":"Contrôle stratégique","type":"CM","salle":"A.4","ens":"MAHTOUT I.","grp":""},{"j":2,"h":1,"module":"Contrôle stratégique","type":"TD","salle":"A.4","ens":"MAHTOUT I.","grp":"1"},{"j":1,"h":4,"module":"Droit de la concurrence et prot des conso","type":"CM","salle":"A.7","ens":"-----","grp":""},{"j":1,"h":5,"module":"Droit de la concurrence et prot des conso","type":"TD","salle":"A.7","ens":"-----","grp":"1"},{"j":2,"h":4,"module":"Stratégies de croissances et l'int","type":"TD","salle":"A.7","ens":"Zaouane M.","grp":"1"},{"j":2,"h":3,"module":"Stratégies de croissances et l'int","type":"CM","salle":"A.9","ens":"DRIR M.","grp":""},{"j":0,"h":4,"module":"Logiciels stat lib","type":"TD","salle":"Salle Machine","ens":"OUDNI N.","grp":"1"}]},"hasCourses":true}}}};</script><script>var currentNiveau="",currentSpecialite="",currentSemestre="",currentGroupFilter="";var jours=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Samedi"];var horaires=["08:00-09:30","09:30-11:00","11:00-12:30","12:30-14:00","14:00-15:30","15:30-17:00"];var semesterLabels={semestre1:"Semestre 1",semestre2:"Semestre 2",semestre3:"Semestre 3",semestre4:"Semestre 4",semestre5:"Semestre 5",semestre6:"Semestre 6"};function escapeHtml(s){if(!s)return"";return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}function formatTypeLabel(t,g){t=(t||"CM").toString().trim().toUpperCase();g=(g===null||g===undefined)?"":String(g).trim();if(t==="TD")t="G";if(g)return t+g;return t;}function formatHoraireCell(h){var p=(h||"").toString().split("-");if(p.length!==2)return escapeHtml(h);return '<div class="horaire-cell"><span class="h-start">'+escapeHtml(p[0].trim())+'</span><span class="h-sep"></span><span class="h-end">'+escapeHtml(p[1].trim())+'</span></div>';}function applyGroupFilter(seances,grp){if(!grp)return seances;return seances.filter(function(s){var t=(s.type||"").toString().toUpperCase();if(t!=="TD")return true;return String(s.grp)===String(grp);});}function extractAvailableGroups(seances){var gs={};seances.forEach(function(s){if((s.type||"").toString().toUpperCase()==="TD"&&s.grp)gs[String(s.grp)]=true;});return Object.keys(gs).sort(function(a,b){var na=parseInt(a,10),nb=parseInt(b,10);if(!isNaN(na)&&!isNaN(nb))return na-nb;return a.localeCompare(b);});}function updateGroupFilterBar(seances){var bar=document.getElementById("groupFilterBar"),sel=document.getElementById("groupFilterSelect"),groups=extractAvailableGroups(seances);if(groups.length===0){bar.style.display="none";sel.innerHTML="<option value=\"\">Tous les groupes</option>";currentGroupFilter="";return;}bar.style.display="flex";var currentVal=sel.value;sel.innerHTML="<option value=\"\">Tous les groupes</option>";groups.forEach(function(g){var opt=document.createElement("option");opt.value=g;opt.textContent="Groupe "+g;sel.appendChild(opt);});if(currentVal&&groups.indexOf(currentVal)!==-1){sel.value=currentVal;currentGroupFilter=currentVal;}else{currentGroupFilter="";sel.value="";}}function collectSemestersForLevel(data){var s={};Object.keys(data.specialites||{}).forEach(function(sk){var sp=data.specialites[sk];if(!sp||!sp.semestres)return;Object.keys(sp.semestres).forEach(function(k){if(sp.semestres[k]&&sp.semestres[k].length>0)s[k]=true;});});return Object.keys(s).sort();}function getSpecsForSemester(data,semKey){var r=[];Object.keys(data.specialites||{}).sort().forEach(function(sk){var sp=data.specialites[sk];if(!sp||!sp.semestres)return;var x=sp.semestres[semKey]||[];if(x.length>0)r.push(sk);});return r;}function renderSemQuickPills(keys){var row=document.getElementById("semQuickRow"),c=document.getElementById("semQuickPills");if(!keys||!keys.length){row.style.display="none";return;}row.style.display="flex";c.innerHTML="";keys.forEach(function(k){var b=document.createElement("button");b.className="quick-pill"+(k===currentSemestre?" active":"");b.textContent=semesterLabels[k]||k;b.onclick=function(){changeSemestre(k);};c.appendChild(b);});}function renderSpecQuickPills(keys){var row=document.getElementById("specQuickRow"),c=document.getElementById("specQuickPills");if(!keys||!keys.length){row.style.display="none";return;}row.style.display="flex";c.innerHTML="";keys.forEach(function(k){var b=document.createElement("button");b.className="quick-pill spec-pill"+(k===currentSpecialite?" active":"");b.textContent=k;b.onclick=function(){changeSpecialite(k);};c.appendChild(b);});}function hideSpecQuickRow(){document.getElementById("specQuickRow").style.display="none";}function selectNiveau(n,el){currentNiveau=n;currentSpecialite="";currentSemestre="";currentGroupFilter="";document.querySelectorAll(".option-card").forEach(function(c){c.classList.remove("active-niveau");});el.classList.add("active-niveau");var data=emploiData[n];if(!data)return;document.getElementById("resultSection").style.display="none";var semKeysAll=collectSemestersForLevel(data);if(semKeysAll.length===0)return;renderSemQuickPills(semKeysAll);hideSpecQuickRow();document.getElementById("quickSelectors").style.display="flex";}function changeSemestre(k){currentSemestre=k;currentGroupFilter="";var data=emploiData[currentNiveau];renderSemQuickPills(collectSemestersForLevel(data));var avail=getSpecsForSemester(data,k);if(avail.length===0){hideSpecQuickRow();return;}currentSpecialite="";renderSpecQuickPills(avail);showPendingMessage();}function changeSpecialite(k){currentSpecialite=k;currentGroupFilter="";var data=emploiData[currentNiveau];renderSpecQuickPills(getSpecsForSemester(data,currentSemestre));displayCurrentTimetable();}function showPendingMessage(){var s=document.getElementById("resultSection");s.style.display="block";document.getElementById("resultHeader").innerHTML="";document.getElementById("groupFilterBar").style.display="none";document.getElementById("timetable-container").innerHTML="<div class=\"pending-message\"><i class=\"fas fa-hand-pointer\"></i><p>Veuillez choisir une section ou une spécialité ci-dessus</p></div>";document.getElementById("infoSection").style.display="none";s.scrollIntoView({behavior:"smooth",block:"start"});}function displayCurrentTimetable(){var data=emploiData[currentNiveau];var allSeances=[];var specLabel=currentSpecialite;var sp=data.specialites[currentSpecialite];if(sp)allSeances=sp.semestres[currentSemestre]||[];var semLabel=semesterLabels[currentSemestre]||currentSemestre||"";updateGroupFilterBar(allSeances);var seances=applyGroupFilter(allSeances,currentGroupFilter);var headerText=escapeHtml(data.label)+(specLabel?" — "+escapeHtml(specLabel):"")+(semLabel?" — "+escapeHtml(semLabel):"")+(currentGroupFilter?" — Groupe TD "+escapeHtml(currentGroupFilter):"");document.getElementById("resultHeader").innerHTML="<h3>"+headerText+"</h3>";var c=document.getElementById("timetable-container"),info=document.getElementById("infoSection");if(!seances||!seances.length){c.innerHTML="<div class=\"empty-state\"><i class=\"fas fa-calendar-times\"></i><p>Aucune séance.</p></div>";info.style.display="none";}else{c.innerHTML=buildTimetableHTML(seances);info.style.display="flex";}document.getElementById("resultSection").style.display="block";var sec=document.getElementById("resultSection");setTimeout(function(){sec.scrollIntoView({behavior:"smooth",block:"start"});},100);}function buildTimetableHTML(seances){var html="<table class=\"timetable\"><thead><tr><th><i class=\"fas fa-clock\"></i>Heure</th>";jours.forEach(function(j){html+="<th><i class=\"fas fa-calendar-day\"></i> "+j+"</th>";});html+="</tr></thead><tbody>";for(var h=0;h<horaires.length;h++){html+="<tr><td>"+formatHoraireCell(horaires[h])+"</td>";for(var j=0;j<jours.length;j++){var cellSeances=seances.filter(function(s){return s.j===j&&s.h===h;});html+="<td>";if(cellSeances.length===0){html+="<div class=\"empty-cell\"><i class=\"fas fa-minus\"></i></div>";}else{cellSeances.forEach(function(s){var tl=formatTypeLabel(s.type,s.grp);var tr=(s.type||"CM").toString().toUpperCase();var tc="cm-"+(tr==="TD"?"G":tr);html+="<div class=\"cell-module "+tc+"\"><span class=\"cm-module-name\">"+escapeHtml(s.module)+"</span>";html+="<div class=\"cm-footer\"><span class=\"cm-type\">"+escapeHtml(tl)+"</span>";if(s.salle)html+="<span class=\"cm-info-row salle\"><i class=\"fas fa-map-marker-alt\"></i>"+escapeHtml(s.salle)+"</span>";if(s.ens)html+="<span class=\"cm-info-row\"><i class=\"fas fa-user\"></i>"+escapeHtml(s.ens)+"</span>";html+="</div></div>";});}html+="</td>";}html+="</tr>";}html+="</tbody></table>";return html;}window.addEventListener("load",function(){document.querySelectorAll(".option-card").forEach(function(c){c.addEventListener("click",function(){selectNiveau(this.getAttribute("data-niveau"),this);});});var g=document.getElementById("groupFilterSelect");if(g)g.addEventListener("change",function(){currentGroupFilter=this.value;displayCurrentTimetable();});});</script></body></html>
+@media print{.top-bar,header,.view-mode-tabs,.cards-grid,.quick-selectors,.info-section,.export-modal-overlay,.group-filter-bar,.dept-load-banner,footer{display:none !important}body{background:white}main{padding:20px;max-width:100%}.timetable-wrapper{border:none;box-shadow:none;max-height:none;overflow:visible}.timetable thead th{background:#0f172a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;position:static !important;box-shadow:none !important}.timetable tbody td:first-child{position:static !important;box-shadow:none !important;background:#f1f5f9 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.cell-module{-webkit-print-color-adjust:exact;print-color-adjust:exact}.pdf-viewer-wrapper{height:auto;min-height:auto}}
+</style>
+</head>
+<body>
+<div class="top-bar">Faculté des Sciences Économiques, Commerciales et des Sciences de Gestion</div>
+<header>
+<div class="header-main">
+<div class="logo">
+<div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+<div class="logo-text"><h1>Sciences de Gestion</h1><p>FSECSG, UMMTO</p></div>
+</div>
+<a href="index.html" class="home-btn" title="Retour à la page d'accueil">
+<i class="fas fa-home"></i><span>Accueil</span>
+</a>
+</div>
+</header>
+<main>
+<div class="page-header">
+<h2>Emplois du temps</h2>
+<p>Année Universitaire 2026/2027</p>
+</div>
+
+<div class="view-mode-tabs" id="viewModeTabs">
+<button class="view-tab active" data-mode="niveau"><i class="fas fa-layer-group"></i> Par niveau</button>
+<button class="view-tab" data-mode="enseignant"><i class="fas fa-chalkboard-teacher"></i> Par enseignant</button>
+</div>
+
+<div class="cards-grid" id="levelsGrid">
+<div class="option-card" data-niveau="licence1">
+<div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+<span>Licence 1 TC</span>
+</div>
+<div class="option-card" data-niveau="licence2">
+<div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+<span>Licence 2 Gestion</span>
+</div>
+<div class="option-card" data-niveau="licence3">
+<div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+<span>Licence 3</span>
+</div>
+<div class="option-card" data-niveau="master1">
+<div class="card-icon"><i class="fas fa-university"></i></div>
+<span>Master 1</span>
+</div>
+</div>
+
+<div id="quickSelectors" class="quick-selectors" style="display:none;">
+<div class="quick-row" id="semQuickRow" style="display:none;">
+<span class="quick-label"><i class="fas fa-calendar-alt"></i> Semestre</span>
+<div class="quick-pills" id="semQuickPills"></div>
+</div>
+<div class="quick-row" id="specQuickRow" style="display:none;">
+<span class="quick-label"><i class="fas fa-bookmark"></i> Section / Spécialité</span>
+<div class="quick-pills" id="specQuickPills"></div>
+</div>
+</div>
+
+<div id="teacherSelectors" class="quick-selectors" style="display:none;">
+<div class="dept-load-banner" id="deptLoadBanner" style="display:none;">
+<div class="dlb-icon"><i class="fas fa-clock"></i></div>
+<div class="dlb-text">Charge hébdomadaire au niveau du Département des SG <span class="dlb-teacher" id="deptLoadTeacher"></span> :<span class="dlb-value" id="deptLoadValue">—</span></div>
+</div>
+<div class="quick-row">
+<span class="quick-label"><i class="fas fa-chalkboard-teacher"></i> Enseignant</span>
+<div class="combobox" id="teacherCombobox">
+<input type="text" id="teacherComboInput" class="combobox-input" placeholder="Rechercher ou sélectionner un enseignant..." autocomplete="off" spellcheck="false">
+<button type="button" class="combobox-toggle" id="teacherComboToggle" tabindex="-1"><i class="fas fa-chevron-down"></i></button>
+<div class="combobox-dropdown" id="teacherComboDropdown"></div>
+</div>
+</div>
+<div class="quick-row" id="teacherGroupRow" style="display:none;">
+<span class="quick-label"><i class="fas fa-layer-group"></i> Niveau/Spécialité</span>
+<div class="combobox" id="groupCombobox">
+<input type="text" id="groupComboInput" class="combobox-input" placeholder="Toutes les classes..." autocomplete="off" spellcheck="false">
+<button type="button" class="combobox-toggle" id="groupComboToggle" tabindex="-1"><i class="fas fa-chevron-down"></i></button>
+<div class="combobox-dropdown" id="groupComboDropdown"></div>
+</div>
+</div>
+</div>
+
+<div id="resultSection" style="display:none;">
+<div class="result-header" id="resultHeader"></div>
+<div id="groupFilterBar" class="group-filter-bar" style="display:none;">
+<label><i class="fas fa-users"></i> Choisissez votre groupe TD</label>
+<select id="groupFilterSelect" class="group-filter-select">
+<option value="">Tous les groupes</option>
+</select>
+<span class="group-filter-info">Sélectionnez votre numéro de groupe pour ne voir que vos TD.</span>
+</div>
+<div id="timetable-container"></div>
+<div class="info-section" id="infoSection">
+<div class="legend-section">
+<span class="legend-item"><span class="legend-dot CM"></span> CM — Cours Magistral</span>
+<span class="legend-item"><span class="legend-dot G"></span> G — Groupe (TD)</span>
+<span class="legend-item"><span class="legend-dot TP"></span> TP — Travaux Pratiques</span>
+</div>
+<div id="actionButtonsGroup" style="display:flex; gap:10px; flex-wrap:wrap;">
+<button class="print-btn" id="btnPrint"><i class="fas fa-print"></i> Imprimer</button>
+<span id="exportBtnsGroup" style="display:flex; gap:10px; flex-wrap:wrap;">
+<button class="export-btn" id="btnExport"><i class="fas fa-file-code"></i> Exporter la vue</button>
+<button class="export-site-btn" id="btnExportSite"><i class="fas fa-globe"></i> Publier site complet</button>
+</span>
+</div>
+</div>
+</div>
+</main>
+<footer>
+<div class="footer-bottom">
+<p>&copy; 2026 Département des Sciences de Gestion &mdash; FSECSG, Université Mouloud MAMMERI Tizi Ouzou</p>
+</div>
+</footer>
+
+<div id="exportModal" class="export-modal-overlay">
+<div class="export-modal">
+<div class="export-modal-header" id="exportModalHeader">
+<h3 id="exportModalTitle"><i class="fas fa-file-export"></i> Exporter en HTML</h3>
+<button class="export-close-btn" id="btnCloseExport">&times;</button>
+</div>
+<div class="export-modal-subtitle" id="exportModalSubtitle"></div>
+<div id="exportOptionZone"></div>
+<div class="export-toolbar">
+<button class="export-toolbar-btn primary" id="btnCheckAll"><i class="fas fa-check-double"></i> Tout cocher</button>
+<button class="export-toolbar-btn" id="btnUncheckAll"><i class="fas fa-square"></i> Tout décocher</button>
+</div>
+<div class="export-modal-body" id="exportModalBody"></div>
+<div class="export-modal-footer">
+<div class="export-selected-info" id="exportSelectedInfo"></div>
+<div class="export-modal-actions">
+<button class="export-action-btn cancel" id="btnCancelExport"><i class="fas fa-times"></i> Annuler</button>
+<button class="export-action-btn confirm" id="exportConfirmBtn"><i class="fas fa-download"></i> Exporter</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+var API_EMPLOI = "http://102.206.41.12/~mahtoutd/api_emploi_temps.php";
+var API_SPECIALITE = "http://102.206.41.12/~mahtoutd/api_specialite.php";
+var API_INFRA = "http://102.206.41.12/~mahtoutd/api_infrastructure.php";
+
+var jours = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Samedi"];
+var horaires = ["08:00-09:30", "09:30-11:00", "11:00-12:30", "12:30-14:00", "14:00-15:30", "15:30-17:00"];
+
+var semesterLabels = {
+    semestre1: "Semestre 1", semestre2: "Semestre 2",
+    semestre3: "Semestre 3", semestre4: "Semestre 4",
+    semestre5: "Semestre 5", semestre6: "Semestre 6"
+};
+
+var levelLabels = {
+    licence1: "Licence 1 TC", licence2: "Licence 2 Gestion",
+    licence3: "Licence 3", master1: "Master 1"
+};
+
+var DUREE_CM_MIN = 135;
+var DUREE_TD_MIN = 90;
+
+var PDF_OVERRIDES = {
+    "licence1|L1 TC G2": "https://drive.google.com/file/d/1iPDURrx-WxbQiXqVbp3GlV76fTiZ6eX4/preview",
+    "licence1|L1 TC G3": "https://drive.google.com/file/d/1voSHwRp_2Ssp0_-sLOHTaBCxN5xT8V4D/preview"
+};
+
+function getPdfUrlForSection(niveau, sectionKey) {
+    if (!niveau || !sectionKey) return null;
+    var key = niveau + "|" + sectionKey;
+    if (PDF_OVERRIDES[key]) return PDF_OVERRIDES[key];
+    var nKey = normKey(sectionKey);
+    for (var k in PDF_OVERRIDES) {
+        var parts = k.split("|");
+        if (parts[0] !== niveau) continue;
+        if (normKey(parts[1]) === nKey) return PDF_OVERRIDES[k];
+    }
+    return null;
+}
+
+function getPdfOpenUrl(previewUrl) {
+    if (!previewUrl) return "#";
+    return previewUrl.replace(/\/preview(\?.*)?$/, '/view');
+}
+
+function computeTeacherLoad(seances) {
+    var cmCount = 0, tdCount = 0;
+    (seances || []).forEach(function (s) {
+        var t = (s.type || 'CM').toString().toUpperCase();
+        if (t === 'CM') cmCount++;
+        else tdCount++;
+    });
+    return {
+        cmCount: cmCount,
+        tdCount: tdCount,
+        minutes: cmCount * DUREE_CM_MIN + tdCount * DUREE_TD_MIN
+    };
+}
+
+function formatDuration(minutes) {
+    if (!minutes) return '0 h 00';
+    var h = Math.floor(minutes / 60);
+    var m = minutes % 60;
+    return h + ' h ' + (m < 10 ? '0' + m : m);
+}
+
+function updateDeptLoadBanner() {
+    var banner = document.getElementById('deptLoadBanner');
+    var val = document.getElementById('deptLoadValue');
+    var teacherEl = document.getElementById('deptLoadTeacher');
+    if (!banner || !val) return;
+    if (!currentTeacher || !teachersData[currentTeacher]) {
+        banner.style.display = 'none';
+        return;
+    }
+    var load = computeTeacherLoad(teachersData[currentTeacher].seances);
+    val.textContent = formatDuration(load.minutes);
+    if (teacherEl) teacherEl.textContent = currentTeacher;
+    banner.style.display = 'flex';
+}
+
+var rawPlacements = [];
+var dbSpecialites = [];
+var dbInfrastructures = {};
+var emploiData = {
+    licence1: { label: "Licence 1 TC", specialites: {} },
+    licence2: { label: "Licence 2 Gestion", specialites: {} },
+    licence3: { label: "Licence 3", specialites: {} },
+    master1: { label: "Master 1", specialites: {} }
+};
+var teachersData = {};
+
+var currentViewMode = "niveau";
+var currentNiveau = "";
+var currentSpecialite = "";
+var currentSemestre = "";
+var currentGroupFilter = "";
+var currentTeacher = "";
+var currentTeacherGroup = "";
+var exportMode = "view";
+var currentIsPdf = false;
+var exportSiteShowCharges = true; // état de la checkbox
+
+function norm(s) { return (s || "").toString().trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+function normKey(s) { return norm(s).replace(/[^A-Z0-9]/g, ''); }
+function escapeHtml(s) { if (!s) return ""; return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function escapeAttr(s) { return escapeHtml(s).replace(/'/g, '&#39;'); }
+function showToast(msg, type) {
+    var t = document.createElement('div');
+    t.className = 'toast ' + (type || 'success');
+    t.innerHTML = '<i class="fas fa-' + (type === 'error' ? 'exclamation-circle' : 'check-circle') + '"></i> ' + msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 2800);
+}
+function formatTypeLabel(type, group) {
+    var t = (type || 'CM').toString().trim().toUpperCase();
+    var g = (group === null || group === undefined) ? '' : String(group).trim();
+    if (t === 'TD') t = 'G';
+    if (g) return t + g;
+    return t;
+}
+function formatHoraireCell(horaireStr) {
+    var parts = (horaireStr || '').toString().split('-');
+    if (parts.length !== 2) return escapeHtml(horaireStr);
+    return '<div class="horaire-cell"><span class="h-start">' + escapeHtml(parts[0].trim()) + '</span><span class="h-sep"></span><span class="h-end">' + escapeHtml(parts[1].trim()) + '</span></div>';
+}
+function getNiveauFromDBLevel(dbNiveau) {
+    var n = norm(dbNiveau);
+    if (!n) return null;
+    if (n.indexOf("L1") !== -1 || n.indexOf("LICENCE 1") !== -1 || n.indexOf("LICENCE1") !== -1 || n === "1" || n.indexOf("TRONC") !== -1 || n === "TC" || n.indexOf("1ERE") !== -1) return "licence1";
+    if (n.indexOf("L2") !== -1 || n.indexOf("LICENCE 2") !== -1 || n.indexOf("LICENCE2") !== -1 || n === "2" || n.indexOf("2EME") !== -1) return "licence2";
+    if (n.indexOf("L3") !== -1 || n.indexOf("LICENCE 3") !== -1 || n.indexOf("LICENCE3") !== -1 || n === "3" || n.indexOf("3EME") !== -1) return "licence3";
+    if (n.indexOf("M1") !== -1 || n.indexOf("M2") !== -1 || n.indexOf("MASTER") !== -1) return "master1";
+    return null;
+}
+function mapSemestre(niveau, typeSemestre) {
+    var isPair = norm(typeSemestre) === "PAIR";
+    if (niveau === "licence1") return isPair ? "semestre2" : "semestre1";
+    if (niveau === "licence2") return isPair ? "semestre4" : "semestre3";
+    if (niveau === "licence3") return isPair ? "semestre6" : "semestre5";
+    if (niveau === "master1") return isPair ? "semestre2" : "semestre1";
+    return "semestre1";
+}
+function findSpecInDB(rawSpec, rawFil) {
+    var normSpec = normKey(rawSpec); var normFil = normKey(rawFil);
+    if (!normSpec && !normFil) return null;
+    for (var i = 0; i < dbSpecialites.length; i++) {
+        var s = dbSpecialites[i];
+        var normAbrev = normKey(s.abreviation); var normNom = normKey(s.specialite);
+        if (normSpec && (normSpec === normAbrev || normSpec === normNom)) return s;
+        if (normFil && (normFil === normAbrev || normFil === normNom)) return s;
+    }
+    return null;
+}
+function detectNiveau(filiere, specialite) {
+    var dbMatch = findSpecInDB(specialite, filiere);
+    if (dbMatch) { var lvl = getNiveauFromDBLevel(dbMatch.niveau); if (lvl) return lvl; }
+    var f = norm(filiere); var s = norm(specialite); var combined = f + " " + s;
+    if (!combined.trim()) return null;
+    if (s.indexOf("M1.") === 0 || s.indexOf("M2.") === 0) return "master1";
+    if (f.indexOf("M1") === 0 || f.indexOf("M2") === 0) return "master1";
+    if (combined.indexOf("MASTER") !== -1) return "master1";
+    if (s.indexOf("L3.") === 0 || f.indexOf("L3") === 0 || f === "L3") return "licence3";
+    if (s.indexOf("L2.") === 0 || f.indexOf("L2") === 0 || f === "L2") return "licence2";
+    if (s.indexOf("L1.") === 0 || f.indexOf("L1") === 0 || f === "L1" || combined.indexOf("TRONC") !== -1) return "licence1";
+    if (combined.indexOf("LICENCE 1") !== -1) return "licence1";
+    if (combined.indexOf("LICENCE 2") !== -1) return "licence2";
+    if (combined.indexOf("LICENCE 3") !== -1) return "licence3";
+    return null;
+}
+function resolveSalleName(p) {
+    if (p.salle_nom && p.salle_nom.toString().trim()) return p.salle_nom.toString().trim();
+    var idx = p.salle_idx;
+    if (idx !== undefined && idx !== null && idx !== '') { if (dbInfrastructures[String(idx)]) return dbInfrastructures[String(idx)]; }
+    return "";
+}
+function extractSectionKey(rawFil, rawSpec, niveau) {
+    var f = (rawFil || "").toString().trim();
+    var s = (rawSpec || "").toString().trim();
+    var combined = (f + " " + s).toUpperCase();
+    var m = combined.match(/\b(?:GROUPE|GRP|SECTION|SEC|G)\s*[.\-]?\s*(\d+)\b/);
+    if (m) {
+        var prefix = (niveau === 'licence1') ? 'L1 TC ' : 'L2 ';
+        return prefix + 'G' + m[1];
+    }
+    return (s || f || "Section unique");
+}
+
+function buildCompleteData(placements, dbSpecs) {
+    var result = {
+        licence1: { label: "Licence 1 TC", specialites: {} },
+        licence2: { label: "Licence 2 Gestion", specialites: {} },
+        licence3: { label: "Licence 3", specialites: {} },
+        master1: { label: "Master 1", specialites: {} }
+    };
+    var dbSpecMap = {};
+    dbSpecs.forEach(function (s) {
+        var niveau = getNiveauFromDBLevel(s.niveau);
+        if (niveau !== 'licence3' && niveau !== 'master1') return;
+        var abrev = (s.abreviation || '').toString().trim();
+        var nom = (s.specialite || '').toString().trim();
+        var displayName = abrev || nom;
+        if (!displayName) return;
+        if (!result[niveau].specialites[displayName]) {
+            result[niveau].specialites[displayName] = {
+                label: displayName, fullName: nom || displayName,
+                abreviation: abrev, semestres: {}, hasCourses: false
+            };
+        }
+        if (abrev) dbSpecMap[niveau + '|' + normKey(abrev)] = displayName;
+        if (nom) dbSpecMap[niveau + '|' + normKey(nom)] = displayName;
+    });
+
+    placements.forEach(function (p) {
+        var niveau = detectNiveau(p.filiere, p.specialite);
+        if (!niveau) return;
+        var semestreKey = mapSemestre(niveau, p.type_Semestre);
+        var salleName = resolveSalleName(p);
+        var seance = {
+            j: parseInt(p.jour_idx, 10) || 0, h: parseInt(p.heure_idx, 10) || 0,
+            module: p.matiere || "", type: (p.type || "CM").toString().toUpperCase(),
+            salle: salleName, ens: p.enseignant || "", grp: p.groupe || ""
+        };
+        var targetKey;
+        if (niveau === "licence1" || niveau === "licence2") {
+            targetKey = extractSectionKey(p.filiere, p.specialite, niveau);
+        } else {
+            var rawSpec = (p.specialite || "").toString().trim();
+            var rawFil = (p.filiere || "").toString().trim();
+            targetKey = null;
+            if (rawSpec) targetKey = dbSpecMap[niveau + '|' + normKey(rawSpec)];
+            if (!targetKey && rawFil) targetKey = dbSpecMap[niveau + '|' + normKey(rawFil)];
+            if (!targetKey) {
+                var normRS = normKey(rawSpec); var normRF = normKey(rawFil);
+                for (var key in result[niveau].specialites) {
+                    var k = normKey(key);
+                    var abr = normKey(result[niveau].specialites[key].abreviation);
+                    if ((normRS && (normRS === k || normRS === abr)) ||
+                        (normRF && (normRF === k || normRF === abr))) { targetKey = key; break; }
+                }
+            }
+            if (!targetKey) targetKey = rawSpec || rawFil || 'Inconnu';
+        }
+        if (!result[niveau].specialites[targetKey]) {
+            result[niveau].specialites[targetKey] = {
+                label: targetKey, fullName: targetKey,
+                abreviation: '', semestres: {}, hasCourses: false
+            };
+        }
+        var spec = result[niveau].specialites[targetKey];
+        spec.hasCourses = true;
+        if (!spec.semestres[semestreKey]) spec.semestres[semestreKey] = [];
+        spec.semestres[semestreKey].push(seance);
+    });
+    return result;
+}
+
+function buildTeacherIndex() {
+    teachersData = {};
+    var levelAbbr = { licence1: 'L1', licence2: 'L2', licence3: 'L3', master1: 'M1' };
+    ['licence1', 'licence2', 'licence3', 'master1'].forEach(function (niveau) {
+        var data = emploiData[niveau];
+        if (!data) return;
+        Object.keys(data.specialites).forEach(function (specKey) {
+            var spec = data.specialites[specKey];
+            if (!spec || !spec.semestres) return;
+            Object.keys(spec.semestres).forEach(function (semKey) {
+                var seances = spec.semestres[semKey] || [];
+                seances.forEach(function (s) {
+                    var ens = (s.ens || '').toString().trim();
+                    if (!ens) return;
+                    if (!teachersData[ens]) {
+                        teachersData[ens] = { seances: [], matieres: {}, classes: {} };
+                    }
+                    var specDisplay;
+                    if (niveau === 'licence1' || niveau === 'licence2') {
+                        specDisplay = specKey;
+                    } else {
+                        var upperKey = (specKey || '').toString().trim().toUpperCase();
+                        var startsWithLevel = /^(L[123]|M[12])(\s|[.\-_]|$)/.test(upperKey);
+                        if (startsWithLevel) {
+                            specDisplay = specKey;
+                        } else {
+                            specDisplay = levelAbbr[niveau] + ' ' + specKey;
+                        }
+                    }
+                    var semShort = (semesterLabels[semKey] || semKey).replace('Semestre ', 'S');
+                    var ctx = specDisplay + ' · ' + semShort;
+                    teachersData[ens].seances.push({
+                        j: s.j, h: s.h,
+                        module: s.module, type: s.type,
+                        salle: s.salle, ens: s.ens, grp: s.grp,
+                        ctx: ctx
+                    });
+                    teachersData[ens].matieres[s.module] = true;
+                    teachersData[ens].classes[specDisplay] = true;
+                });
+            });
+        });
+    });
+}
+
+function switchViewMode(mode) {
+    if (mode === currentViewMode) return;
+    currentViewMode = mode;
+
+    document.querySelectorAll('.view-tab').forEach(function (t) {
+        t.classList.toggle('active', t.getAttribute('data-mode') === mode);
+    });
+
+    document.getElementById('levelsGrid').style.display = 'none';
+    document.getElementById('quickSelectors').style.display = 'none';
+    document.getElementById('teacherSelectors').style.display = 'none';
+    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('groupFilterBar').style.display = 'none';
+    closeTeacherCombo();
+    closeClassCombo();
+
+    if (mode === 'niveau') {
+        currentTeacher = ""; currentTeacherGroup = "";
+        document.getElementById('levelsGrid').style.display = '';
+        document.getElementById('exportBtnsGroup').style.display = 'flex';
+        if (currentNiveau) {
+            var card = document.querySelector('.option-card[data-niveau="' + currentNiveau + '"]');
+            if (card) selectNiveau(currentNiveau, card);
+            else document.querySelectorAll('.option-card').forEach(function (c) { c.classList.remove('active-niveau'); });
+        } else {
+            document.querySelectorAll('.option-card').forEach(function (c) { c.classList.remove('active-niveau'); });
+        }
+    } else {
+        currentNiveau = ""; currentSpecialite = ""; currentSemestre = ""; currentGroupFilter = "";
+        document.querySelectorAll('.option-card').forEach(function (c) { c.classList.remove('active-niveau'); });
+        document.getElementById('exportBtnsGroup').style.display = 'none';
+        document.getElementById('teacherSelectors').style.display = 'flex';
+        document.getElementById('teacherComboInput').value = currentTeacher || '';
+        document.getElementById('teacherGroupRow').style.display = 'none';
+        document.getElementById('groupComboInput').value = '';
+        updateDeptLoadBanner();
+        if (currentTeacher && teachersData[currentTeacher]) {
+            updateTeacherClassRow();
+            displayTeacherTimetable();
+        } else {
+            showTeacherPendingMessage();
+        }
+    }
+}
+
+var teacherComboHighlight = -1;
+var teacherComboItems = [];
+
+function openTeacherCombo() {
+    renderTeacherComboDropdown();
+    document.getElementById('teacherComboDropdown').classList.add('open');
+}
+function closeTeacherCombo() {
+    teacherComboHighlight = -1;
+    document.getElementById('teacherComboDropdown').classList.remove('open');
+}
+function isTeacherComboOpen() {
+    return document.getElementById('teacherComboDropdown').classList.contains('open');
+}
+function renderTeacherComboDropdown() {
+    var drop = document.getElementById('teacherComboDropdown');
+    var input = document.getElementById('teacherComboInput');
+    var filter = (input.value || '').toLowerCase().trim();
+    var names = Object.keys(teachersData).sort(function (a, b) {
+        return a.localeCompare(b, 'fr', { sensitivity: 'base' });
+    });
+    if (filter === (currentTeacher || '').toLowerCase()) filter = '';
+    if (filter) names = names.filter(function (n) { return n.toLowerCase().indexOf(filter) !== -1; });
+    teacherComboItems = names;
+    if (names.length === 0) {
+        drop.innerHTML = '<div class="combobox-empty"><i class="fas fa-user-slash"></i>Aucun enseignant trouvé</div>';
+        return;
+    }
+    var html = '';
+    names.forEach(function (n, idx) {
+        var isSel = (n === currentTeacher) ? ' selected' : '';
+        var isHl = (idx === teacherComboHighlight) ? ' highlight' : '';
+        html += '<div class="combobox-option' + isSel + isHl + '" data-name="' + escapeAttr(n) + '">';
+        html += '<span class="opt-name"><i class="fas fa-user-tie" style="font-size:11px;opacity:0.5;margin-right:8px;flex-shrink:0"></i><span>' + escapeHtml(n) + '</span></span>';
+        html += '</div>';
+    });
+    drop.innerHTML = html;
+    drop.querySelectorAll('.combobox-option').forEach(function (opt) {
+        opt.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            var name = this.getAttribute('data-name');
+            selectTeacher(name);
+            closeTeacherCombo();
+        });
+    });
+}
+
+function selectTeacher(name) {
+    currentTeacher = name;
+    currentTeacherGroup = "";
+    document.getElementById('teacherComboInput').value = name;
+    updateDeptLoadBanner();
+    updateTeacherClassRow();
+    displayTeacherTimetable();
+}
+
+function updateTeacherClassRow() {
+    var row = document.getElementById('teacherGroupRow');
+    if (!currentTeacher || !teachersData[currentTeacher]) {
+        row.style.display = 'none';
+        return;
+    }
+    var ctxSet = {};
+    teachersData[currentTeacher].seances.forEach(function (s) {
+        if (s.ctx) ctxSet[s.ctx] = true;
+    });
+    var count = Object.keys(ctxSet).length;
+    if (count <= 1) {
+        row.style.display = 'none';
+        currentTeacherGroup = "";
+        document.getElementById('groupComboInput').value = '';
+        return;
+    }
+    row.style.display = 'flex';
+    document.getElementById('groupComboInput').value = '';
+    document.getElementById('groupComboInput').placeholder = 'Toutes les classes (' + count + ')';
+}
+
+var classComboHighlight = -1;
+var classComboItems = [];
+
+function openClassCombo() {
+    if (!currentTeacher || !teachersData[currentTeacher]) return;
+    renderClassComboDropdown();
+    document.getElementById('groupComboDropdown').classList.add('open');
+}
+function closeClassCombo() {
+    classComboHighlight = -1;
+    document.getElementById('groupComboDropdown').classList.remove('open');
+}
+function isClassComboOpen() {
+    return document.getElementById('groupComboDropdown').classList.contains('open');
+}
+function getTeacherContexts() {
+    if (!currentTeacher || !teachersData[currentTeacher]) return [];
+    var ctxSet = {};
+    teachersData[currentTeacher].seances.forEach(function (s) { if (s.ctx) ctxSet[s.ctx] = true; });
+    return Object.keys(ctxSet).sort();
+}
+function renderClassComboDropdown() {
+    var drop = document.getElementById('groupComboDropdown');
+    var input = document.getElementById('groupComboInput');
+    var filter = (input.value || '').toLowerCase().trim();
+    if (filter === (currentTeacherGroup || '').toLowerCase()) filter = '';
+    var ctxList = getTeacherContexts();
+    if (filter) ctxList = ctxList.filter(function (c) { return c.toLowerCase().indexOf(filter) !== -1; });
+
+    var totalSeances = teachersData[currentTeacher].seances.length;
+    var html = '';
+    var allMatch = !filter || 'toutes les classes'.indexOf(filter) !== -1;
+    if (allMatch) {
+        var allSel = (!currentTeacherGroup) ? ' selected' : '';
+        html += '<div class="combobox-option' + allSel + '" data-ctx="">';
+        html += '<span class="opt-name"><i class="fas fa-layer-group" style="font-size:11px;opacity:0.5;margin-right:8px;flex-shrink:0"></i><span>Toutes les classes</span></span>';
+        html += '<span class="opt-count">' + totalSeances + '</span>';
+        html += '</div>';
+    }
+    ctxList.forEach(function (ctx) {
+        var count = teachersData[currentTeacher].seances.filter(function (s) { return s.ctx === ctx; }).length;
+        var isSel = (ctx === currentTeacherGroup) ? ' selected' : '';
+        html += '<div class="combobox-option' + isSel + '" data-ctx="' + escapeAttr(ctx) + '">';
+        html += '<span class="opt-name"><span>' + escapeHtml(ctx) + '</span></span>';
+        html += '<span class="opt-count">' + count + '</span>';
+        html += '</div>';
+    });
+    classComboItems = ctxList;
+    if (!html) {
+        drop.innerHTML = '<div class="combobox-empty"><i class="fas fa-inbox"></i>Aucune classe correspondante</div>';
+        return;
+    }
+    drop.innerHTML = html;
+    drop.querySelectorAll('.combobox-option').forEach(function (opt) {
+        opt.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            var ctx = this.getAttribute('data-ctx');
+            currentTeacherGroup = ctx || '';
+            document.getElementById('groupComboInput').value = ctx || '';
+            closeClassCombo();
+            displayTeacherTimetable();
+        });
+    });
+}
+
+function showTeacherPendingMessage() {
+    var section = document.getElementById('resultSection');
+    section.style.display = 'block';
+    document.getElementById('resultHeader').innerHTML = '';
+    document.getElementById('groupFilterBar').style.display = 'none';
+    var container = document.getElementById('timetable-container');
+    if (Object.keys(teachersData).length === 0) {
+        container.innerHTML = '<div class="pending-message teacher"><i class="fas fa-spinner fa-spin"></i><p>Chargement des enseignants…</p></div>';
+    } else {
+        container.innerHTML = '<div class="pending-message teacher"><i class="fas fa-hand-pointer"></i><p>Veuillez sélectionner un enseignant dans la liste ci-dessus</p></div>';
+    }
+    document.getElementById('infoSection').style.display = 'none';
+}
+
+function displayTeacherTimetable() {
+    var info = teachersData[currentTeacher];
+    if (!info) return;
+    var allSeances = info.seances;
+    var seances = allSeances;
+    if (currentTeacherGroup) {
+        seances = allSeances.filter(function (s) { return s.ctx === currentTeacherGroup; });
+    }
+    var headerHtml = '<h3><i class="fas fa-chalkboard-teacher header-icon" style="color:var(--purple)"></i>'
+        + escapeHtml(currentTeacher)
+        + (currentTeacherGroup ? ' — <span class="h3-ctx">' + escapeHtml(currentTeacherGroup) + '</span>' : '')
+        + '</h3>';
+    document.getElementById('resultHeader').innerHTML = headerHtml;
+
+    var container = document.getElementById('timetable-container');
+    var infoSection = document.getElementById('infoSection');
+    if (!seances || seances.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Aucune séance pour cette sélection.</p></div>';
+        infoSection.style.display = 'none';
+    } else {
+        container.innerHTML = buildTimetableHTML(seances, { showContext: true });
+        infoSection.style.display = 'flex';
+    }
+    document.getElementById('resultSection').style.display = 'block';
+    var section = document.getElementById('resultSection');
+    setTimeout(function () { section.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+}
+
+function renderPdfViewer(pdfUrl, title, subtitle) {
+    var openUrl = getPdfOpenUrl(pdfUrl);
+    var html = '<div class="pdf-viewer-wrapper">';
+    html += '<div class="pdf-viewer-header">';
+    html += '<div class="pdf-title"><i class="fas fa-file-pdf"></i> ' + escapeHtml(title) + (subtitle ? ' — ' + escapeHtml(subtitle) : '') + '</div>';
+    html += '<a class="pdf-open-btn" href="' + escapeAttr(openUrl) + '" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Ouvrir</a>';
+    html += '</div>';
+    html += '<iframe class="pdf-iframe" src="' + escapeAttr(pdfUrl) + '" allow="autoplay" loading="lazy"></iframe>';
+    html += '<div class="pdf-fallback"><i class="fas fa-file-pdf"></i>Si le PDF ne s\'affiche pas, <a href="' + escapeAttr(openUrl) + '" target="_blank" rel="noopener">cliquez ici pour l\'ouvrir dans un nouvel onglet</a>.</div>';
+    html += '</div>';
+    return html;
+}
+
+function applyGroupFilter(seances, grp) {
+    if (!grp) return seances;
+    return seances.filter(function (s) {
+        var t = (s.type || '').toString().toUpperCase();
+        if (t !== 'TD') return true;
+        return String(s.grp) === String(grp);
+    });
+}
+function extractAvailableGroups(seances) {
+    var groups = {};
+    seances.forEach(function (s) {
+        if ((s.type || '').toString().toUpperCase() === 'TD' && s.grp) groups[String(s.grp)] = true;
+    });
+    return Object.keys(groups).sort(function (a, b) {
+        var na = parseInt(a, 10); var nb = parseInt(b, 10);
+        if (!isNaN(na) && !isNaN(nb)) return na - nb;
+        return a.localeCompare(b);
+    });
+}
+function updateGroupFilterBar(seances) {
+    var bar = document.getElementById('groupFilterBar');
+    var sel = document.getElementById('groupFilterSelect');
+    var groups = extractAvailableGroups(seances);
+    if (groups.length === 0) {
+        bar.style.display = 'none';
+        sel.innerHTML = '<option value="">Tous les groupes</option>';
+        currentGroupFilter = '';
+        return;
+    }
+    bar.style.display = 'flex';
+    var currentVal = sel.value;
+    sel.innerHTML = '<option value="">Tous les groupes</option>';
+    groups.forEach(function (g) {
+        var opt = document.createElement('option');
+        opt.value = g; opt.textContent = 'Groupe ' + g;
+        sel.appendChild(opt);
+    });
+    if (currentVal && groups.indexOf(currentVal) !== -1) {
+        sel.value = currentVal;
+        currentGroupFilter = currentVal;
+    } else {
+        currentGroupFilter = '';
+        sel.value = '';
+    }
+}
+
+function selectNiveau(niveau, el) {
+    currentNiveau = niveau; currentSpecialite = ""; currentSemestre = ""; currentGroupFilter = "";
+    document.querySelectorAll('.option-card').forEach(function (c) { c.classList.remove('active-niveau'); });
+    if (el) el.classList.add('active-niveau');
+    var data = emploiData[niveau];
+    if (!data) { showEmptyState('Niveau introuvable.'); return; }
+    document.getElementById('resultSection').style.display = 'none';
+
+    var specKeys = Object.keys(data.specialites).sort();
+    if (specKeys.length === 0) {
+        showEmptyState('Aucune section/spécialité disponible pour ' + data.label + '.', true);
+        hideQuickSelectors(); return;
+    }
+    var semKeysAll = collectSemestersForLevel(data);
+    if (semKeysAll.length === 0) {
+        var hasPdfOnly = false;
+        Object.keys(data.specialites).forEach(function (sk) {
+            if (getPdfUrlForSection(niveau, sk)) hasPdfOnly = true;
+        });
+        if (!hasPdfOnly) {
+            showEmptyState('Aucun emploi du temps disponible pour ' + data.label + '.', true);
+            hideQuickSelectors(); return;
+        }
+        semKeysAll = ["semestre1"];
+    }
+    renderSemQuickPills(semKeysAll);
+    hideSpecQuickRow();
+    document.getElementById('quickSelectors').style.display = 'flex';
+    if (semKeysAll.length === 1) changeSemestre(semKeysAll[0]);
+}
+
+function collectSemestersForLevel(data) {
+    var semSet = {};
+    Object.keys(data.specialites || {}).forEach(function (sk) {
+        var sp = data.specialites[sk]; if (!sp || !sp.semestres) return;
+        Object.keys(sp.semestres).forEach(function (semK) {
+            if (sp.semestres[semK] && sp.semestres[semK].length > 0) semSet[semK] = true;
+        });
+    });
+    return Object.keys(semSet).sort();
+}
+
+function getSpecsForSemester(data, semKey) {
+    var result = [];
+    Object.keys(data.specialites || {}).sort().forEach(function (sk) {
+        var sp = data.specialites[sk]; if (!sp) return;
+        var seances = (sp.semestres && sp.semestres[semKey]) ? sp.semestres[semKey] : [];
+        var hasPdf = !!getPdfUrlForSection(currentNiveau, sk);
+        if (seances.length > 0 || hasPdf) {
+            result.push({ id: sk, count: seances.length });
+        }
+    });
+    return result;
+}
+
+function renderSemQuickPills(semKeys) {
+    var row = document.getElementById('semQuickRow'); var container = document.getElementById('semQuickPills');
+    if (!semKeys || semKeys.length === 0) { row.style.display = 'none'; return; }
+    row.style.display = 'flex'; container.innerHTML = '';
+    semKeys.forEach(function (key) {
+        var btn = document.createElement('button');
+        btn.className = 'quick-pill' + (key === currentSemestre ? ' active' : '');
+        btn.textContent = semesterLabels[key] || key;
+        btn.onclick = function () { changeSemestre(key); };
+        container.appendChild(btn);
+    });
+}
+function renderSpecQuickPills(specKeys) {
+    var row = document.getElementById('specQuickRow'); var container = document.getElementById('specQuickPills');
+    if (!specKeys || specKeys.length === 0) { row.style.display = 'none'; return; }
+    row.style.display = 'flex'; container.innerHTML = '';
+    specKeys.forEach(function (key) {
+        var btn = document.createElement('button');
+        btn.className = 'quick-pill spec-pill' + (key === currentSpecialite ? ' active' : '');
+        btn.textContent = key;
+        btn.onclick = function () { changeSpecialite(key); };
+        container.appendChild(btn);
+    });
+}
+function hideSpecQuickRow() { document.getElementById('specQuickRow').style.display = 'none'; }
+function hideQuickSelectors() { document.getElementById('quickSelectors').style.display = 'none'; }
+
+function changeSemestre(semKey) {
+    currentSemestre = semKey; currentGroupFilter = '';
+    var data = emploiData[currentNiveau];
+    renderSemQuickPills(collectSemestersForLevel(data));
+    var availableSpecs = getSpecsForSemester(data, semKey);
+    if (availableSpecs.length === 0) {
+        hideSpecQuickRow();
+        showEmptyState('Aucune section/spécialité n\'a de cours programmé pour '
+            + (semesterLabels[semKey] || semKey) + '.', true);
+        return;
+    }
+    var autoSelect = (availableSpecs.length === 1);
+    currentSpecialite = autoSelect ? availableSpecs[0].id : "";
+    renderSpecQuickPills(availableSpecs.map(function (s) { return s.id; }));
+    if (autoSelect) displayCurrentTimetable();
+    else showPendingMessage();
+}
+function changeSpecialite(specKey) {
+    currentSpecialite = specKey; currentGroupFilter = '';
+    var data = emploiData[currentNiveau];
+    var availableSpecs = getSpecsForSemester(data, currentSemestre);
+    renderSpecQuickPills(availableSpecs.map(function (s) { return s.id; }));
+    displayCurrentTimetable();
+}
+function showPendingMessage() {
+    var section = document.getElementById('resultSection');
+    section.style.display = 'block';
+    document.getElementById('resultHeader').innerHTML = '';
+    document.getElementById('groupFilterBar').style.display = 'none';
+    document.getElementById('timetable-container').innerHTML = '<div class="pending-message"><i class="fas fa-hand-pointer"></i><p>Veuillez choisir une section ou une spécialité ci-dessus</p></div>';
+    document.getElementById('infoSection').style.display = 'none';
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function showEmptyState(msg, warn) {
+    document.getElementById('quickSelectors').style.display = 'none';
+    var section = document.getElementById('resultSection');
+    section.style.display = 'block';
+    document.getElementById('resultHeader').innerHTML = '';
+    document.getElementById('groupFilterBar').style.display = 'none';
+    var cls = warn ? 'empty-state warn' : 'empty-state';
+    var icon = warn ? 'fa-calendar-xmark' : 'fa-calendar-times';
+    document.getElementById('timetable-container').innerHTML = '<div class="' + cls + '"><i class="fas ' + icon + '"></i><p>' + escapeHtml(msg) + '</p></div>';
+    document.getElementById('infoSection').style.display = 'none';
+}
+
+function displayCurrentTimetable() {
+    var data = emploiData[currentNiveau];
+    var niveauLabel = data.label;
+    var specLabel = currentSpecialite;
+    var semLabel = semesterLabels[currentSemestre] || currentSemestre || '';
+
+    var pdfUrl = getPdfUrlForSection(currentNiveau, currentSpecialite);
+    if (pdfUrl) {
+        currentIsPdf = true;
+        var headerHtml = '<h3>' + escapeHtml(niveauLabel)
+            + (specLabel ? ' — ' + escapeHtml(specLabel) : '')
+            + (semLabel ? ' — ' + escapeHtml(semLabel) : '')
+            + ' <span class="h3-pdf"><i class="fas fa-file-pdf"></i> PDF</span></h3>';
+        document.getElementById('resultHeader').innerHTML = headerHtml;
+        document.getElementById('groupFilterBar').style.display = 'none';
+        var container = document.getElementById('timetable-container');
+        container.innerHTML = renderPdfViewer(pdfUrl, niveauLabel, specLabel + (semLabel ? ' — ' + semLabel : ''));
+        document.getElementById('infoSection').style.display = 'flex';
+        document.getElementById('exportBtnsGroup').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'block';
+        var section = document.getElementById('resultSection');
+        setTimeout(function () { section.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+        return;
+    }
+
+    currentIsPdf = false;
+    document.getElementById('exportBtnsGroup').style.display = 'flex';
+
+    var allSeances = [];
+    var sp = data.specialites[currentSpecialite];
+    if (sp) allSeances = sp.semestres[currentSemestre] || [];
+
+    updateGroupFilterBar(allSeances);
+    var seances = applyGroupFilter(allSeances, currentGroupFilter);
+
+    var headerText = escapeHtml(niveauLabel)
+        + (specLabel ? ' — ' + escapeHtml(specLabel) : '')
+        + (semLabel ? ' — ' + escapeHtml(semLabel) : '')
+        + (currentGroupFilter ? ' — Groupe TD ' + escapeHtml(currentGroupFilter) : '');
+    document.getElementById('resultHeader').innerHTML = '<h3>' + headerText + '</h3>';
+
+    var container = document.getElementById('timetable-container');
+    var infoSection = document.getElementById('infoSection');
+    if (!seances || seances.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Aucune séance pour cette sélection.</p></div>';
+        infoSection.style.display = 'none';
+    } else {
+        container.innerHTML = buildTimetableHTML(seances);
+        infoSection.style.display = 'flex';
+    }
+    document.getElementById('resultSection').style.display = 'block';
+    var section = document.getElementById('resultSection');
+    if (section.scrollIntoView) setTimeout(function () { section.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+}
+
+function buildTimetableHTML(seances, options) {
+    options = options || {};
+    var html = '<div class="timetable-wrapper"><table class="timetable"><thead><tr><th><i class="fas fa-clock"></i>Heure</th>';
+    jours.forEach(function (j) { html += '<th><i class="fas fa-calendar-day"></i> ' + j + '</th>'; });
+    html += '</tr></thead><tbody>';
+    for (var h = 0; h < horaires.length; h++) {
+        html += '<tr><td>' + formatHoraireCell(horaires[h]) + '</td>';
+        for (var j = 0; j < jours.length; j++) {
+            var cellSeances = seances.filter(function (s) { return s.j === j && s.h === h; });
+            html += '<td>';
+            if (cellSeances.length === 0) {
+                html += '<div class="empty-cell"><i class="fas fa-minus"></i></div>';
+            } else {
+                cellSeances.forEach(function (s) {
+                    var typeLabel = formatTypeLabel(s.type, s.grp);
+                    var typeRaw = (s.type || 'CM').toString().toUpperCase();
+                    var typeClass = 'cm-' + (typeRaw === 'TD' ? 'G' : typeRaw);
+                    html += '<div class="cell-module ' + typeClass + '">';
+                    if (options.showContext && s.ctx) {
+                        html += '<span class="cm-ctx">' + escapeHtml(s.ctx) + '</span>';
+                    }
+                    html += '<span class="cm-module-name">' + escapeHtml(s.module) + '</span>';
+                    html += '<div class="cm-footer"><span class="cm-type">' + escapeHtml(typeLabel) + '</span>';
+                    if (s.salle) html += '<span class="cm-info-row salle"><i class="fas fa-map-marker-alt"></i>' + escapeHtml(s.salle) + '</span>';
+                    if (s.ens && !options.showContext) html += '<span class="cm-info-row"><i class="fas fa-user"></i>' + escapeHtml(s.ens) + '</span>';
+                    html += '</div></div>';
+                });
+            }
+            html += '</td>';
+        }
+        html += '</tr>';
+    }
+    html += '</tbody></table></div>';
+    return html;
+}
+
+function openExportDialog() {
+    if (currentViewMode !== 'niveau') { showToast('Disponible uniquement en mode « Par niveau ».', 'error'); return; }
+    if (currentIsPdf) { showToast('Export non disponible pour cet emploi du temps PDF.', 'error'); return; }
+    if (!currentNiveau) { showToast('Veuillez d\'abord sélectionner un niveau.', 'error'); return; }
+    var data = emploiData[currentNiveau];
+    if (!data) { showToast('Données introuvables.', 'error'); return; }
+    exportMode = "view";
+    document.getElementById('exportModalHeader').classList.remove('site-mode');
+    document.getElementById('exportModalTitle').innerHTML = '<i class="fas fa-file-export"></i> Exporter la vue courante';
+    var bc = document.getElementById('exportConfirmBtn');
+    bc.classList.remove('site-confirm'); bc.innerHTML = '<i class="fas fa-download"></i> Exporter';
+    document.getElementById('exportOptionZone').innerHTML = '';
+
+    var body = document.getElementById('exportModalBody');
+    var subtitle = document.getElementById('exportModalSubtitle');
+    var items = [];
+    var specKeys = Object.keys(data.specialites).sort();
+    if (specKeys.length === 0) { showToast('Aucune section/spécialité à exporter.', 'error'); return; }
+    specKeys.forEach(function (specKey) {
+        var spec = data.specialites[specKey];
+        var hasPdf = !!getPdfUrlForSection(currentNiveau, specKey);
+        items.push({ type: 'spec', key: specKey, label: specKey, enabled: spec.hasCourses || hasPdf, hasPdf: hasPdf });
+    });
+    subtitle.innerHTML = 'Niveau : <strong>' + escapeHtml(data.label) + '</strong> — Décochez les sections/spécialités à ne pas exporter.';
+
+    var html = '';
+    items.forEach(function (item, idx) {
+        var disabled = item.enabled ? '' : 'disabled';
+        var checked = item.enabled ? 'checked' : '';
+        var cls = item.enabled ? '' : ' no-data';
+        var label = escapeHtml(item.label) + (item.hasPdf ? ' <span style="font-size:10px;font-weight:800;color:#dc2626;background:#fee2e2;padding:1px 6px;border-radius:4px;margin-left:6px">PDF</span>' : '');
+        html += '<label class="export-item' + cls + '">';
+        html += '<input type="checkbox" class="export-cb" data-type="' + escapeAttr(item.type) + '" data-key="' + escapeAttr(item.key) + '" data-idx="' + idx + '" ' + checked + ' ' + disabled + '>';
+        html += '<span class="export-label">' + label + '</span></label>';
+    });
+    body.innerHTML = html;
+    body.querySelectorAll('.export-cb').forEach(function (cb) { cb.addEventListener('change', updateExportSelection); });
+    document.getElementById('exportModal').classList.add('active');
+    updateExportSelection();
+}
+
+function openExportSiteDialog() {
+    if (currentViewMode !== 'niveau') { showToast('Disponible uniquement en mode « Par niveau ».', 'error'); return; }
+    exportMode = "site";
+    document.getElementById('exportModalHeader').classList.add('site-mode');
+    document.getElementById('exportModalTitle').innerHTML = '<i class="fas fa-globe"></i> Publier le site complet';
+    var bc = document.getElementById('exportConfirmBtn');
+    bc.classList.add('site-confirm'); bc.innerHTML = '<i class="fas fa-download"></i> Générer le site';
+    var body = document.getElementById('exportModalBody');
+    var subtitle = document.getElementById('exportModalSubtitle');
+    subtitle.innerHTML = 'Cochez les <strong>niveaux et sections/spécialités</strong> à inclure. Le fichier <strong>index.html</strong> généré sera prêt à publier sur GitHub Pages.';
+
+    // ?? ZONE D'OPTION — checkbox pour afficher/masquer les charges enseignants
+    var optZone = document.getElementById('exportOptionZone');
+    optZone.innerHTML = ''
+        + '<label class="export-option-line" for="exportShowCharges">'
+        + '  <input type="checkbox" id="exportShowCharges" ' + (exportSiteShowCharges ? 'checked' : '') + '>'
+        + '  <div class="eol-icon"><i class="fas fa-clock"></i></div>'
+        + '  <div class="eol-text">Afficher les charges horaires par enseignant'
+        + '    <small>Mode « Par enseignant » : CM × 2h15 + TD/TP × 1h30</small>'
+        + '  </div>'
+        + '</label>';
+    // Handler pour mettre à jour l'état
+    setTimeout(function () {
+        var cb = document.getElementById('exportShowCharges');
+        if (cb) {
+            cb.addEventListener('change', function () {
+                exportSiteShowCharges = !!this.checked;
+            });
+        }
+    }, 0);
+
+    var html = '';
+    ['licence1', 'licence2', 'licence3', 'master1'].forEach(function (niveau) {
+        var data = emploiData[niveau];
+        if (!data) return;
+        html += '<div class="export-group-header" data-group="' + niveau + '">';
+        html += '<input type="checkbox" class="export-group-cb" data-group="' + niveau + '" checked>';
+        html += '<span class="group-label">' + escapeHtml(data.label) + '</span></div>';
+        html += '<div class="export-subgroup">';
+        var specKeys = Object.keys(data.specialites).sort();
+        specKeys.forEach(function (specKey) {
+            var spec = data.specialites[specKey];
+            var hasPdf = !!getPdfUrlForSection(niveau, specKey);
+            var hasCourses = spec.hasCourses || hasPdf;
+            var disabled = hasCourses ? '' : 'disabled';
+            var checked = hasCourses ? 'checked' : '';
+            var cls = hasCourses ? '' : ' no-data';
+            var label = escapeHtml(specKey) + (hasPdf ? ' <span style="font-size:10px;font-weight:800;color:#dc2626;background:#fee2e2;padding:1px 6px;border-radius:4px;margin-left:6px">PDF</span>' : '');
+            html += '<label class="export-item' + cls + '">';
+            html += '<input type="checkbox" class="export-cb site-cb" data-niveau="' + niveau + '" data-type="spec" data-key="' + escapeAttr(specKey) + '" ' + checked + ' ' + disabled + '>';
+            html += '<span class="export-label">' + label + '</span></label>';
+        });
+        html += '</div>';
+    });
+    body.innerHTML = html;
+    body.querySelectorAll('.site-cb').forEach(function (cb) { cb.addEventListener('change', updateExportSelection); });
+    body.querySelectorAll('.export-group-cb').forEach(function (cb) {
+        cb.addEventListener('change', function () {
+            var grp = this.getAttribute('data-group'); var checked = this.checked;
+            body.querySelectorAll('.site-cb[data-niveau="' + grp + '"]').forEach(function (child) { if (!child.disabled) child.checked = checked; });
+            updateExportSelection();
+        });
+    });
+    document.getElementById('exportModal').classList.add('active');
+    updateExportSelection();
+}
+
+function closeExportDialog() { document.getElementById('exportModal').classList.remove('active'); }
+function exportCheckAll(state) {
+    document.querySelectorAll('#exportModalBody .export-cb').forEach(function (cb) { if (!cb.disabled) cb.checked = state; });
+    document.querySelectorAll('#exportModalBody .export-group-cb').forEach(function (cb) { cb.checked = state; });
+    updateExportSelection();
+}
+function updateExportSelection() {
+    var cbs = document.querySelectorAll('#exportModalBody .export-cb');
+    var checked = 0, enabled = 0;
+    for (var i = 0; i < cbs.length; i++) { if (!cbs[i].disabled) { enabled++; if (cbs[i].checked) checked++; } }
+    document.getElementById('exportSelectedInfo').innerHTML = '<strong>' + checked + '</strong> élément(s) sélectionné(s)';
+    document.getElementById('exportConfirmBtn').disabled = (checked === 0);
+}
+function getSelectedViewItems() {
+    var selected = [];
+    document.querySelectorAll('#exportModalBody .export-cb').forEach(function (cb) {
+        if (cb.checked && !cb.disabled) selected.push({ type: cb.getAttribute('data-type'), key: cb.getAttribute('data-key') });
+    });
+    return selected;
+}
+function getSelectedSiteItems() {
+    var selected = [];
+    document.querySelectorAll('#exportModalBody .site-cb').forEach(function (cb) {
+        if (cb.checked && !cb.disabled) selected.push({ niveau: cb.getAttribute('data-niveau'), type: cb.getAttribute('data-type'), key: cb.getAttribute('data-key') });
+    });
+    return selected;
+}
+function confirmExport() { if (exportMode === "site") return confirmExportSite(); return confirmExportView(); }
+
+function confirmExportView() {
+    try {
+        var selected = getSelectedViewItems();
+        if (selected.length === 0) { showToast('Veuillez sélectionner au moins un élément.', 'error'); return; }
+        var data = emploiData[currentNiveau];
+        var sections = [];
+        selected.forEach(function (item) {
+            if (item.type !== 'spec') return;
+            if (getPdfUrlForSection(currentNiveau, item.key)) return;
+            var spec = data.specialites[item.key]; if (!spec) return;
+            var semKeys = Object.keys(spec.semestres).filter(function (k) { return spec.semestres[k] && spec.semestres[k].length > 0; }).sort();
+            semKeys.forEach(function (semKey) {
+                sections.push({ title: data.label + ' — ' + item.key, sub: semesterLabels[semKey] || semKey, seances: spec.semestres[semKey] });
+            });
+        });
+        if (sections.length === 0) { showToast('Aucune donnée exportable (les PDF ne sont pas inclus).', 'error'); return; }
+        var css = extractSharedCSS();
+        var html = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Emploi du temps</title>';
+        html += '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">';
+        html += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">';
+        html += '<style>' + css + '</style></head><body>';
+        html += '<div class="top-bar">Faculté des Sciences Économiques, Commerciales et des Sciences de Gestion</div>';
+        html += '<header><div class="header-main"><div class="logo"><div class="logo-icon"><i class="fas fa-graduation-cap"></i></div><div class="logo-text"><h1>Sciences de Gestion</h1><p>FSECSG, UMMTO</p></div></div></div></header>';
+        html += '<main><div class="page-header"><h2>Emplois du temps</h2><p>Année Universitaire 2026/2027</p></div>';
+        sections.forEach(function (sec) {
+            html += '<div style="margin-bottom:32px;"><div class="result-header"><h3>' + escapeHtml(sec.title) + ' — ' + escapeHtml(sec.sub) + '</h3></div>';
+            html += buildTimetableHTML(sec.seances);
+        });
+        html += '<div class="info-section"><div class="legend-section">' + buildLegendHTML() + '</div></div></main>';
+        html += '<footer><div class="footer-bottom"><p>&copy; 2026 Département des Sciences de Gestion &mdash; FSECSG, Université Mouloud MAMMERI Tizi Ouzou</p></div></footer>';
+        html += '</body></html>';
+        downloadHTML(html, 'Emploi_' + safeName(sections[0].title) + '.html');
+        closeExportDialog();
+        showToast('? Export réussi !', 'success');
+    } catch (e) { console.error(e); showToast('Erreur : ' + e.message, 'error'); }
+}
+
+function confirmExportSite() {
+    try {
+        var selected = getSelectedSiteItems();
+        if (selected.length === 0) { showToast('Veuillez sélectionner au moins un élément.', 'error'); return; }
+        var filteredData = buildFilteredDataForSite(selected);
+        var totalLevels = Object.keys(filteredData).length;
+        if (totalLevels === 0) { showToast('Aucune donnée à exporter.', 'error'); return; }
+        // ?? On récupère l'état de la checkbox
+        var cb = document.getElementById('exportShowCharges');
+        if (cb) exportSiteShowCharges = !!cb.checked;
+        var siteHTML = buildSiteHTML(filteredData, exportSiteShowCharges);
+        downloadHTML(siteHTML, 'index.html');
+        closeExportDialog();
+        showToast('? Site généré avec ' + totalLevels + ' niveau(x) !', 'success');
+    } catch (e) { console.error(e); showToast('Erreur : ' + e.message, 'error'); }
+}
+
+function buildFilteredDataForSite(selectedItems) {
+    var result = {};
+    selectedItems.forEach(function (item) {
+        var n = item.niveau;
+        if (!result[n]) result[n] = { label: levelLabels[n], specialites: {} };
+        var spec = emploiData[n].specialites[item.key]; if (!spec) return;
+        var semCopy = {}; var hasAny = false;
+        Object.keys(spec.semestres).forEach(function (semKey) {
+            if (spec.semestres[semKey] && spec.semestres[semKey].length > 0) { semCopy[semKey] = spec.semestres[semKey]; hasAny = true; }
+        });
+        if (hasAny) {
+            result[n].specialites[item.key] = {
+                label: spec.label, fullName: spec.fullName,
+                abreviation: spec.abreviation, semestres: semCopy, hasCourses: true,
+                pdfUrl: getPdfUrlForSection(n, item.key) || null
+            };
+        } else if (getPdfUrlForSection(n, item.key)) {
+            result[n].specialites[item.key] = {
+                label: spec.label, fullName: spec.fullName,
+                abreviation: spec.abreviation, semestres: {}, hasCourses: false,
+                pdfUrl: getPdfUrlForSection(n, item.key)
+            };
+        }
+    });
+    Object.keys(result).forEach(function (n) {
+        if (Object.keys(result[n].specialites).length === 0) delete result[n];
+    });
+    return result;
+}
+
+function buildLegendHTML() {
+    return '<span class="legend-item"><span class="legend-dot CM"></span> CM — Cours Magistral</span><span class="legend-item"><span class="legend-dot G"></span> G — Groupe (TD)</span><span class="legend-item"><span class="legend-dot TP"></span> TP — Travaux Pratiques</span>';
+}
+function safeName(s) { return (s || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, ''); }
+function extractSharedCSS() { var styleEl = document.querySelector('style'); return styleEl ? styleEl.innerHTML : ''; }
+function downloadHTML(htmlString, filename) {
+    var blob = new Blob([htmlString], { type: 'text/html;charset=utf-8' });
+    if (window.navigator && window.navigator.msSaveBlob) { window.navigator.msSaveBlob(blob, filename); return; }
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) { window.navigator.msSaveOrOpenBlob(blob, filename); return; }
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename; a.style.display = 'none';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { try { document.body.removeChild(a); } catch (e) { } URL.revokeObjectURL(url); }, 500);
+}
+
+/* ===========================================================
+   BUILD SITE HTML
+   @param filteredData  les niveaux/sections à inclure
+   @param showCharges   true = afficher les charges enseignants
+   =========================================================== */
+function buildSiteHTML(filteredData, showCharges) {
+    if (typeof showCharges === 'undefined') showCharges = true;
+    var dataJSON = JSON.stringify(filteredData).replace(/</g, '\\u003c').replace(/>/g, '\\u003e');
+    // On sérialise aussi l'index enseignants pour que la vue "Par enseignant" fonctionne
+    var teachersJSON = JSON.stringify(teachersData).replace(/</g, '\\u003c').replace(/>/g, '\\u003e');
+    var css = extractSharedCSS();
+    var levelIcons = { licence1: 'fa-user-graduate', licence2: 'fa-user-graduate', licence3: 'fa-user-graduate', master1: 'fa-university' };
+    var levelsHTML = '';
+    ['licence1', 'licence2', 'licence3', 'master1'].forEach(function (n) {
+        if (!filteredData[n]) return;
+        levelsHTML += '<div class="option-card" data-niveau="' + n + '">';
+        levelsHTML += '<div class="card-icon"><i class="fas ' + levelIcons[n] + '"></i></div>';
+        levelsHTML += '<span>' + escapeHtml(filteredData[n].label) + '</span></div>';
+    });
+
+    var h = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Emplois du temps — FSECSG, UMMTO</title>';
+    h += '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">';
+    h += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">';
+    h += '<style>' + css + '</style></head><body>';
+    h += '<div class="top-bar">Faculté des Sciences Économiques, Commerciales et des Sciences de Gestion</div>';
+    h += '<header><div class="header-main"><div class="logo"><div class="logo-icon"><i class="fas fa-graduation-cap"></i></div><div class="logo-text"><h1>Sciences de Gestion</h1><p>FSECSG, UMMTO</p></div></div>';
+    h += '<a href="index.html" class="home-btn" title="Retour à la page d\'accueil"><i class="fas fa-home"></i><span>Accueil</span></a>';
+    h += '</div></header>';
+    h += '<main>';
+    h += '<div class="page-header"><h2>Emplois du temps</h2><p>Année Universitaire 2026/2027</p></div>';
+    // ONGLETS
+    h += '<div class="view-mode-tabs" id="viewModeTabs">';
+    h += '<button class="view-tab active" data-mode="niveau"><i class="fas fa-layer-group"></i> Par niveau</button>';
+    h += '<button class="view-tab" data-mode="enseignant"><i class="fas fa-chalkboard-teacher"></i> Par enseignant</button>';
+    h += '</div>';
+    // VUE PAR NIVEAU
+    h += '<div class="cards-grid" id="levelsGrid">' + levelsHTML + '</div>';
+    h += '<div id="quickSelectors" class="quick-selectors" style="display:none;">';
+    h += '<div class="quick-row" id="semQuickRow" style="display:none;"><span class="quick-label"><i class="fas fa-calendar-alt"></i> Semestre</span><div class="quick-pills" id="semQuickPills"></div></div>';
+    h += '<div class="quick-row" id="specQuickRow" style="display:none;"><span class="quick-label"><i class="fas fa-bookmark"></i> Section / Spécialité</span><div class="quick-pills" id="specQuickPills"></div></div>';
+    h += '</div>';
+    // VUE PAR ENSEIGNANT
+    h += '<div id="teacherSelectors" class="quick-selectors" style="display:none;">';
+    if (showCharges) {
+        h += '<div class="dept-load-banner" id="deptLoadBanner" style="display:none;">';
+        h += '<div class="dlb-icon"><i class="fas fa-clock"></i></div>';
+        h += '<div class="dlb-text">Charge hébdomadaire au niveau du Département des SG <span class="dlb-teacher" id="deptLoadTeacher"></span> :<span class="dlb-value" id="deptLoadValue">—</span></div>';
+        h += '</div>';
+    }
+    h += '<div class="quick-row">';
+    h += '<span class="quick-label"><i class="fas fa-chalkboard-teacher"></i> Enseignant</span>';
+    h += '<div class="combobox" id="teacherCombobox">';
+    h += '<input type="text" id="teacherComboInput" class="combobox-input" placeholder="Rechercher ou sélectionner un enseignant..." autocomplete="off" spellcheck="false">';
+    h += '<button type="button" class="combobox-toggle" id="teacherComboToggle" tabindex="-1"><i class="fas fa-chevron-down"></i></button>';
+    h += '<div class="combobox-dropdown" id="teacherComboDropdown"></div>';
+    h += '</div></div>';
+    h += '<div class="quick-row" id="teacherGroupRow" style="display:none;">';
+    h += '<span class="quick-label"><i class="fas fa-layer-group"></i> Classe / Section</span>';
+    h += '<div class="combobox" id="groupCombobox">';
+    h += '<input type="text" id="groupComboInput" class="combobox-input" placeholder="Toutes les classes..." autocomplete="off" spellcheck="false">';
+    h += '<button type="button" class="combobox-toggle" id="groupComboToggle" tabindex="-1"><i class="fas fa-chevron-down"></i></button>';
+    h += '<div class="combobox-dropdown" id="groupComboDropdown"></div>';
+    h += '</div></div></div>';
+    // RESULT SECTION (partagé)
+    h += '<div id="resultSection" style="display:none;">';
+    h += '<div class="result-header" id="resultHeader"></div>';
+    h += '<div id="groupFilterBar" class="group-filter-bar" style="display:none;">';
+    h += '<label><i class="fas fa-users"></i> Choisissez votre groupe TD</label>';
+    h += '<select id="groupFilterSelect" class="group-filter-select"><option value="">Tous les groupes</option></select>';
+    h += '<span class="group-filter-info">Sélectionnez votre numéro de groupe pour ne voir que vos TD.</span>';
+    h += '</div>';
+    h += '<div id="timetable-container"></div>';
+    h += '<div class="info-section" id="infoSection" style="display:none;margin-top:20px;"><div class="legend-section">' + buildLegendHTML() + '</div>';
+    h += '<button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Imprimer</button></div></div>';
+    h += '</main>';
+    h += '<footer><div class="footer-bottom"><p>&copy; 2026 Département des Sciences de Gestion &mdash; FSECSG, Université Mouloud MAMMERI Tizi Ouzou</p></div></footer>';
+    h += '<script>var emploiData = ' + dataJSON + ';<\/script>';
+    h += '<script>var teachersData = ' + teachersJSON + ';<\/script>';
+    h += '<script>var SHOW_TEACHER_CHARGES = ' + (showCharges ? 'true' : 'false') + ';<\/script>';
+    h += '<script>' + getExportedJS() + '<\/script>';
+    h += '</body></html>';
+    return h;
+}
+
+function getExportedJS() {
+    var js = '';
+    js += 'var currentViewMode="niveau",currentNiveau="",currentSpecialite="",currentSemestre="",currentGroupFilter="",currentTeacher="",currentTeacherGroup="",currentIsPdf=false;';
+    js += 'var jours=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Samedi"];';
+    js += 'var horaires=["08:00-09:30","09:30-11:00","11:00-12:30","12:30-14:00","14:00-15:30","15:30-17:00"];';
+    js += 'var semesterLabels={semestre1:"Semestre 1",semestre2:"Semestre 2",semestre3:"Semestre 3",semestre4:"Semestre 4",semestre5:"Semestre 5",semestre6:"Semestre 6"};';
+    js += 'var DUREE_CM_MIN=135,DUREE_TD_MIN=90;';
+    js += 'function escapeHtml(s){if(!s)return"";return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}';
+    js += 'function escapeAttr(s){return escapeHtml(s).replace(/\'/g,"&#39;");}';
+    js += 'function formatTypeLabel(t,g){t=(t||"CM").toString().trim().toUpperCase();g=(g===null||g===undefined)?"":String(g).trim();if(t==="TD")t="G";if(g)return t+g;return t;}';
+    js += 'function formatHoraireCell(h){var p=(h||"").toString().split("-");if(p.length!==2)return escapeHtml(h);return \'<div class="horaire-cell"><span class="h-start">\'+escapeHtml(p[0].trim())+\'</span><span class="h-sep"></span><span class="h-end">\'+escapeHtml(p[1].trim())+\'</span></div>\';}';
+    js += 'function applyGroupFilter(seances,grp){if(!grp)return seances;return seances.filter(function(s){var t=(s.type||"").toString().toUpperCase();if(t!=="TD")return true;return String(s.grp)===String(grp);});}';
+    js += 'function extractAvailableGroups(seances){var gs={};seances.forEach(function(s){if((s.type||"").toString().toUpperCase()==="TD"&&s.grp)gs[String(s.grp)]=true;});return Object.keys(gs).sort(function(a,b){var na=parseInt(a,10),nb=parseInt(b,10);if(!isNaN(na)&&!isNaN(nb))return na-nb;return a.localeCompare(b);});}';
+    js += 'function getPdfOpenUrl(u){if(!u)return"#";return u.replace(/\\/preview(\\?.*)?$/,"/view");}';
+    js += 'function renderPdfViewer(u,title,sub){var o=getPdfOpenUrl(u);var h=\'<div class="pdf-viewer-wrapper"><div class="pdf-viewer-header"><div class="pdf-title"><i class="fas fa-file-pdf"></i> \'+escapeHtml(title)+(sub?" — "+escapeHtml(sub):"")+\'</div><a class="pdf-open-btn" href="\'+escapeAttr(o)+\'" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Ouvrir</a></div><iframe class="pdf-iframe" src="\'+escapeAttr(u)+\'" loading="lazy"></iframe><div class="pdf-fallback"><i class="fas fa-file-pdf"></i>Si le PDF ne s\\\'affiche pas, <a href="\'+escapeAttr(o)+\'" target="_blank" rel="noopener">ouvrez-le dans un nouvel onglet</a>.</div></div>\';return h;}';
+    js += 'function computeTeacherLoad(seances){var cm=0,td=0;(seances||[]).forEach(function(s){var t=(s.type||"CM").toString().toUpperCase();if(t==="CM")cm++;else td++;});return{cmCount:cm,tdCount:td,minutes:cm*DUREE_CM_MIN+td*DUREE_TD_MIN};}';
+    js += 'function formatDuration(m){if(!m)return "0 h 00";var h=Math.floor(m/60),r=m%60;return h+" h "+(r<10?"0"+r:r);}';
+
+    js += 'function updateGroupFilterBar(seances){var bar=document.getElementById("groupFilterBar"),sel=document.getElementById("groupFilterSelect"),groups=extractAvailableGroups(seances);';
+    js += 'if(groups.length===0){bar.style.display="none";sel.innerHTML="<option value=\\"\\">Tous les groupes</option>";currentGroupFilter="";return;}';
+    js += 'bar.style.display="flex";var currentVal=sel.value;sel.innerHTML="<option value=\\"\\">Tous les groupes</option>";';
+    js += 'groups.forEach(function(g){var opt=document.createElement("option");opt.value=g;opt.textContent="Groupe "+g;sel.appendChild(opt);});';
+    js += 'if(currentVal&&groups.indexOf(currentVal)!==-1){sel.value=currentVal;currentGroupFilter=currentVal;}else{currentGroupFilter="";sel.value="";}}';
+
+    js += 'function collectSemestersForLevel(data){var s={};Object.keys(data.specialites||{}).forEach(function(sk){var sp=data.specialites[sk];if(!sp||!sp.semestres)return;Object.keys(sp.semestres).forEach(function(k){if(sp.semestres[k]&&sp.semestres[k].length>0)s[k]=true;});});return Object.keys(s).sort();}';
+    js += 'function getSpecsForSemester(data,semKey){var r=[];Object.keys(data.specialites||{}).sort().forEach(function(sk){var sp=data.specialites[sk];if(!sp)return;var x=(sp.semestres&&sp.semestres[semKey])?sp.semestres[semKey]:[];if(x.length>0||sp.pdfUrl)r.push(sk);});return r;}';
+
+    js += 'function renderSemQuickPills(keys){var row=document.getElementById("semQuickRow"),c=document.getElementById("semQuickPills");if(!keys||!keys.length){row.style.display="none";return;}row.style.display="flex";c.innerHTML="";keys.forEach(function(k){var b=document.createElement("button");b.className="quick-pill"+(k===currentSemestre?" active":"");b.textContent=semesterLabels[k]||k;b.onclick=function(){changeSemestre(k);};c.appendChild(b);});}';
+    js += 'function renderSpecQuickPills(keys){var row=document.getElementById("specQuickRow"),c=document.getElementById("specQuickPills");if(!keys||!keys.length){row.style.display="none";return;}row.style.display="flex";c.innerHTML="";keys.forEach(function(k){var b=document.createElement("button");b.className="quick-pill spec-pill"+(k===currentSpecialite?" active":"");b.textContent=k;b.onclick=function(){changeSpecialite(k);};c.appendChild(b);});}';
+    js += 'function hideSpecQuickRow(){document.getElementById("specQuickRow").style.display="none";}';
+
+    js += 'function selectNiveau(n,el){currentNiveau=n;currentSpecialite="";currentSemestre="";currentGroupFilter="";currentIsPdf=false;';
+    js += 'document.querySelectorAll(".option-card").forEach(function(c){c.classList.remove("active-niveau");});el.classList.add("active-niveau");';
+    js += 'var data=emploiData[n];if(!data)return;document.getElementById("resultSection").style.display="none";';
+    js += 'var semKeysAll=collectSemestersForLevel(data);';
+    js += 'if(semKeysAll.length===0){var hasPdfOnly=false;Object.keys(data.specialites||{}).forEach(function(sk){if(data.specialites[sk].pdfUrl)hasPdfOnly=true;});if(!hasPdfOnly)return;semKeysAll=["semestre1"];}';
+    js += 'renderSemQuickPills(semKeysAll);hideSpecQuickRow();document.getElementById("quickSelectors").style.display="flex";';
+    js += 'if(semKeysAll.length===1){changeSemestre(semKeysAll[0]);}}';
+
+    js += 'function changeSemestre(k){currentSemestre=k;currentGroupFilter="";var data=emploiData[currentNiveau];';
+    js += 'renderSemQuickPills(collectSemestersForLevel(data));var avail=getSpecsForSemester(data,k);';
+    js += 'if(avail.length===0){hideSpecQuickRow();return;}';
+    js += 'var autoSel=(avail.length===1);currentSpecialite=autoSel?avail[0]:"";renderSpecQuickPills(avail);';
+    js += 'if(autoSel){displayCurrentTimetable();}else{showPendingMessage();}}';
+    js += 'function changeSpecialite(k){currentSpecialite=k;currentGroupFilter="";var data=emploiData[currentNiveau];';
+    js += 'renderSpecQuickPills(getSpecsForSemester(data,currentSemestre));displayCurrentTimetable();}';
+
+    js += 'function showPendingMessage(){var s=document.getElementById("resultSection");s.style.display="block";';
+    js += 'document.getElementById("resultHeader").innerHTML="";document.getElementById("groupFilterBar").style.display="none";';
+    js += 'document.getElementById("timetable-container").innerHTML="<div class=\\"pending-message\\"><i class=\\"fas fa-hand-pointer\\"></i><p>Veuillez choisir une section ou une spécialité ci-dessus</p></div>";';
+    js += 'document.getElementById("infoSection").style.display="none";s.scrollIntoView({behavior:"smooth",block:"start"});}';
+
+    js += 'function displayCurrentTimetable(){var data=emploiData[currentNiveau];var specLabel=currentSpecialite;';
+    js += 'var semLabel=semesterLabels[currentSemestre]||currentSemestre||"";';
+    js += 'var sp=data.specialites[currentSpecialite];';
+    js += 'if(sp&&sp.pdfUrl){currentIsPdf=true;';
+    js += 'var hh="<h3>"+escapeHtml(data.label)+(specLabel?" — "+escapeHtml(specLabel):"")+(semLabel?" — "+escapeHtml(semLabel):"")+\' <span class="h3-pdf"><i class="fas fa-file-pdf"></i> PDF</span></h3>\';';
+    js += 'document.getElementById("resultHeader").innerHTML=hh;document.getElementById("groupFilterBar").style.display="none";';
+    js += 'document.getElementById("timetable-container").innerHTML=renderPdfViewer(sp.pdfUrl,data.label,specLabel+(semLabel?" — "+semLabel:""));';
+    js += 'document.getElementById("infoSection").style.display="flex";document.getElementById("resultSection").style.display="block";';
+    js += 'var sec=document.getElementById("resultSection");setTimeout(function(){sec.scrollIntoView({behavior:"smooth",block:"start"});},100);return;}';
+    js += 'currentIsPdf=false;var allSeances=(sp&&sp.semestres)?(sp.semestres[currentSemestre]||[]):[];';
+    js += 'updateGroupFilterBar(allSeances);var seances=applyGroupFilter(allSeances,currentGroupFilter);';
+    js += 'var headerText=escapeHtml(data.label)+(specLabel?" — "+escapeHtml(specLabel):"")+(semLabel?" — "+escapeHtml(semLabel):"")+(currentGroupFilter?" — Groupe TD "+escapeHtml(currentGroupFilter):"");';
+    js += 'document.getElementById("resultHeader").innerHTML="<h3>"+headerText+"</h3>";';
+    js += 'var c=document.getElementById("timetable-container"),info=document.getElementById("infoSection");';
+    js += 'if(!seances||!seances.length){c.innerHTML="<div class=\\"empty-state\\"><i class=\\"fas fa-calendar-times\\"></i><p>Aucune séance.</p></div>";info.style.display="none";}';
+    js += 'else{c.innerHTML=buildTimetableHTML(seances);info.style.display="flex";}';
+    js += 'document.getElementById("resultSection").style.display="block";var sec=document.getElementById("resultSection");setTimeout(function(){sec.scrollIntoView({behavior:"smooth",block:"start"});},100);}';
+
+    js += 'function buildTimetableHTML(seances,opts){opts=opts||{};var html="<div class=\\"timetable-wrapper\\"><table class=\\"timetable\\"><thead><tr><th><i class=\\"fas fa-clock\\"></i>Heure</th>";';
+    js += 'jours.forEach(function(j){html+="<th><i class=\\"fas fa-calendar-day\\"></i> "+j+"</th>";});html+="</tr></thead><tbody>";';
+    js += 'for(var h=0;h<horaires.length;h++){html+="<tr><td>"+formatHoraireCell(horaires[h])+"</td>";';
+    js += 'for(var j=0;j<jours.length;j++){var cellSeances=seances.filter(function(s){return s.j===j&&s.h===h;});html+="<td>";';
+    js += 'if(cellSeances.length===0){html+="<div class=\\"empty-cell\\"><i class=\\"fas fa-minus\\"></i></div>";}';
+    js += 'else{cellSeances.forEach(function(s){var tl=formatTypeLabel(s.type,s.grp);var tr=(s.type||"CM").toString().toUpperCase();var tc="cm-"+(tr==="TD"?"G":tr);';
+    js += 'html+="<div class=\\"cell-module "+tc+"\\">";';
+    js += 'if(opts.showContext&&s.ctx)html+="<span class=\\"cm-ctx\\">"+escapeHtml(s.ctx)+"</span>";';
+    js += 'html+="<span class=\\"cm-module-name\\">"+escapeHtml(s.module)+"</span>";';
+    js += 'html+="<div class=\\"cm-footer\\"><span class=\\"cm-type\\">"+escapeHtml(tl)+"</span>";';
+    js += 'if(s.salle)html+="<span class=\\"cm-info-row salle\\"><i class=\\"fas fa-map-marker-alt\\"></i>"+escapeHtml(s.salle)+"</span>";';
+    js += 'if(s.ens&&!opts.showContext)html+="<span class=\\"cm-info-row\\"><i class=\\"fas fa-user\\"></i>"+escapeHtml(s.ens)+"</span>";';
+    js += 'html+="</div></div>";});}html+="</td>";}html+="</tr>";}html+="</tbody></table></div>";return html;}';
+
+    // ================= MODE ENSEIGNANT =================
+    js += 'var teacherComboHighlight=-1,teacherComboItems=[];';
+    js += 'function openTeacherCombo(){renderTeacherComboDropdown();document.getElementById("teacherComboDropdown").classList.add("open");}';
+    js += 'function closeTeacherCombo(){teacherComboHighlight=-1;document.getElementById("teacherComboDropdown").classList.remove("open");}';
+    js += 'function isTeacherComboOpen(){return document.getElementById("teacherComboDropdown").classList.contains("open");}';
+    js += 'function renderTeacherComboDropdown(){var drop=document.getElementById("teacherComboDropdown"),input=document.getElementById("teacherComboInput");';
+    js += 'var filter=(input.value||"").toLowerCase().trim();var names=Object.keys(teachersData).sort(function(a,b){return a.localeCompare(b,"fr",{sensitivity:"base"});});';
+    js += 'if(filter===(currentTeacher||"").toLowerCase())filter="";if(filter)names=names.filter(function(n){return n.toLowerCase().indexOf(filter)!==-1;});';
+    js += 'teacherComboItems=names;if(names.length===0){drop.innerHTML=\'<div class="combobox-empty"><i class="fas fa-user-slash"></i>Aucun enseignant trouvé</div>\';return;}';
+    js += 'var html="";names.forEach(function(n,idx){var isSel=(n===currentTeacher)?" selected":"";var isHl=(idx===teacherComboHighlight)?" highlight":"";';
+    js += 'html+=\'<div class="combobox-option\'+isSel+isHl+\'" data-name="\'+escapeAttr(n)+\'">\';';
+    js += 'html+=\'<span class="opt-name"><i class="fas fa-user-tie" style="font-size:11px;opacity:0.5;margin-right:8px;flex-shrink:0"></i><span>\'+escapeHtml(n)+\'</span></span>\';';
+    js += 'html+="</div>";});drop.innerHTML=html;';
+    js += 'drop.querySelectorAll(".combobox-option").forEach(function(opt){opt.addEventListener("mousedown",function(e){e.preventDefault();var name=this.getAttribute("data-name");selectTeacher(name);closeTeacherCombo();});});}';
+
+    js += 'function selectTeacher(name){currentTeacher=name;currentTeacherGroup="";document.getElementById("teacherComboInput").value=name;updateDeptLoadBanner();updateTeacherClassRow();displayTeacherTimetable();}';
+
+    js += 'function updateDeptLoadBanner(){if(!SHOW_TEACHER_CHARGES)return;var banner=document.getElementById("deptLoadBanner"),val=document.getElementById("deptLoadValue"),teacherEl=document.getElementById("deptLoadTeacher");if(!banner||!val)return;';
+    js += 'if(!currentTeacher||!teachersData[currentTeacher]){banner.style.display="none";return;}';
+    js += 'var load=computeTeacherLoad(teachersData[currentTeacher].seances);val.textContent=formatDuration(load.minutes);if(teacherEl)teacherEl.textContent=currentTeacher;banner.style.display="flex";}';
+
+    js += 'function updateTeacherClassRow(){var row=document.getElementById("teacherGroupRow");if(!currentTeacher||!teachersData[currentTeacher]){row.style.display="none";return;}';
+    js += 'var ctxSet={};teachersData[currentTeacher].seances.forEach(function(s){if(s.ctx)ctxSet[s.ctx]=true;});var count=Object.keys(ctxSet).length;';
+    js += 'if(count<=1){row.style.display="none";currentTeacherGroup="";document.getElementById("groupComboInput").value="";return;}';
+    js += 'row.style.display="flex";document.getElementById("groupComboInput").value="";document.getElementById("groupComboInput").placeholder="Toutes les classes ("+count+")";}';
+
+    js += 'var classComboHighlight=-1,classComboItems=[];';
+    js += 'function openClassCombo(){if(!currentTeacher||!teachersData[currentTeacher])return;renderClassComboDropdown();document.getElementById("groupComboDropdown").classList.add("open");}';
+    js += 'function closeClassCombo(){classComboHighlight=-1;document.getElementById("groupComboDropdown").classList.remove("open");}';
+    js += 'function isClassComboOpen(){return document.getElementById("groupComboDropdown").classList.contains("open");}';
+    js += 'function getTeacherContexts(){if(!currentTeacher||!teachersData[currentTeacher])return [];var ctxSet={};teachersData[currentTeacher].seances.forEach(function(s){if(s.ctx)ctxSet[s.ctx]=true;});return Object.keys(ctxSet).sort();}';
+    js += 'function renderClassComboDropdown(){var drop=document.getElementById("groupComboDropdown"),input=document.getElementById("groupComboInput");';
+    js += 'var filter=(input.value||"").toLowerCase().trim();if(filter===(currentTeacherGroup||"").toLowerCase())filter="";var ctxList=getTeacherContexts();';
+    js += 'if(filter)ctxList=ctxList.filter(function(c){return c.toLowerCase().indexOf(filter)!==-1;});var total=teachersData[currentTeacher].seances.length;var html="";';
+    js += 'var allMatch=!filter||"toutes les classes".indexOf(filter)!==-1;if(allMatch){var allSel=(!currentTeacherGroup)?" selected":"";';
+    js += 'html+=\'<div class="combobox-option\'+allSel+\'" data-ctx=""><span class="opt-name"><i class="fas fa-layer-group" style="font-size:11px;opacity:0.5;margin-right:8px;flex-shrink:0"></i><span>Toutes les classes</span></span><span class="opt-count">\'+total+\'</span></div>\';}';
+    js += 'ctxList.forEach(function(ctx){var count=teachersData[currentTeacher].seances.filter(function(s){return s.ctx===ctx;}).length;var isSel=(ctx===currentTeacherGroup)?" selected":"";';
+    js += 'html+=\'<div class="combobox-option\'+isSel+\'" data-ctx="\'+escapeAttr(ctx)+\'"><span class="opt-name"><span>\'+escapeHtml(ctx)+\'</span></span><span class="opt-count">\'+count+\'</span></div>\';});';
+    js += 'classComboItems=ctxList;if(!html){drop.innerHTML=\'<div class="combobox-empty"><i class="fas fa-inbox"></i>Aucune classe correspondante</div>\';return;}drop.innerHTML=html;';
+    js += 'drop.querySelectorAll(".combobox-option").forEach(function(opt){opt.addEventListener("mousedown",function(e){e.preventDefault();var ctx=this.getAttribute("data-ctx");currentTeacherGroup=ctx||"";document.getElementById("groupComboInput").value=ctx||"";closeClassCombo();displayTeacherTimetable();});});}';
+
+    js += 'function showTeacherPendingMessage(){var s=document.getElementById("resultSection");s.style.display="block";document.getElementById("resultHeader").innerHTML="";document.getElementById("groupFilterBar").style.display="none";';
+    js += 'document.getElementById("timetable-container").innerHTML=\'<div class="pending-message teacher"><i class="fas fa-hand-pointer"></i><p>Veuillez sélectionner un enseignant dans la liste ci-dessus</p></div>\';';
+    js += 'document.getElementById("infoSection").style.display="none";}';
+
+    js += 'function displayTeacherTimetable(){var info=teachersData[currentTeacher];if(!info)return;var allSeances=info.seances;var seances=allSeances;';
+    js += 'if(currentTeacherGroup)seances=allSeances.filter(function(s){return s.ctx===currentTeacherGroup;});';
+    js += 'var headerHtml=\'<h3><i class="fas fa-chalkboard-teacher header-icon" style="color:var(--purple)"></i>\'+escapeHtml(currentTeacher)+(currentTeacherGroup?\' — <span class="h3-ctx">\'+escapeHtml(currentTeacherGroup)+\'</span>\':"")+\'</h3>\';';
+    js += 'document.getElementById("resultHeader").innerHTML=headerHtml;';
+    js += 'var c=document.getElementById("timetable-container"),info2=document.getElementById("infoSection");';
+    js += 'if(!seances||!seances.length){c.innerHTML="<div class=\\"empty-state\\"><i class=\\"fas fa-calendar-times\\"></i><p>Aucune séance.</p></div>";info2.style.display="none";}';
+    js += 'else{c.innerHTML=buildTimetableHTML(seances,{showContext:true});info2.style.display="flex";}';
+    js += 'document.getElementById("resultSection").style.display="block";var sec=document.getElementById("resultSection");setTimeout(function(){sec.scrollIntoView({behavior:"smooth",block:"start"});},100);}';
+
+    // ============ SWITCH VIEW MODE ============
+    js += 'function switchViewMode(mode){if(mode===currentViewMode)return;currentViewMode=mode;';
+    js += 'document.querySelectorAll(".view-tab").forEach(function(t){t.classList.toggle("active",t.getAttribute("data-mode")===mode);});';
+    js += 'document.getElementById("levelsGrid").style.display="none";document.getElementById("quickSelectors").style.display="none";';
+    js += 'document.getElementById("teacherSelectors").style.display="none";document.getElementById("resultSection").style.display="none";';
+    js += 'document.getElementById("groupFilterBar").style.display="none";closeTeacherCombo();closeClassCombo();';
+    js += 'if(mode==="niveau"){currentTeacher="";currentTeacherGroup="";document.getElementById("levelsGrid").style.display="";';
+    js += 'if(currentNiveau){var card=document.querySelector(\'.option-card[data-niveau="\'+currentNiveau+\'"]\');if(card)selectNiveau(currentNiveau,card);}';
+    js += '}else{currentNiveau="";currentSpecialite="";currentSemestre="";currentGroupFilter="";';
+    js += 'document.querySelectorAll(".option-card").forEach(function(c){c.classList.remove("active-niveau");});';
+    js += 'document.getElementById("teacherSelectors").style.display="flex";document.getElementById("teacherComboInput").value=currentTeacher||"";';
+    js += 'document.getElementById("teacherGroupRow").style.display="none";document.getElementById("groupComboInput").value="";';
+    js += 'updateDeptLoadBanner();if(currentTeacher&&teachersData[currentTeacher]){updateTeacherClassRow();displayTeacherTimetable();}else{showTeacherPendingMessage();}}}';
+
+    // ============ INIT ============
+    js += 'window.addEventListener("load",function(){';
+    js += 'document.querySelectorAll(".option-card").forEach(function(c){c.addEventListener("click",function(){selectNiveau(this.getAttribute("data-niveau"),this);});});';
+    js += 'document.querySelectorAll(".view-tab").forEach(function(t){t.addEventListener("click",function(){switchViewMode(this.getAttribute("data-mode"));});});';
+    js += 'var g=document.getElementById("groupFilterSelect");if(g)g.addEventListener("change",function(){currentGroupFilter=this.value;displayCurrentTimetable();});';
+    // Teacher combobox events
+    js += 'var tIn=document.getElementById("teacherComboInput"),tTg=document.getElementById("teacherComboToggle");';
+    js += 'if(tIn){tIn.addEventListener("focus",function(){closeClassCombo();openTeacherCombo();});';
+    js += 'tIn.addEventListener("click",function(){closeClassCombo();openTeacherCombo();});';
+    js += 'tIn.addEventListener("input",function(){teacherComboHighlight=-1;if(!isTeacherComboOpen())openTeacherCombo();else renderTeacherComboDropdown();});';
+    js += 'tIn.addEventListener("keydown",function(e){if(e.key==="ArrowDown"){e.preventDefault();if(!isTeacherComboOpen()){openTeacherCombo();return;}if(!teacherComboItems.length)return;teacherComboHighlight=(teacherComboHighlight+1)%teacherComboItems.length;renderTeacherComboDropdown();}';
+    js += 'else if(e.key==="ArrowUp"){e.preventDefault();if(!isTeacherComboOpen()){openTeacherCombo();return;}if(!teacherComboItems.length)return;teacherComboHighlight=teacherComboHighlight<=0?teacherComboItems.length-1:teacherComboHighlight-1;renderTeacherComboDropdown();}';
+    js += 'else if(e.key==="Enter"){e.preventDefault();if(!teacherComboItems.length)return;var i=teacherComboHighlight>=0?teacherComboHighlight:0;selectTeacher(teacherComboItems[i]);closeTeacherCombo();tIn.blur();}';
+    js += 'else if(e.key==="Escape"){closeTeacherCombo();tIn.value=currentTeacher||"";tIn.blur();}});}';
+    js += 'if(tTg)tTg.addEventListener("click",function(e){e.stopPropagation();closeClassCombo();if(isTeacherComboOpen())closeTeacherCombo();else{openTeacherCombo();tIn.focus();}});';
+    // Group combobox events
+    js += 'var gIn=document.getElementById("groupComboInput"),gTg=document.getElementById("groupComboToggle");';
+    js += 'if(gIn){gIn.addEventListener("focus",function(){closeTeacherCombo();openClassCombo();});';
+    js += 'gIn.addEventListener("click",function(){closeTeacherCombo();openClassCombo();});';
+    js += 'gIn.addEventListener("input",function(){classComboHighlight=-1;if(!isClassComboOpen())openClassCombo();else renderClassComboDropdown();});';
+    js += 'gIn.addEventListener("keydown",function(e){if(e.key==="ArrowDown"){e.preventDefault();if(!isClassComboOpen()){openClassCombo();return;}if(!classComboItems.length)return;classComboHighlight=(classComboHighlight+1)%classComboItems.length;renderClassComboDropdown();}';
+    js += 'else if(e.key==="ArrowUp"){e.preventDefault();if(!isClassComboOpen()){openClassCombo();return;}if(!classComboItems.length)return;classComboHighlight=classComboHighlight<=0?classComboItems.length-1:classComboHighlight-1;renderClassComboDropdown();}';
+    js += 'else if(e.key==="Enter"){e.preventDefault();if(classComboHighlight>=0&&classComboItems[classComboHighlight]!==undefined){currentTeacherGroup=classComboItems[classComboHighlight];gIn.value=currentTeacherGroup;}else{currentTeacherGroup="";gIn.value="";}closeClassCombo();displayTeacherTimetable();gIn.blur();}';
+    js += 'else if(e.key==="Escape"){closeClassCombo();gIn.value=currentTeacherGroup||"";gIn.blur();}});}';
+    js += 'if(gTg)gTg.addEventListener("click",function(e){e.stopPropagation();closeTeacherCombo();if(isClassComboOpen())closeClassCombo();else{openClassCombo();gIn.focus();}});';
+    js += 'document.addEventListener("click",function(e){if(!e.target.closest("#teacherCombobox"))closeTeacherCombo();if(!e.target.closest("#groupCombobox"))closeClassCombo();});';
+    js += '});';
+    return js;
+}
+
+async function fetchPlacements(typeSemestre) {
+    try {
+        var res = await fetch(API_EMPLOI + '?action=read&type=' + encodeURIComponent(typeSemestre) + '&t=' + Date.now());
+        var data = await res.json();
+        if (data && data.status === 'ok' && Array.isArray(data.data)) return data.data.map(function (p) { return Object.assign({}, p, { type_Semestre: typeSemestre }); });
+        if (Array.isArray(data)) return data.map(function (p) { return Object.assign({}, p, { type_Semestre: typeSemestre }); });
+    } catch (e) { console.error('Erreur fetch ' + typeSemestre + ':', e); }
+    return [];
+}
+async function fetchSpecialitesFromDB() {
+    try {
+        var res = await fetch(API_SPECIALITE + '?action=read&t=' + Date.now());
+        var data = await res.json();
+        if (data && data.status === 'ok' && Array.isArray(data.data)) return data.data;
+        if (Array.isArray(data)) return data;
+    } catch (e) { console.error('Erreur fetch specialites:', e); }
+    return [];
+}
+async function fetchInfrastructuresFromDB() {
+    var map = {};
+    try {
+        var res = await fetch(API_INFRA + '?action=read&t=' + Date.now());
+        var data = await res.json();
+        var rows = [];
+        if (data && data.status === 'ok' && Array.isArray(data.data)) rows = data.data;
+        else if (Array.isArray(data)) rows = data;
+        rows.forEach(function (r, idx) {
+            var name = r.lieu || r.salle_nom || "";
+            if (!name) return;
+            if (r.id !== undefined && r.id !== null) map[String(r.id)] = name;
+            map[String(idx)] = name;
+        });
+    } catch (e) { console.error('Erreur fetch infrastructures:', e); }
+    return map;
+}
+async function loadData() {
+    try {
+        var pair = await fetchPlacements('Pair');
+        var impair = await fetchPlacements('Impair');
+        rawPlacements = pair.concat(impair);
+        dbSpecialites = await fetchSpecialitesFromDB();
+        dbInfrastructures = await fetchInfrastructuresFromDB();
+        emploiData = buildCompleteData(rawPlacements, dbSpecialites);
+        ['L1 TC G1', 'L1 TC G2', 'L1 TC G3'].forEach(function (sk) {
+            if (!emploiData.licence1.specialites[sk]) {
+                emploiData.licence1.specialites[sk] = {
+                    label: sk, fullName: sk, abreviation: '',
+                    semestres: {}, hasCourses: false, hasPdf: !!getPdfUrlForSection('licence1', sk)
+                };
+            } else {
+                emploiData.licence1.specialites[sk].hasPdf = !!getPdfUrlForSection('licence1', sk);
+            }
+        });
+        buildTeacherIndex();
+        console.log('Données chargées :', emploiData);
+        console.log('Enseignants :', Object.keys(teachersData).length);
+        if (currentViewMode === 'enseignant') {
+            if (currentTeacher && teachersData[currentTeacher]) {
+                updateDeptLoadBanner();
+                updateTeacherClassRow();
+                displayTeacherTimetable();
+            } else {
+                showTeacherPendingMessage();
+            }
+        }
+    } catch (e) { console.error('Erreur chargement:', e); }
+}
+
+window.addEventListener('load', function () {
+    document.querySelectorAll('.option-card').forEach(function (card) {
+        card.addEventListener('click', function () { selectNiveau(this.getAttribute('data-niveau'), this); });
+    });
+    document.querySelectorAll('.view-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () { switchViewMode(this.getAttribute('data-mode')); });
+    });
+
+    var tInput = document.getElementById('teacherComboInput');
+    var tToggle = document.getElementById('teacherComboToggle');
+
+    tInput.addEventListener('focus', function () { closeClassCombo(); openTeacherCombo(); });
+    tInput.addEventListener('click', function () { closeClassCombo(); openTeacherCombo(); });
+    tInput.addEventListener('input', function () {
+        teacherComboHighlight = -1;
+        if (!isTeacherComboOpen()) openTeacherCombo();
+        else renderTeacherComboDropdown();
+    });
+    tInput.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (!isTeacherComboOpen()) { openTeacherCombo(); return; }
+            if (teacherComboItems.length === 0) return;
+            teacherComboHighlight = (teacherComboHighlight + 1) % teacherComboItems.length;
+            renderTeacherComboDropdown();
+            scrollHighlightIntoView('teacherComboDropdown');
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (!isTeacherComboOpen()) { openTeacherCombo(); return; }
+            if (teacherComboItems.length === 0) return;
+            teacherComboHighlight = teacherComboHighlight <= 0 ? teacherComboItems.length - 1 : teacherComboHighlight - 1;
+            renderTeacherComboDropdown();
+            scrollHighlightIntoView('teacherComboDropdown');
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (teacherComboItems.length === 0) return;
+            var idx = teacherComboHighlight >= 0 ? teacherComboHighlight : 0;
+            selectTeacher(teacherComboItems[idx]);
+            closeTeacherCombo();
+            tInput.blur();
+        } else if (e.key === 'Escape') {
+            closeTeacherCombo();
+            tInput.value = currentTeacher || '';
+            tInput.blur();
+        }
+    });
+    tToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeClassCombo();
+        if (isTeacherComboOpen()) closeTeacherCombo();
+        else { openTeacherCombo(); tInput.focus(); }
+    });
+
+    var gInput = document.getElementById('groupComboInput');
+    var gToggle = document.getElementById('groupComboToggle');
+
+    gInput.addEventListener('focus', function () { closeTeacherCombo(); openClassCombo(); });
+    gInput.addEventListener('click', function () { closeTeacherCombo(); openClassCombo(); });
+    gInput.addEventListener('input', function () {
+        classComboHighlight = -1;
+        if (!isClassComboOpen()) openClassCombo();
+        else renderClassComboDropdown();
+    });
+    gInput.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (!isClassComboOpen()) { openClassCombo(); return; }
+            if (classComboItems.length === 0) return;
+            classComboHighlight = (classComboHighlight + 1) % classComboItems.length;
+            renderClassComboDropdown();
+            scrollHighlightIntoView('groupComboDropdown');
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (!isClassComboOpen()) { openClassCombo(); return; }
+            if (classComboItems.length === 0) return;
+            classComboHighlight = classComboHighlight <= 0 ? classComboItems.length - 1 : classComboHighlight - 1;
+            renderClassComboDropdown();
+            scrollHighlightIntoView('groupComboDropdown');
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (classComboHighlight >= 0 && classComboItems[classComboHighlight] !== undefined) {
+                currentTeacherGroup = classComboItems[classComboHighlight];
+                gInput.value = currentTeacherGroup;
+            } else {
+                currentTeacherGroup = '';
+                gInput.value = '';
+            }
+            closeClassCombo();
+            displayTeacherTimetable();
+            gInput.blur();
+        } else if (e.key === 'Escape') {
+            closeClassCombo();
+            gInput.value = currentTeacherGroup || '';
+            gInput.blur();
+        }
+    });
+    gToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeTeacherCombo();
+        if (isClassComboOpen()) closeClassCombo();
+        else { openClassCombo(); gInput.focus(); }
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('#teacherCombobox')) closeTeacherCombo();
+        if (!e.target.closest('#groupCombobox')) closeClassCombo();
+    });
+
+    document.getElementById('btnPrint').addEventListener('click', function () { window.print(); });
+    document.getElementById('btnExport').addEventListener('click', openExportDialog);
+    document.getElementById('btnExportSite').addEventListener('click', openExportSiteDialog);
+    document.getElementById('btnCloseExport').addEventListener('click', closeExportDialog);
+    document.getElementById('btnCancelExport').addEventListener('click', closeExportDialog);
+    document.getElementById('btnCheckAll').addEventListener('click', function () { exportCheckAll(true); });
+    document.getElementById('btnUncheckAll').addEventListener('click', function () { exportCheckAll(false); });
+    document.getElementById('exportConfirmBtn').addEventListener('click', confirmExport);
+    document.getElementById('exportModal').addEventListener('click', function (e) { if (e.target === this) closeExportDialog(); });
+    document.getElementById('groupFilterSelect').addEventListener('change', function () {
+        currentGroupFilter = this.value;
+        displayCurrentTimetable();
+    });
+    loadData();
+});
+
+function scrollHighlightIntoView(dropdownId) {
+    var drop = document.getElementById(dropdownId);
+    if (!drop) return;
+    var hl = drop.querySelector('.highlight');
+    if (hl && hl.scrollIntoView) hl.scrollIntoView({ block: 'nearest' });
+}
+</script>
+</body>
+</html>
+]==]
+
+Edge.LoadHTML("WebView", html)
